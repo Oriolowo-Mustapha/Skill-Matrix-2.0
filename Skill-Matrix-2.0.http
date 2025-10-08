@@ -1,0 +1,6 @@
+@Skill_Matrix_2._0_HostAddress = http://localhost:5154
+
+GET {{Skill_Matrix_2._0_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
