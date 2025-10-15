@@ -5,6 +5,7 @@
 		public int Id { get; set; }
 		public string OptionText { get; set; }
 		public Guid AssessmentId { get; set; }
-		public Assessment Assessment { get; set; } = new Assessment();
+		public Assessment Assessment { get; set; }
+		public List<UserResponse> UserResponses { get; set; }
 	}
 }

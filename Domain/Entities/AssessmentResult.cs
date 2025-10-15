@@ -2,14 +2,12 @@
 {
 	public class AssessmentResult : BaseEntity
 	{
-		public Guid AdminID { get; set; }
-		public Admin Admin { get; set; }
-		public Guid LearnerID { get; set; }
-		public Learner Learner { get; set; }
-		public Guid TeamMemberID { get; set; }
-		public Team_Members TeamMember { get; set; }
+		public Guid? LearnerID { get; set; }
+		public Learner? Learner { get; set; }
+		public Guid? TeamMemberID { get; set; }
+		public TeamMember? TeamMember { get; set; }
 		public Guid SkillId { get; set; }
-		public Skill Skill { get; set; }
+		public AssignedSkill Skill { get; set; }
 		public Guid AssessmentBatchId { get; set; }
 		public AssessmentBatch AssessmentBatch { get; set; }
 		public int Score { get; set; }
