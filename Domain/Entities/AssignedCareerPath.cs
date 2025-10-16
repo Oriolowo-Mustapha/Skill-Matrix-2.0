@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-	public class AssignedCareerPath
+	public class AssignedCareerPath:BaseEntity
 	{
 		public string Title { get; set; }
 		public string Description { get; set; }

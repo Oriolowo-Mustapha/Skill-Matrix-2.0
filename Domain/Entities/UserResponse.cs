@@ -7,12 +7,12 @@
 
 		public Guid? TeamMemberId { get; set; }
 		public TeamMember? TeamMember { get; set; }
-		public Guid AssessmentBatchId { get; set; }
+		public int AssessmentBatchId { get; set; }
 		public AssessmentBatch AssessmentBatch { get; set; }
-		public Guid AssessmentQuestionId { get; set; }
+		public int AssessmentQuestionId { get; set; }
 		public Assessment AssessmentQuestion { get; set; }
 
-		public Guid SelectedOptionId { get; set; }
+		public int SelectedOptionId { get; set; }
 		public AssessmentOptions SelectedOption { get; set; }
 
 		public DateTime Timestamp { get; set; } = DateTime.UtcNow;

@@ -7,5 +7,6 @@
 		public Guid ManagerId { get; set; }
 		public Manager Manager { get; set; }
 		public List<TeamMember> TeamMembers { get; set; }
+		public DateTime DateJoined { get; set; }
 	}
 }

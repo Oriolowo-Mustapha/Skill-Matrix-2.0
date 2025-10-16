@@ -144,8 +144,6 @@ namespace Infrastructure.Context
 				.HasForeignKey(ur => ur.SelectedOptionId)
 				.OnDelete(DeleteBehavior.NoAction);
 
-
-			// AssessmentResult
 			modelBuilder.Entity<AssessmentResult>()
 				.HasOne(ar => ar.Learner)
 				.WithMany(l => l.AssessmentResults)
@@ -167,6 +165,24 @@ namespace Infrastructure.Context
 				.HasOne(ar => ar.AssessmentBatch)
 				.WithOne(ab => ab.AssessmentResult)
 				.HasForeignKey<AssessmentResult>(ar => ar.AssessmentBatchId);
+
+			modelBuilder.Entity<Admin>().HasData
+				(
+					new Admin
+					{
+						FirstName = "Super",
+						LastName = "Admin",
+						Email = "superAdmin@gmail.com",
+						UserName = "Superadmin",
+						PasswordHash = HashPassword("SkillMatrix@SuperAdmin"),
+						Role = Domain.Enum.Roles.SuperAdmin
+					}
+
+				);
+		}
+		private string HashPassword(string password)
+		{
+			return BCrypt.Net.BCrypt.HashPassword(password);
 		}
 	}
 }

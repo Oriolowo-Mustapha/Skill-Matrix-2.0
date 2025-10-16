@@ -14,5 +14,6 @@ namespace Domain.Entities
 		public Guid OrganizationId { get; set; }
 		public Organization Organization { get; set; }
 		public List<TeamMember> TeamMembers { get; set; }
+		public DateTime DateJoined { get; set; }
 	}
 }

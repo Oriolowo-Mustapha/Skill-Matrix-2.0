@@ -14,5 +14,6 @@
 		public List<AssessmentResult> AssessmentResults { get; set; }
 		public List<AssignedBadge> Badges { get; set; }
 		public List<AssessmentResult> UserCareerPaths { get; set; }
+		public DateTime DateAssigned { get; set; }
 	}
 }

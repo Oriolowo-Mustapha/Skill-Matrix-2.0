@@ -17,5 +17,6 @@ namespace Domain.Entities
 		public List<AssignedBadge> Badges { get; set; }
 		public List<AssignedCareerPath> LearnerCareerPaths { get; set; }
 		public List<AssignedSkill> LearnerSkills { get; set; }
+		public DateTime DateJoined { get; set; }
 	}
 }

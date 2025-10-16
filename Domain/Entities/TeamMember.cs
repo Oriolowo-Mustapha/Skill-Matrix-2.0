@@ -22,6 +22,6 @@ namespace Domain.Entities
 		public List<AssignedCareerPath> CareerPaths { get; set; }
 		public List<AssessmentResult> AssessmentResults { get; set; }
 		public List<AssignedSkill> TeamMemberSkills { get; set; }
-
+		public DateTime DateJoined { get; set; }
 	}
 }
