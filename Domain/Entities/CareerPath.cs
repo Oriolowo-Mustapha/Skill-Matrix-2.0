@@ -2,9 +2,9 @@
 {
 	public class CareerPath : BaseEntity
 	{
-		public string Title { get; set; }
-		public string Description { get; set; }
-		public string IconURL { get; set; }
-		public DateTime DateAdded { get; set; }
+		public string Title { get; set; } = string.Empty;
+		public string Description { get; set; } = string.Empty;
+		public string IconURL { get; set; } = string.Empty;
+		public DateTime DateAdded { get; set; } = DateTime.UtcNow;
 	}
 }

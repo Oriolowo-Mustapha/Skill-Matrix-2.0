@@ -7,14 +7,14 @@
 		public Guid? TeamMemberID { get; set; }
 		public TeamMember? TeamMember { get; set; }
 		public Guid SkillId { get; set; }
-		public AssignedSkill Skill { get; set; }
+		public AssignedSkill Skill { get; set; } = null!;
 		public Guid AssessmentBatchId { get; set; }
-		public AssessmentBatch AssessmentBatch { get; set; }
+		public AssessmentBatch AssessmentBatch { get; set; } = null!;
 		public int Score { get; set; }
 		public int NoOfCorrectAnswers { get; set; }
 		public int NoOfWrongAnswers { get; set; }
 		public int NoOfUnansweredQuestions { get; set; }
-		public int TotalQuestions { get; set; } = 0;
+		public int TotalQuestions { get; set; }
 		public DateTime DateCreated { get; set; } = DateTime.Now;
 		public DateTime DateModified { get; set; } = DateTime.Now;
 

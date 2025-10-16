@@ -8,12 +8,12 @@
 		public Guid? TeamMemberId { get; set; }
 		public TeamMember? TeamMember { get; set; }
 		public int AssessmentBatchId { get; set; }
-		public AssessmentBatch AssessmentBatch { get; set; }
+		public AssessmentBatch AssessmentBatch { get; set; } = null!;
 		public int AssessmentQuestionId { get; set; }
-		public Assessment AssessmentQuestion { get; set; }
+		public Assessment AssessmentQuestion { get; set; } = null!;
 
 		public int SelectedOptionId { get; set; }
-		public AssessmentOptions SelectedOption { get; set; }
+		public AssessmentOptions SelectedOption { get; set; } = null!;
 
 		public DateTime Timestamp { get; set; } = DateTime.UtcNow;
 
