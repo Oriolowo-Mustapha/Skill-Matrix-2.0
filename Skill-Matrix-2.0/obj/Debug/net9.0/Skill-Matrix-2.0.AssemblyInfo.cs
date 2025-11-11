@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Skill-Matrix-2.0")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5b8b38b2917b9a95e5046b05230ad6f89684cf52")]
 [assembly: System.Reflection.AssemblyProductAttribute("Skill-Matrix-2.0")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Skill-Matrix-2.0")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

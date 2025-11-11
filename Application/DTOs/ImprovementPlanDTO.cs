@@ -7,15 +7,15 @@
 		public string GeneratedSummary { get; set; } = string.Empty;
 		public string FocusAreas { get; set; } = string.Empty;
 		public DateTime DateGenerated { get; set; }
-		public List<RecommendedResourceDTO> RecommendedResources { get; set; }
+		public List<RecommendedResourceDTO> RecommendedResources { get; set; } = new List<RecommendedResourceDTO>();
 	}
 
 	public record RecommendedResourceDTO
 	{
 		public Guid Id { get; set; }
-		public string Title { get; set; }
-		public string Url { get; set; }
-		public string Description { get; set; }
-		public string ResourseType { get; set; }
+		public string Title { get; set; } = string.Empty;
+		public string Url { get; set; } = string.Empty;
+		public string Description { get; set; } = string.Empty;
+		public string ResourseType { get; set; } = string.Empty;
 	}
 }

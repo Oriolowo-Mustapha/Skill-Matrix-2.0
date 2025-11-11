@@ -3,40 +3,56 @@
   "WorkspaceRootPath": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\exceptions\\assessmentalreadycompletedexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\exceptions\\assessmentalreadycompletedexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\exceptions\\badrequestexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\exceptions\\badrequestexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\exceptions\\notfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\exceptions\\notfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\extensions\\usermappingextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\extensions\\usermappingextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\dtos\\assesmentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\dtos\\assesmentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\exceptions\\applicationexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\exceptions\\applicationexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\extensions\\improvementplanmappingextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\extensions\\improvementplanmappingextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\extensions\\assessmentmappingextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\extensions\\assessmentmappingextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\dtos\\teammemberperformancedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\dtos\\teammemberperformancedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\dtos\\skilldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\dtos\\skilldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\dtos\\assessmentresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\dtos\\assessmentresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\dtos\\improvementplandto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\dtos\\improvementplandto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\dtos\\assessmentresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\dtos\\assessmentresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\dtos\\skilldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\dtos\\skilldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\dtos\\assesmentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\dtos\\assesmentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\dtos\\teammemberperformancedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\dtos\\teammemberperformancedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\extensions\\assessmentmappingextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\extensions\\assessmentmappingextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{748A08BF-C8EE-4897-877F-0C8426DD02CD}|Domain\\Domain.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\domain\\entities\\assessment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -146,7 +162,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -162,33 +178,85 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ImprovementPlanMappingExtensions.cs",
-              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Extensions\\ImprovementPlanMappingExtensions.cs",
-              "RelativeDocumentMoniker": "Application\\Extensions\\ImprovementPlanMappingExtensions.cs",
-              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Extensions\\ImprovementPlanMappingExtensions.cs",
-              "RelativeToolTip": "Application\\Extensions\\ImprovementPlanMappingExtensions.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAABUAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "AssessmentAlreadyCompletedException.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Exceptions\\AssessmentAlreadyCompletedException.cs",
+              "RelativeDocumentMoniker": "Application\\Exceptions\\AssessmentAlreadyCompletedException.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Exceptions\\AssessmentAlreadyCompletedException.cs",
+              "RelativeToolTip": "Application\\Exceptions\\AssessmentAlreadyCompletedException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAABxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-07T09:14:49.249Z",
+              "WhenOpened": "2025-11-08T13:40:27.737Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "BadRequestException.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Exceptions\\BadRequestException.cs",
+              "RelativeDocumentMoniker": "Application\\Exceptions\\BadRequestException.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Exceptions\\BadRequestException.cs",
+              "RelativeToolTip": "Application\\Exceptions\\BadRequestException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-08T12:59:56.166Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "UserMappingExtensions.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Extensions\\UserMappingExtensions.cs",
               "RelativeDocumentMoniker": "Application\\Extensions\\UserMappingExtensions.cs",
               "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Extensions\\UserMappingExtensions.cs",
               "RelativeToolTip": "Application\\Extensions\\UserMappingExtensions.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAADAzMzMzMwgwBkAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-07T08:02:51.357Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
+              "Title": "ApplicationException.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Exceptions\\ApplicationException.cs",
+              "RelativeDocumentMoniker": "Application\\Exceptions\\ApplicationException.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Exceptions\\ApplicationException.cs",
+              "RelativeToolTip": "Application\\Exceptions\\ApplicationException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-08T12:41:02.335Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ImprovementPlanMappingExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Extensions\\ImprovementPlanMappingExtensions.cs",
+              "RelativeDocumentMoniker": "Application\\Extensions\\ImprovementPlanMappingExtensions.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Extensions\\ImprovementPlanMappingExtensions.cs",
+              "RelativeToolTip": "Application\\Extensions\\ImprovementPlanMappingExtensions.cs",
+              "ViewState": "AgIAAAAAAACYmZmZmZklwB4AAABUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-07T09:14:49.249Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "TeamMemberPerformanceDTO.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\TeamMemberPerformanceDTO.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\TeamMemberPerformanceDTO.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\TeamMemberPerformanceDTO.cs",
+              "RelativeToolTip": "Application\\DTOs\\TeamMemberPerformanceDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T03:01:18.049Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "AssessmentMappingExtensions.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Extensions\\AssessmentMappingExtensions.cs",
               "RelativeDocumentMoniker": "Application\\Extensions\\AssessmentMappingExtensions.cs",
@@ -196,25 +264,11 @@
               "RelativeToolTip": "Application\\Extensions\\AssessmentMappingExtensions.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-07T08:35:45.469Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-07T08:35:45.469Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TeamMemberPerformanceDTO.cs",
-              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\TeamMemberPerformanceDTO.cs",
-              "RelativeDocumentMoniker": "Application\\DTOs\\TeamMemberPerformanceDTO.cs",
-              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\TeamMemberPerformanceDTO.cs",
-              "RelativeToolTip": "Application\\DTOs\\TeamMemberPerformanceDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T03:01:18.049Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "MatrixDbContext.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Context\\MatrixDbContext.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Context\\MatrixDbContext.cs",
@@ -226,7 +280,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "AssessmentResult.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\AssessmentResult.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\AssessmentResult.cs",
@@ -238,7 +292,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "AssessmentBatch.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\AssessmentBatch.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\AssessmentBatch.cs",
@@ -250,7 +304,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "UserResponse.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\UserResponse.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\UserResponse.cs",
@@ -262,7 +316,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 21,
               "Title": "DesignTimeDbContextFactory.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Context\\DesignTimeDbContextFactory.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Context\\DesignTimeDbContextFactory.cs",
@@ -274,7 +328,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Skill-Matrix-2.0\\appsettings.json",
               "RelativeDocumentMoniker": "Skill-Matrix-2.0\\appsettings.json",
@@ -286,7 +340,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "AssignedSkill.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\AssignedSkill.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\AssignedSkill.cs",
@@ -298,7 +352,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 23,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Skill-Matrix-2.0\\appsettings.Development.json",
               "RelativeDocumentMoniker": "Skill-Matrix-2.0\\appsettings.Development.json",
@@ -310,7 +364,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "BaseEntity.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\BaseEntity.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\BaseEntity.cs",
@@ -322,7 +376,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 25,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Skill-Matrix-2.0\\Program.cs",
               "RelativeDocumentMoniker": "Skill-Matrix-2.0\\Program.cs",
@@ -334,7 +388,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 24,
               "Title": "Badge.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\Badge.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Badge.cs",
@@ -346,7 +400,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
               "Title": "AssessmentOptions.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\AssessmentOptions.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\AssessmentOptions.cs",
@@ -358,7 +412,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 28,
               "Title": "RecommendedResource.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\RecommendedResource.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\RecommendedResource.cs",
@@ -370,7 +424,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 29,
               "Title": "ImprovementPlan.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\ImprovementPlan.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\ImprovementPlan.cs",
@@ -382,7 +436,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 27,
               "Title": "ResourseType.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Enum\\ResourseType.cs",
               "RelativeDocumentMoniker": "Domain\\Enum\\ResourseType.cs",
@@ -394,7 +448,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 30,
               "Title": "CareerPath.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\CareerPath.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\CareerPath.cs",
@@ -406,7 +460,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 31,
               "Title": "AssignedCareerPath.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\AssignedCareerPath.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\AssignedCareerPath.cs",
@@ -418,7 +472,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 32,
               "Title": "Skill.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\Skill.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Skill.cs",
@@ -430,7 +484,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 33,
               "Title": "Organization.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\Organization.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Organization.cs",
@@ -442,7 +496,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 34,
               "Title": "AssignedBadge.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\AssignedBadge.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\AssignedBadge.cs",
@@ -454,7 +508,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 35,
               "Title": "AssessmentStatus.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Enum\\AssessmentStatus.cs",
               "RelativeDocumentMoniker": "Domain\\Enum\\AssessmentStatus.cs",
@@ -466,7 +520,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 36,
               "Title": "ProficiencyLevel.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Enum\\ProficiencyLevel.cs",
               "RelativeDocumentMoniker": "Domain\\Enum\\ProficiencyLevel.cs",
@@ -478,7 +532,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 37,
               "Title": "Roles.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Enum\\Roles.cs",
               "RelativeDocumentMoniker": "Domain\\Enum\\Roles.cs",
@@ -492,19 +546,19 @@
         },
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ImprovementPlanDTO.cs",
-              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\ImprovementPlanDTO.cs",
-              "RelativeDocumentMoniker": "Application\\DTOs\\ImprovementPlanDTO.cs",
-              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\ImprovementPlanDTO.cs",
-              "RelativeToolTip": "Application\\DTOs\\ImprovementPlanDTO.cs",
-              "ViewState": "AgIAAAYAAAAAZmZmZmb2vxUAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "NotFoundException.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Exceptions\\NotFoundException.cs",
+              "RelativeDocumentMoniker": "Application\\Exceptions\\NotFoundException.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Exceptions\\NotFoundException.cs",
+              "RelativeToolTip": "Application\\Exceptions\\NotFoundException.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAABvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-07T09:52:41.65Z",
+              "WhenOpened": "2025-11-08T12:52:27.761Z",
               "EditorCaption": ""
             },
             {
@@ -515,46 +569,33 @@
               "RelativeDocumentMoniker": "Application\\DTOs\\AssessmentResultDTO.cs",
               "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\AssessmentResultDTO.cs",
               "RelativeToolTip": "Application\\DTOs\\AssessmentResultDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-25T02:46:22.37Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SkillDTO.cs",
-              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\SkillDTO.cs",
-              "RelativeDocumentMoniker": "Application\\DTOs\\SkillDTO.cs",
-              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\SkillDTO.cs",
-              "RelativeToolTip": "Application\\DTOs\\SkillDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T02:21:34.253Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UserDTO.cs",
-              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\UserDTO.cs",
-              "RelativeDocumentMoniker": "Application\\DTOs\\UserDTO.cs",
-              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\UserDTO.cs",
-              "RelativeToolTip": "Application\\DTOs\\UserDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-24T18:38:48.312Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 8,
+              "Title": "ImprovementPlanDTO.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\ImprovementPlanDTO.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\ImprovementPlanDTO.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\ImprovementPlanDTO.cs",
+              "RelativeToolTip": "Application\\DTOs\\ImprovementPlanDTO.cs",
+              "ViewState": "AgIAAAkAAADQzMzMzMwxwBIAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-07T09:52:41.65Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "AssesmentDTO.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\AssesmentDTO.cs",
               "RelativeDocumentMoniker": "Application\\DTOs\\AssesmentDTO.cs",
               "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\AssesmentDTO.cs",
               "RelativeToolTip": "Application\\DTOs\\AssesmentDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-25T02:26:45.646Z",
               "EditorCaption": ""
@@ -562,6 +603,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 9,
+              "Title": "SkillDTO.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\SkillDTO.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\SkillDTO.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\SkillDTO.cs",
+              "RelativeToolTip": "Application\\DTOs\\SkillDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T02:21:34.253Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "UserDTO.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\UserDTO.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\UserDTO.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\UserDTO.cs",
+              "RelativeToolTip": "Application\\DTOs\\UserDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-24T18:38:48.312Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "Assessment.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\Assessment.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Assessment.cs",
@@ -569,12 +636,11 @@
               "RelativeToolTip": "Domain\\Entities\\Assessment.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T15:24:32.064Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T15:24:32.064Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "TeamMember.cs",
               "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\TeamMember.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\TeamMember.cs",
@@ -582,8 +648,7 @@
               "RelativeToolTip": "Domain\\Entities\\TeamMember.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T18:03:47.61Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-16T18:03:47.61Z"
             }
           ]
         }
