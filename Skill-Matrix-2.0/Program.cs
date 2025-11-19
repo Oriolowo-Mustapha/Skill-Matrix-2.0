@@ -1,3 +1,6 @@
+using Application.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,10 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddDbContext<MatrixDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
-        b => b.MigrationsAssembly("Infrastructure")));
+	options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+		b => b.MigrationsAssembly("Infrastructure")));
+
+builder.Services.AddValidatorsFromAssemblyContaining<AssesmentDTOValidator>();
+
+builder.Services.AddFluentValidationAutoValidation();
+
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
 builder.Services.AddOpenApi();
 
 var app = builder.Build();

@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "BhwWsDxdXEY=",
+  "dgSpecHash": "xLLcn+2RBmw=",
   "success": true,
   "projectFilePath": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Skill-Matrix-2.0\\Skill-Matrix-2.0.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ORIOLOWO\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
+    "C:\\Users\\ORIOLOWO\\.nuget\\packages\\fluentvalidation\\12.1.0\\fluentvalidation.12.1.0.nupkg.sha512",
+    "C:\\Users\\ORIOLOWO\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.1\\fluentvalidation.aspnetcore.11.3.1.nupkg.sha512",
+    "C:\\Users\\ORIOLOWO\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.11.0\\fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
     "C:\\Users\\ORIOLOWO\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\ORIOLOWO\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.10\\microsoft.aspnetcore.openapi.9.0.10.nupkg.sha512",
     "C:\\Users\\ORIOLOWO\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
