@@ -13,8 +13,8 @@ namespace Domain.Entities
 		public AssignedSkill Skill { get; set; } = null!;
 		public int AssessmentBatchId { get; set; }
 		public AssessmentBatch AssessmentBatch { get; set; } = null!;
-		public Guid ImprovementPlanId { get; set; }
-		public ImprovementPlan ImprovementPlan { get; set; } = null!;
+		public Guid? ImprovementPlanId { get; set; }
+		public ImprovementPlan? ImprovementPlan { get; set; }
 		public int Score { get; set; }
 		public int NoOfCorrectAnswers { get; set; }
 		public int NoOfWrongAnswers { get; set; }

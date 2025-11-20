@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MatrixDbContext))]
-    [Migration("20251024182814_First-Migrant")]
-    partial class FirstMigrant
+    [Migration("20251120160827_Second-Commit")]
+    partial class SecondCommit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -417,7 +417,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("AssessmentResultId")
                         .IsUnique();
 
-                    b.ToTable("ImprovementPlan");
+                    b.ToTable("ImprovementPlans");
                 });
 
             modelBuilder.Entity("Domain.Entities.Learner", b =>
@@ -567,7 +567,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ImprovementPlanId");
 
-                    b.ToTable("RecommendedResource");
+                    b.ToTable("RecommendedResources");
                 });
 
             modelBuilder.Entity("Domain.Entities.Skill", b =>

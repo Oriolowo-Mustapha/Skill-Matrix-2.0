@@ -138,3 +138,13 @@ C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Skill-Matrix-2.0\bin\Debug\net9.
 C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Skill-Matrix-2.0\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Skill-Matrix-2.0\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Skill-Matrix-2.0\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Skill-Matrix-2.0\bin\Debug\net9.0\FluentValidation.dll
+C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Skill-Matrix-2.0\bin\Debug\net9.0\FluentValidation.AspNetCore.dll
+C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Skill-Matrix-2.0\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Skill-Matrix-2.0\bin\Debug\net9.0\MediatR.dll
+C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Skill-Matrix-2.0\bin\Debug\net9.0\MediatR.Contracts.dll
+C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Skill-Matrix-2.0\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Skill-Matrix-2.0\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Skill-Matrix-2.0\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Skill-Matrix-2.0\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Skill-Matrix-2.0\obj\Debug\net9.0\Skill-Matrix-2.0.sourcelink.json

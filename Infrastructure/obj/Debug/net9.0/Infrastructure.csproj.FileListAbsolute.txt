@@ -17,3 +17,4 @@ C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Infrastructure\obj\Debug\net9.0\
 C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Infrastructure\obj\Debug\net9.0\Infrastructure.pdb
 C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Infrastructure\obj\Debug\net9.0\Infrastructure.genruntimeconfig.cache
 C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Infrastructure\obj\Debug\net9.0\ref\Infrastructure.dll
+C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Infrastructure\obj\Debug\net9.0\Infrastructure.sourcelink.json

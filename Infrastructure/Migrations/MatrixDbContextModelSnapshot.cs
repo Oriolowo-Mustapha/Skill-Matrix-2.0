@@ -414,7 +414,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("AssessmentResultId")
                         .IsUnique();
 
-                    b.ToTable("ImprovementPlan");
+                    b.ToTable("ImprovementPlans");
                 });
 
             modelBuilder.Entity("Domain.Entities.Learner", b =>
@@ -564,7 +564,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ImprovementPlanId");
 
-                    b.ToTable("RecommendedResource");
+                    b.ToTable("RecommendedResources");
                 });
 
             modelBuilder.Entity("Domain.Entities.Skill", b =>

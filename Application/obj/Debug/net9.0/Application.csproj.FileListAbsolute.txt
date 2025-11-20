@@ -15,3 +15,4 @@ C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Application\obj\Debug\net9.0\ref
 C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Application\obj\Debug\net9.0\Application.pdb
 C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Application\obj\Debug\net9.0\Application.genruntimeconfig.cache
 C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Application\obj\Debug\net9.0\ref\Application.dll
+C:\Users\ORIOLOWO\source\repos\Skill-Matrix-2.0\Application\obj\Debug\net9.0\Application.sourcelink.json

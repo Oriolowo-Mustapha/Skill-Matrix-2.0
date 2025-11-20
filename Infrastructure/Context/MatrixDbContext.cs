@@ -23,6 +23,8 @@ namespace Infrastructure.Context
 		public DbSet<AssignedSkill> AssignedSkills { get; set; }
 		public DbSet<AssignedBadge> AssignedBadges { get; set; }
 		public DbSet<AssignedCareerPath> AssignedCareerPaths { get; set; }
+		public DbSet<ImprovementPlan> ImprovementPlans { get; set; }
+		public DbSet<RecommendedResource> RecommendedResources { get; set; }
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -189,7 +191,6 @@ namespace Infrastructure.Context
 						Role = Domain.Enum.Roles.SuperAdmin,
 						DateJoined = new DateTime(2024, 01, 01, 0, 0, 0, DateTimeKind.Utc)
 					}
-
 				);
 		}
 	}

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigrant : Migration
+    public partial class SecondCommit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -380,7 +380,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ImprovementPlan",
+                name: "ImprovementPlans",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -391,9 +391,9 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ImprovementPlan", x => x.Id);
+                    table.PrimaryKey("PK_ImprovementPlans", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ImprovementPlan_AssessmentResults_AssessmentResultId",
+                        name: "FK_ImprovementPlans_AssessmentResults_AssessmentResultId",
                         column: x => x.AssessmentResultId,
                         principalTable: "AssessmentResults",
                         principalColumn: "Id",
@@ -421,7 +421,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RecommendedResource",
+                name: "RecommendedResources",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -433,11 +433,11 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RecommendedResource", x => x.Id);
+                    table.PrimaryKey("PK_RecommendedResources", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RecommendedResource_ImprovementPlan_ImprovementPlanId",
+                        name: "FK_RecommendedResources_ImprovementPlans_ImprovementPlanId",
                         column: x => x.ImprovementPlanId,
-                        principalTable: "ImprovementPlan",
+                        principalTable: "ImprovementPlans",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -590,8 +590,8 @@ namespace Infrastructure.Migrations
                 column: "TeamMemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ImprovementPlan_AssessmentResultId",
-                table: "ImprovementPlan",
+                name: "IX_ImprovementPlans_AssessmentResultId",
+                table: "ImprovementPlans",
                 column: "AssessmentResultId",
                 unique: true);
 
@@ -614,8 +614,8 @@ namespace Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_RecommendedResource_ImprovementPlanId",
-                table: "RecommendedResource",
+                name: "IX_RecommendedResources_ImprovementPlanId",
+                table: "RecommendedResources",
                 column: "ImprovementPlanId");
 
             migrationBuilder.CreateIndex(
@@ -679,13 +679,13 @@ namespace Infrastructure.Migrations
                 name: "CareerPaths");
 
             migrationBuilder.DropTable(
-                name: "RecommendedResource");
+                name: "RecommendedResources");
 
             migrationBuilder.DropTable(
                 name: "UserResponses");
 
             migrationBuilder.DropTable(
-                name: "ImprovementPlan");
+                name: "ImprovementPlans");
 
             migrationBuilder.DropTable(
                 name: "AssessmentOptions");

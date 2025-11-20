@@ -1,7 +1,9 @@
+using Application.Interfaces.Repository;
 using Application.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Context;
+using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<AssesmentDTOValidator>();
 builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddOpenApi();
 
