@@ -30,9 +30,6 @@ namespace Application.DTOs.Validators
 			RuleFor(x => x.Email)
 				.NotEmpty()
 				.EmailAddress().WithMessage("Invalid email format.");
-			// .MustAsync(BeUniqueEmail).WithMessage("Email is already taken."); // Custom Async Rule
-
-			// Note: Validating 'PasswordHash' as the raw password input from user
 			RuleFor(x => x.PasswordHash)
 				.NotEmpty().WithMessage("Password is required.")
 				.MinimumLength(8).WithMessage("Password must be at least 8 characters.")
@@ -41,15 +38,6 @@ namespace Application.DTOs.Validators
 				.Matches("[0-9]").WithMessage("Password must contain at least one number.")
 				.Matches("[^a-zA-Z0-9]").WithMessage("Password must contain at least one special character.");
 		}
-
-		// Example Custom Async Logic
-		/*
-		private async Task<bool> BeUniqueEmail(string email, CancellationToken token)
-		{
-			var user = await _learnerRepository.GetByEmailAsync(email);
-			return user == null;
-		}
-		*/
 	}
 
 	public class RegisterTeamMemberRequestDTOValidator : AbstractValidator<RegisterTeamMemberRequestDTO>

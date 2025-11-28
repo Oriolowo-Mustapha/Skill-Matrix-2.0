@@ -8,6 +8,7 @@ namespace Application.Interfaces.Repository
 		Task<T?> GetByIdAsync(Guid id);
 		Task<IReadOnlyList<T>> GetAllAsync();
 		Task<T> AddAsync(T entity);
+		Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entity);
 		Task UpdateAsync(T entity);
 		Task DeleteAsync(T entity);
 		Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);

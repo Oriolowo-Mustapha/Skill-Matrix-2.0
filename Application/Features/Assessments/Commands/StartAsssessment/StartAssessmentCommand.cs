@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Application.Features.Assessments.Commands.StartAsssessment
 {
-	public record StartAssessmentCommand(AssesmentDTO AssesmentDTO, Guid UserId) : IRequest<StartAssesmentResponseDTO>;
+	public record StartAssessmentCommand(AssesmentDTO Dto, Guid UserId, string UserRole) : IRequest<StartAssesmentResponseDTO>;
 }

@@ -9,6 +9,7 @@ namespace Application.Interfaces.Repository
 		IAssignedSkillRepository AssignedSkills { get; }
 		IImprovementPlanRepository ImprovementPlans { get; }
 		ISkillRepository Skills { get; }
+		IUserResponseRepository UserResponses { get; }
 
 		ILearnerRepository Learners { get; }
 		ITeamMemberRepository TeamMembers { get; }

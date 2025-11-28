@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.Exceptions;
 using Application.Extensions;
 using Application.Features.Assessments.Commands.StartAsssessment;
 using Application.Interfaces.Repository;
@@ -22,29 +23,43 @@ namespace Application.Features.Assessments.Commands.StartAssessment
 
 		public async Task<StartAssesmentResponseDTO> Handle(StartAssessmentCommand request, CancellationToken cancellationToken)
 		{
-			var assignedSkill = await _unitOfWork.AssignedSkills.GetByIdAsync(request.AssesmentDTO.AssignedSkillId);
+			var assignedSkill = await _unitOfWork.AssignedSkills.GetByUserAndSkillId(request.UserId, request.Dto.AssignedSkillId);
 
 			if (assignedSkill == null)
 			{
-				throw new KeyNotFoundException($"Assigned Skill with ID {request.AssesmentDTO.AssignedSkillId} not found.");
+				throw new NotFoundException("Assigned Skill", request.Dto.AssignedSkillId);
 			}
 
-			var questions = await _aiService.GeneratAssessmentQuestionsAsync(assignedSkill.Name, 10, assignedSkill.ProficiencyLevel.ToString());
+			var questions = await _aiService.GeneratAssessmentQuestionsAsync(
+				assignedSkill.Name,
+				10,
+				assignedSkill.ProficiencyLevel.ToString()
+			);
 
 			var batch = new AssessmentBatch
 			{
-				LearnerID = request.UserId,
 				SkillId = assignedSkill.SkillId,
 				AssessmentStatus = AssessmentStatus.InProgress,
 				DateCreated = DateTime.UtcNow,
 				Assessments = questions.ToList()
 			};
 
-			//await _unitOfWork.AssessmentBatches.AddAsync(batch);
+			if (request.UserRole == Roles.Learner.ToString())
+			{
+				batch.LearnerID = request.UserId;
+			}
+			else if (request.UserRole == Roles.Team_Members.ToString() || request.UserRole == "TeamMember")
+			{
+				batch.TeamMemberID = request.UserId;
+			}
+			else
+			{
+				throw new BadRequestException("Only Learners and Team Members can take assessments.");
+			}
+			await _unitOfWork.AssessmentBatches.AddAsync(batch);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			// 5. Map to Response DTO
-			return batch.ToDTO(); // Using the Extension method we defined earlier!
+			return batch.ToDTO();
 		}
 	}
 }

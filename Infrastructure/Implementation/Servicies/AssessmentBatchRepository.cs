@@ -24,5 +24,13 @@ namespace Infrastructure.Implementation.Servicies
 				.ThenInclude(a => a.AssessmentOptions)
 				.FirstOrDefaultAsync(ab => ab.Id == batchId);
 		}
+		public async Task<AssessmentBatch?> GetBatchForGradingAsync(int batchId)
+		{
+			return await _context.AssessmentBatches
+				.Include(ab => ab.AssignedSkill)
+				.Include(ab => ab.Assessments)
+					.ThenInclude(a => a.AssessmentOptions)
+				.FirstOrDefaultAsync(ab => ab.Id == batchId);
+		}
 	}
 }

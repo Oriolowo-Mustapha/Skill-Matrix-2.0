@@ -6,5 +6,6 @@ namespace Application.Interfaces.Repository
 	{
 		Task<AssessmentBatch?> GetBatchWithQuestionsAsync(int batchId);
 		Task<AssessmentBatch?> GetBatchForGrading(int batchId);
+		Task<AssessmentBatch?> GetBatchForGradingAsync(int batchId);
 	}
 }

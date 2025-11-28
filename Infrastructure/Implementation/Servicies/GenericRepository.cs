@@ -44,19 +44,26 @@ namespace Infrastructure.Implementation.Servicies
 			await Task.CompletedTask;
 		}
 
-		public virtual async Task DeleteAsync(T entity)
+		public virtual Task DeleteAsync(T entity)
 		{
 			if (_context.Entry(entity).State == EntityState.Detached)
 			{
 				_dbSet.Attach(entity);
 			}
 			_dbSet.Remove(entity);
-			await Task.CompletedTask;
+			return Task.CompletedTask;
 		}
 
 		public virtual async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
 		{
 			return await _dbSet.AnyAsync(predicate);
+		}
+
+
+		public virtual async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities)
+		{
+			await _dbSet.AddRangeAsync(entities);
+			return entities;
 		}
 	}
 }
