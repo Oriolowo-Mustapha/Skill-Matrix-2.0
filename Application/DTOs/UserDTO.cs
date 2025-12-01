@@ -69,4 +69,11 @@
 		public string? ProfilePictureUrl { get; set; }
 		public string PasswordHash { get; set; } = string.Empty;
 	}
+
+	public record UpdateUserRequestDTO
+	{
+		public string FirstName { get; set; } = string.Empty;
+		public string LastName { get; set; } = string.Empty;
+		public string? ProfilePictureUrl { get; set; }
+	}
 }
