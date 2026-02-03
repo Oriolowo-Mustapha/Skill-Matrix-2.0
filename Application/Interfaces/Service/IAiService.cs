@@ -4,7 +4,7 @@ namespace Application.Interfaces.Service
 {
 	public interface IAiService
 	{
-		Task<List<Assessment>> GeneratAssessmentQuestionsAsync(string skillName, int count, string proficencyLevel);
-		Task<ImprovementPlan> GetImprovementPlanAsync(AssessmentResult result);
+		Task<IEnumerable<Assessment>> GenerateAssessmentQuestionsAsync(string skillName, string proficencyLevel, int count);
+		Task<ImprovementPlan> GenerateImprovementPlanAsync(AssessmentResult result);
 	}
 }

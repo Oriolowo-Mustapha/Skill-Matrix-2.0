@@ -51,7 +51,7 @@ namespace Application.Features.Assessments.Commands.ImprovementPlans
 				throw new ForbiddenException("You are not authorized to access this assessment result.");
 			}
 
-			var newPlan = await _aiService.GetImprovementPlanAsync(assessmentResult);
+			var newPlan = await _aiService.GenerateImprovementPlanAsync(assessmentResult);
 
 			newPlan.AssessmentResultId = request.AssessmentResultId;
 

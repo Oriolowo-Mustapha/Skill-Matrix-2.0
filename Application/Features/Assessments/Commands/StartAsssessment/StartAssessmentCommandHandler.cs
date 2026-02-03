@@ -30,10 +30,10 @@ namespace Application.Features.Assessments.Commands.StartAssessment
 				throw new NotFoundException("Assigned Skill", request.Dto.AssignedSkillId);
 			}
 
-			var questions = await _aiService.GeneratAssessmentQuestionsAsync(
+			var questions = await _aiService.GenerateAssessmentQuestionsAsync(
 				assignedSkill.Name,
-				10,
-				assignedSkill.ProficiencyLevel.ToString()
+				assignedSkill.ProficiencyLevel.ToString(),
+				10
 			);
 
 			var batch = new AssessmentBatch

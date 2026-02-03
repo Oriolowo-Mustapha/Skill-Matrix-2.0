@@ -1,6 +1,7 @@
 ﻿using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
+using Application.Interfaces.Service;
 using Domain.Entities;
 using Domain.Enum;
 using MediatR;
@@ -10,10 +11,12 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 	public class SubmitAssessmentCommandHandler : IRequestHandler<SubmitAssessmentCommand, AssessmentResultDTO>
 	{
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IAiService _aiService;
 
-		public SubmitAssessmentCommandHandler(IUnitOfWork unitOfWork)
+		public SubmitAssessmentCommandHandler(IUnitOfWork unitOfWork, IAiService aiService)
 		{
 			_unitOfWork = unitOfWork;
+			_aiService = aiService;
 		}
 
 		public async Task<AssessmentResultDTO> Handle(SubmitAssessmentCommand request, CancellationToken cancellationToken)
@@ -76,7 +79,8 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				NoOfWrongAnswers = totalQuestions - correctAnswers,
 				Score = score,
 				ProficiencyLevel = batch.AssignedSkill.ProficiencyLevel,
-				DateCreated = DateTime.UtcNow
+				DateCreated = DateTime.UtcNow,
+				Skill = batch.AssignedSkill
 			};
 
 			if (request.UserRole == Roles.Learner.ToString())
@@ -91,6 +95,14 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 			await _unitOfWork.AssessmentBatches.UpdateAsync(batch);
 
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+			// Generate Improvement Plan
+			var improvementPlan = await _aiService.GenerateImprovementPlanAsync(result);
+			improvementPlan.AssessmentResultId = result.Id;
+			await _unitOfWork.ImprovementPlans.AddAsync(improvementPlan);
+			
+			await _unitOfWork.SaveChangesAsync(cancellationToken);
+
 
 			return new AssessmentResultDTO
 			{
