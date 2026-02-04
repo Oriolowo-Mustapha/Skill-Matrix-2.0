@@ -23,6 +23,7 @@ namespace Application.Features.Assessments.Commands.StartAssessment
 
 		public async Task<StartAssesmentResponseDTO> Handle(StartAssessmentCommand request, CancellationToken cancellationToken)
 		{
+
 			var assignedSkill = await _unitOfWork.AssignedSkills.GetByUserAndSkillId(request.UserId, request.Dto.AssignedSkillId);
 
 			if (assignedSkill == null)
@@ -56,6 +57,8 @@ namespace Application.Features.Assessments.Commands.StartAssessment
 			{
 				throw new BadRequestException("Only Learners and Team Members can take assessments.");
 			}
+
+
 			await _unitOfWork.AssessmentBatches.AddAsync(batch);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 

@@ -8,7 +8,7 @@ namespace Domain.Entities
 		public string LastName { get; set; } = string.Empty;
 		public string UserName { get; set; } = string.Empty;
 		public string Email { get; set; } = string.Empty;
-		public Roles Role { get; set; } = Roles.Team_Members;
+		public string Role { get; set; } = Roles.Team_Members.ToString();
 		public ProficiencyLevel ProficiencyLevel { get; set; } = ProficiencyLevel.Novice;
 		public string? ProfilePictureUrl { get; set; }
 		public string PasswordHash { get; set; } = string.Empty;

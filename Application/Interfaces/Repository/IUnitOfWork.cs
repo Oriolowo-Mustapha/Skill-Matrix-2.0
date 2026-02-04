@@ -11,9 +11,9 @@ namespace Application.Interfaces.Repository
 		ISkillRepository Skills { get; }
 		IUserResponseRepository UserResponses { get; }
 
+		IManagerRepository ManagerRepository { get; }
 		ILearnerRepository Learners { get; }
 		ITeamMemberRepository TeamMembers { get; }
-		IGenericRepository<Manager> Managers { get; }
 		IGenericRepository<Organization> Organizations { get; }
 
 		IGenericRepository<Badge> Badges { get; }

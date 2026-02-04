@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.Repository;
 using Domain.Entities;
 using Infrastructure.Context;
+using Infrastructure.Implementation.Repositories;
 using Infrastructure.Implementation.Servicies;
 
 namespace Infrastructure.Repository
@@ -14,10 +15,11 @@ namespace Infrastructure.Repository
 		private IGenericRepository<AssessmentResult>? _assessmentResults;
 		private IAssignedSkillRepository? _assignedSkills;
 		private IImprovementPlanRepository? _improvementPlans;
+		private IUserResponseRepository? _userResponseRepository;
 		private ISkillRepository? _skills;
 		private ILearnerRepository? _learners;
 		private ITeamMemberRepository? _teamMembers;
-		private IGenericRepository<Manager>? _managers;
+		private IManagerRepository? _managers;
 		private IGenericRepository<Organization>? _organizations;
 		private IGenericRepository<Badge>? _badges;
 		private IGenericRepository<CareerPath>? _careerPaths;
@@ -48,8 +50,8 @@ namespace Infrastructure.Repository
 		public ITeamMemberRepository TeamMembers =>
 			_teamMembers ??= new TeamMemberRepository(_context);
 
-		public IGenericRepository<Manager> Managers =>
-			_managers ??= new GenericRepository<Manager>(_context);
+		public IManagerRepository ManagerRepository =>
+			_managers ??= new ManagerRepository(_context);
 
 		public IGenericRepository<Organization> Organizations =>
 			_organizations ??= new GenericRepository<Organization>(_context);
@@ -59,6 +61,9 @@ namespace Infrastructure.Repository
 
 		public IGenericRepository<CareerPath> CareerPaths =>
 			_careerPaths ??= new GenericRepository<CareerPath>(_context);
+
+		public IUserResponseRepository UserResponses =>
+			_userResponseRepository ??= new UserResponseRepository(_context);
 
 		public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 		{

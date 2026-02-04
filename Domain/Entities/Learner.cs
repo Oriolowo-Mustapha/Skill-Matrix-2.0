@@ -11,7 +11,7 @@ namespace Domain.Entities
 		public string? ProfilePictureUrl { get; set; }
 		public string PasswordHash { get; set; } = string.Empty;
 		public ProficiencyLevel ProficiencyLevel { get; set; } = ProficiencyLevel.Novice;
-		public Roles Role { get; set; } = Roles.Learner;
+		public string Role { get; set; } = Roles.Learner.ToString();
 		public List<UserResponse> UserResponses { get; set; } = new List<UserResponse>();
 		public List<AssessmentResult> AssessmentResults { get; set; } = new List<AssessmentResult>();
 		public List<AssessmentBatch> AssessmentBatches { get; set; } = new List<AssessmentBatch>();

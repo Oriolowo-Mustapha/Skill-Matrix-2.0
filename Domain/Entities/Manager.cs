@@ -9,7 +9,7 @@ namespace Domain.Entities
 		public string UserName { get; set; } = string.Empty;
 		public string Email { get; set; } = string.Empty;
 		public string? ProfilePictureUrl { get; set; }
-		public Roles Roles { get; set; } = Roles.Manager;
+		public string Role { get; set; } = Roles.Manager.ToString();
 		public string PasswordHash { get; set; } = string.Empty;
 		public Guid OrganizationId { get; set; }
 		public Organization Organization { get; set; } = null!;

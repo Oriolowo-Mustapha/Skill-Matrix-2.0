@@ -1,4 +1,6 @@
-﻿namespace Application.DTOs
+﻿using Domain.Enum;
+
+namespace Application.DTOs
 {
 	public record UserDTO
 	{
@@ -30,7 +32,7 @@
 		public string LastName { get; set; } = string.Empty;
 		public string Email { get; set; } = string.Empty;
 		public string UserName { get; set; } = string.Empty;
-		public string Role { get; set; } = string.Empty;
+		public string Role { get; set; } = Roles.Learner.ToString();
 		public string? ProfilePicUrl { get; set; }
 		public string PasswordHash { get; set; } = string.Empty;
 	}
@@ -41,7 +43,7 @@
 		public string LastName { get; set; } = string.Empty;
 		public string Email { get; set; } = string.Empty;
 		public string UserName { get; set; } = string.Empty;
-		public string Role { get; set; } = string.Empty;
+		public string Role { get; set; } = Roles.Team_Members.ToString();
 		public string? ProfilePicUrl { get; set; }
 		public string PasswordHash { get; set; } = string.Empty;
 	}
@@ -50,6 +52,7 @@
 	{
 		public string Name { get; set; } = string.Empty;
 		public string? ProfilePictureUrl { get; set; }
+		public string Description { get; set; } = string.Empty;
 
 	}
 

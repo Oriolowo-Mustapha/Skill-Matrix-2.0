@@ -188,7 +188,7 @@ namespace Infrastructure.Context
 						Email = "superAdmin@gmail.com",
 						UserName = "Superadmin",
 						PasswordHash = "$2a$12$EGOawab0.yM2V9ZqlNwuxuDRiPQ1nsIM9M4rsfWwqzNzy1Y8qBl1u",
-						Role = Domain.Enum.Roles.SuperAdmin,
+						Role = Domain.Enum.Roles.SuperAdmin.ToString(),
 						DateJoined = new DateTime(2024, 01, 01, 0, 0, 0, DateTimeKind.Utc)
 					}
 				);

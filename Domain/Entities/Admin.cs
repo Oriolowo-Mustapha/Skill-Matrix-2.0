@@ -10,7 +10,7 @@ namespace Domain.Entities
 		public string Email { get; set; } = string.Empty;
 		public string UserName { get; set; } = string.Empty;
 		public string PasswordHash { get; set; } = string.Empty;
-		public Roles Role { get; set; }
+		public string Role { get; set; } = Roles.Admin.ToString();
 		public DateTime DateJoined { get; set; }
 	}
 }
