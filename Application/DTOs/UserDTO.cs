@@ -37,32 +37,6 @@ namespace Application.DTOs
 		public string PasswordHash { get; set; } = string.Empty;
 	}
 
-	public record RegisterTeamMemberRequestDTO
-	{
-		public string FirstName { get; set; } = string.Empty;
-		public string LastName { get; set; } = string.Empty;
-		public string Email { get; set; } = string.Empty;
-		public string UserName { get; set; } = string.Empty;
-		public string Role { get; set; } = Roles.Team_Members.ToString();
-		public string? ProfilePicUrl { get; set; }
-		public string PasswordHash { get; set; } = string.Empty;
-	}
-
-	public record OrganizationDTO
-	{
-		public string Name { get; set; } = string.Empty;
-		public string? ProfilePictureUrl { get; set; }
-		public string Description { get; set; } = string.Empty;
-
-	}
-
-	public record RegisterOrganizationRequestDTO
-	{
-		public string Name { get; set; } = string.Empty;
-		public string? ProfilePictureUrl { get; set; }
-
-	}
-
 	public record RegisterManagerRequestDTO
 	{
 		public string FirstName { get; set; } = string.Empty;

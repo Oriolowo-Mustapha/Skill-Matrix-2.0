@@ -37,11 +37,10 @@ namespace Infrastructure.Context
 			modelBuilder.Entity<TeamMember>().HasIndex(t => t.Email).IsUnique();
 
 			modelBuilder.Entity<Organization>()
-				.HasOne(o => o.Manager)
-				.WithOne(m => m.Organization)
-				.HasForeignKey<Manager>(m => m.OrganizationId)
-				.OnDelete(DeleteBehavior.Cascade);
-
+			    .HasMany(o => o.Managers) // An Organization has many Managers
+			    .WithOne(m => m.Organization) // A Manager has one Organization
+			    .HasForeignKey(m => m.OrganizationId) // The foreign key is on the Manager entity
+			    .OnDelete(DeleteBehavior.Cascade); // Deleting an org will delete its managers
 			modelBuilder.Entity<Manager>()
 				.HasMany(m => m.TeamMembers)
 				.WithOne(t => t.Manager)

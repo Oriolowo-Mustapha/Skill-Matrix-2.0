@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Exceptions;
+using Application.Extensions;
 using Application.Interfaces.Repository;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -14,18 +15,61 @@ namespace Application.Features.Auth.Commands.Login
 	public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponseDTO>
 	{
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IConfiguration _configuration;
+
+		public LoginCommandHandler(IUnitOfWork unitOfWork, IConfiguration configuration)
+		{
+			_unitOfWork = unitOfWork;
+			_configuration = configuration;
+		}
 
 		public async Task<LoginResponseDTO> Handle(LoginCommand request, CancellationToken cancellationToken)
 		{
-			var Learner = await _unitOfWork.Learners.GetByEmailAsync(request.req.Email);
-			var TeamMember = await _unitOfWork.TeamMembers.GetByEmailAsync(request.req.Email);
-			var Manager = await _unitOfWork.ManagerRepository.GetByEmailAsync(request.req.Email);
+			// A common user interface or base class would be better, but this works for now.
+			UserDTO userDto = null;
+			string passwordHash = null;
+			List<string> roles = new List<string>();
 
-			if (!VerifyPassword(request.req.Password, Learner.PasswordHash) || !VerifyPassword(request.req.Password, TeamMember.PasswordHash))
+			var learner = await _unitOfWork.Learners.GetByEmailAsync(request.req.Email);
+			if (learner != null)
 			{
-				throw new BadRequestException("Invalid Email or Password");
+				userDto = learner.ToDto();
+				passwordHash = learner.PasswordHash;
+				roles.Add(learner.Role);
 			}
-			return null;
+			else
+			{
+				var teamMember = await _unitOfWork.TeamMembers.GetByEmailAsync(request.req.Email);
+				if (teamMember != null)
+				{
+					userDto = teamMember.ToDto();
+					passwordHash = teamMember.PasswordHash;
+					roles.Add(teamMember.Role);
+				}
+				else
+				{
+					var manager = await _unitOfWork.ManagerRepository.GetByEmailAsync(request.req.Email);
+					if (manager != null)
+					{
+						userDto = manager.ToDto();
+						passwordHash = manager.PasswordHash;
+						roles.Add(manager.Role.ToString());
+					}
+				}
+			}
+
+			if (userDto == null || !VerifyPassword(request.req.Password, passwordHash))
+			{
+				throw new UnauthorizedException("Invalid email or password.");
+			}
+
+			var token = GenerateJwtToken(userDto.Id.ToString(), userDto.Email, roles, _configuration);
+
+			return new LoginResponseDTO
+			{
+				Token = token,
+				User = userDto
+			};
 		}
 
 
@@ -71,7 +115,5 @@ namespace Application.Features.Auth.Commands.Login
 
 			return new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler().WriteToken(token);
 		}
-
-
 	}
 }
