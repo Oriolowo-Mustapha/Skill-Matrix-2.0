@@ -42,5 +42,10 @@ namespace Application.Extensions
 				ResourseType = resource.ResourseType.ToString()
 			};
 		}
+
+		public static List<ImprovementPlanDTO> ToImprovementPlanDTOList(this IEnumerable<ImprovementPlan> plans)
+		{
+			return plans.Select(p => p.ToDto()).ToList();
+		}
 	}
 }

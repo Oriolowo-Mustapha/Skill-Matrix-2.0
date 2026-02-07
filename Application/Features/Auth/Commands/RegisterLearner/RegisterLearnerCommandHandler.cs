@@ -13,7 +13,7 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IEmailService _emailService;
 
-		public RegisterLearnerCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService) // Modified
+		public RegisterLearnerCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService)
 		{
 			_unitOfWork = unitOfWork;
 			_emailService = emailService;
@@ -44,7 +44,22 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
 			var subject = "Welcome to Skill Matrix!";
-			var body = $"Hello {learner.FirstName},\n\nWelcome to Skill Matrix. We are excited to have you on board!\n\nBest regards,\nThe Skill Matrix Team";
+			var body = $"""
+				Dear {learner.FirstName},
+
+				Welcome to Skill Matrix 2.0! We are excited to have you on board.
+
+				Skill Matrix 2.0 is a platform designed to help you track and develop your professional skills.
+
+				To get started, please log in with your registered email and explore the available skills and assessments.
+
+				If you have any questions, please don't hesitate to reach out to our support team.
+
+				We look forward to seeing your progress!
+
+				Best regards,
+				The Skill Matrix 2.0 Team
+				""";
 			await _emailService.SendEmailAsync(learner.Email, subject, body);
 
 			return learner.ToDto();

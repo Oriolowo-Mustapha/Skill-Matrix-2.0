@@ -1,6 +1,7 @@
 ﻿using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
+using Application.Interfaces.Service;
 using Domain.Entities;
 using MediatR;
 
@@ -9,10 +10,12 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 	public class CreateTeamMemberCommandHandler : IRequestHandler<CreateTeamMemberCommand, TeamMemberDTO>
 	{
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IEmailService _emailService;
 
-		public CreateTeamMemberCommandHandler(IUnitOfWork unitOfWork)
+		public CreateTeamMemberCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService)
 		{
 			_unitOfWork = unitOfWork;
+			_emailService = emailService;
 		}
 		public async Task<TeamMemberDTO> Handle(CreateTeamMemberCommand request, CancellationToken cancellationToken)
 		{
@@ -62,6 +65,26 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 				ManagerId = newTeamMember.ManagerId
 			};
 
+			var subject = $"You're Invited to Skill Matrix 2.0 - Join {getOrganization.Name}!";
+			var body = $"""
+				Dear {newTeamMember.UserName},
+
+				You have been invited by {getManager.UserName} to join {getOrganization.Name} on Skill Matrix 2.0.
+
+				Skill Matrix 2.0 is a platform designed to help you track and develop your professional skills.
+
+				To activate your account and set up your password, please click on the following link:
+				[Activation Link]
+
+				If you have any questions, please contact your manager, {getManager.UserName}, or our support team.
+
+				We look forward to seeing your progress!
+
+				Best regards,
+				The Skill Matrix 2.0 Team
+				""";
+
+			await _emailService.SendEmailAsync(newTeamMember.Email, subject, body);
 			return toDTO;
 		}
 

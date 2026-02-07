@@ -1,7 +1,6 @@
-﻿using Application.DTOs;
+using Application.DTOs;
 using Application.Exceptions;
 using Application.Extensions;
-using Application.Features.Assessments.Commands.StartAsssessment;
 using Application.Interfaces.Repository;
 using Application.Interfaces.Service;
 using Domain.Entities;
@@ -10,7 +9,7 @@ using MediatR;
 
 namespace Application.Features.Assessments.Commands.StartAssessment
 {
-	public class StartAssessmentCommandHandler : IRequestHandler<StartAssessmentCommand, StartAssesmentResponseDTO>
+	public class StartAssessmentCommandHandler : IRequestHandler<StartAssessmentCommand, StartAssessmentResponseDTO>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IAiService _aiService;

@@ -1,7 +1,20 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{087A9487-DB17-4842-814F-3872ECAB2703}|Skill-Matrix-2.0\\Skill-Matrix-2.0.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\skill-matrix-2.0\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{087A9487-DB17-4842-814F-3872ECAB2703}|Skill-Matrix-2.0\\Skill-Matrix-2.0.csproj|solutionrelative:skill-matrix-2.0\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\validators\\authvalidators.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\validators\\authvalidators.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\extensions\\usermappingextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\extensions\\usermappingextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +22,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Skill-Matrix-2.0\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Skill-Matrix-2.0\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Skill-Matrix-2.0\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Skill-Matrix-2.0\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAAADYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-07T10:38:50.704Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthValidators.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Validators\\AuthValidators.cs",
+              "RelativeDocumentMoniker": "Application\\Validators\\AuthValidators.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Validators\\AuthValidators.cs",
+              "RelativeToolTip": "Application\\Validators\\AuthValidators.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAAAEgAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-07T10:37:21.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserMappingExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Extensions\\UserMappingExtensions.cs",
+              "RelativeDocumentMoniker": "Application\\Extensions\\UserMappingExtensions.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Extensions\\UserMappingExtensions.cs",
+              "RelativeToolTip": "Application\\Extensions\\UserMappingExtensions.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACsAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-07T10:37:06.187Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",

@@ -1,6 +1,7 @@
 using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
+using Application.Interfaces.Service;
 using Domain.Entities;
 using MediatR;
 
@@ -9,10 +10,12 @@ namespace Application.Features.Auth.Commands.RegisterOrganization
 	public class RegisterOrganizationCommandHandler : IRequestHandler<RegisterOrganizationCommand, OrganizationDTO>
 	{
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IEmailService _emailService;
 
-		public RegisterOrganizationCommandHandler(IUnitOfWork unitOfWork)
+		public RegisterOrganizationCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService)
 		{
 			_unitOfWork = unitOfWork;
+			_emailService = emailService;
 		}
 
 		public async Task<OrganizationDTO> Handle(RegisterOrganizationCommand command, CancellationToken cancellationToken)
@@ -53,6 +56,11 @@ namespace Application.Features.Auth.Commands.RegisterOrganization
 			await _unitOfWork.ManagerRepository.AddAsync(newManager);
 
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+			var subject = $"Welcome to Skill Matrix 2.0 - {newOrganization.Name}!";
+			var body = $"  Dear {newManager.UserName},\r\n\r\nWelcome to Skill Matrix 2.0! Your organization, {newOrganization.Name}, has been\r\nsuccessfully registered.\r\n\r\nSkill Matrix 2.0 helps you assess and track the skills of your team members,\r\n identify areas for improvement, and foster professional growth.\r\n\r\n To get started, you can log in using your registered email and password.\r\n  \r\n If you have any questions or need assistance, please do not hesitate to conta\r\n our support team.\r\n\r\n Best regards,\r\n  The Skill Matrix 2.0 Team";
+
+			await _emailService.SendEmailAsync(newManager.Email, subject, body);
 
 			return new OrganizationDTO
 			{

@@ -17,6 +17,21 @@ namespace Application.Extensions
 			};
 		}
 
+		public static SkillDTO ToDTO(this Domain.Entities.Skill skill)
+		{
+			return new new SkillDTO
+			{
+				Id = skill.Id,
+				Name = skill.Name,
+				Category = skill.Category,
+			};
+		}
+
+		public static List<SkillDTO> ToSkillDTOList(this IEnumerable<Domain.Entities.Skill> skills)
+		{
+			return skills.Select(s => s.ToDTO()).ToList();
+		}
+
 
 		public static AssessmentOptionDTO ToDTO(this AssessmentOptions option)
 		{
@@ -37,9 +52,9 @@ namespace Application.Extensions
 			};
 		}
 
-		public static StartAssesmentResponseDTO ToDTO(this AssessmentBatch batch)
+		public static StartAssessmentResponseDTO ToDTO(this AssessmentBatch batch)
 		{
-			return new StartAssesmentResponseDTO
+			return new StartAssessmentResponseDTO
 			{
 				AssessmentBatchId = batch.Id,
 				Questions = batch.Assessments.Select(a => a.ToDTO()).ToList()
@@ -53,6 +68,25 @@ namespace Application.Extensions
 				AssessmentQuestionId = answer.AssessmentQuestionId,
 				SelectedOptionId = answer.SelectedOptionId
 			};
+		}
+
+		public static AssessmentBatchDTO ToDTO(this AssessmentBatch batch)
+		{
+			return new AssessmentBatchDTO
+			{
+				Id = batch.Id,
+				SkillId = batch.SkillId,
+				LearnerID = batch.LearnerID,
+				TeamMemberID = batch.TeamMemberID,
+				AssessmentStatus = batch.AssessmentStatus,
+				DateCreated = batch.DateCreated,
+				Assessments = batch.Assessments?.Select(a => a.ToDTO()).ToList() // Map individual assessments
+			};
+		}
+
+		public static List<AssessmentBatchDTO> ToAssessmentBatchDTOList(this IEnumerable<AssessmentBatch> batches)
+		{
+			return batches.Select(b => b.ToDTO()).ToList();
 		}
 	}
 }
