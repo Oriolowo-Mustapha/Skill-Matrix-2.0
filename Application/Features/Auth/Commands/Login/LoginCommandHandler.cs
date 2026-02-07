@@ -25,9 +25,8 @@ namespace Application.Features.Auth.Commands.Login
 
 		public async Task<LoginResponseDTO> Handle(LoginCommand request, CancellationToken cancellationToken)
 		{
-			// A common user interface or base class would be better, but this works for now.
-			UserDTO userDto = null;
-			string passwordHash = null;
+			UserDTO? userDto = null;
+			string? passwordHash = null;
 			List<string> roles = new List<string>();
 
 			var learner = await _unitOfWork.Learners.GetByEmailAsync(request.req.Email);
@@ -73,7 +72,7 @@ namespace Application.Features.Auth.Commands.Login
 		}
 
 
-		private bool VerifyPassword(string password, string hashedPassword)
+		private bool VerifyPassword(string password, string? hashedPassword)
 		{
 			if (string.IsNullOrEmpty(hashedPassword))
 			{
@@ -94,11 +93,11 @@ namespace Application.Features.Auth.Commands.Login
 
 			foreach (var role in roles)
 			{
-				claims.Add(new Claim(ClaimTypes.Role, role));
+				claims.Add(new Claim(ClaimTypes.Role, role));		
 			}
 
 			var key = new SymmetricSecurityKey(
-				Encoding.UTF8.GetBytes(configuration["Jwt:Key"])
+				Encoding.UTF8.GetBytes(configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key is not configured."))
 			);
 
 			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -108,12 +107,12 @@ namespace Application.Features.Auth.Commands.Login
 				audience: configuration["Jwt:Audience"],
 				claims: claims,
 				expires: DateTime.UtcNow.AddMinutes(
-					int.Parse(configuration["Jwt:ExpiryMinutes"])
+					int.Parse(configuration["Jwt:ExpiryMinutes"] ?? "60")
 				),
 				signingCredentials: creds
 			);
 
-			return new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler().WriteToken(token);
+			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
 	}
 }

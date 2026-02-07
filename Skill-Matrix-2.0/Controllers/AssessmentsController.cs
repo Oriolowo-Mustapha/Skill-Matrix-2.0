@@ -24,8 +24,10 @@ namespace Skill_Matrix_2_0.Controllers
 		[HttpPost("start")]
 		public async Task<IActionResult> StartAssessment([FromBody] AssesmentDTO assesmentDto)
 		{
-			var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-			var userRole = User.FindFirstValue(ClaimTypes.Role);
+			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
+				?? throw new UnauthorizedAccessException("User ID claim not found.");
+			var userId = Guid.Parse(userIdClaim);
+			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
 
 			var command = new StartAssessmentCommand(assesmentDto, userId, userRole);
 			var result = await _mediator.Send(command);
@@ -35,8 +37,10 @@ namespace Skill_Matrix_2_0.Controllers
 		[HttpPost("submit")]
 		public async Task<IActionResult> SubmitAssessment([FromBody] SubmitAssessmentRequestDTO submitDto)
 		{
-			var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-			var userRole = User.FindFirstValue(ClaimTypes.Role);
+			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
+				?? throw new UnauthorizedAccessException("User ID claim not found.");
+			var userId = Guid.Parse(userIdClaim);
+			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
 
 			var command = new SubmitAssessmentCommand(submitDto, userId, userRole);
 			var result = await _mediator.Send(command);
@@ -46,7 +50,9 @@ namespace Skill_Matrix_2_0.Controllers
 		[HttpGet("results/{id}")]
 		public async Task<IActionResult> GetAssessmentResult(Guid id)
 		{
-			var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
+				?? throw new UnauthorizedAccessException("User ID claim not found.");
+			var userId = Guid.Parse(userIdClaim);
 
 			var query = new GetAssessmentResultQuery(id, userId);
 			var result = await _mediator.Send(query);

@@ -41,7 +41,7 @@ namespace Application.Extensions
 				Email = manager.Email,
 				FirstName = manager.FirstName,
 				LastName = manager.LastName,
-				Role = manager.Roles.ToString(),
+				Role = manager.Role.ToString(),
 				UserName = manager.UserName,
 				ProfilePicUrl = manager.ProfilePictureUrl
 			};

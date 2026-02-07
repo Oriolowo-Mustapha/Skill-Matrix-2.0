@@ -49,7 +49,7 @@ namespace Application.DTOs.Validators
 			RuleFor(x => x.UserName).NotEmpty();
 			RuleFor(x => x.Email).NotEmpty().EmailAddress();
 
-			RuleFor(x => x.PasswordHash)
+			RuleFor(x => x.Password)
 				.NotEmpty()
 				.MinimumLength(8);
 		}
@@ -70,7 +70,7 @@ namespace Application.DTOs.Validators
 	{
 		public RegisterOrganizationRequestDTOValidator()
 		{
-			RuleFor(x => x.Name)
+			RuleFor(x => x.OrganizationName)
 				.NotEmpty().WithMessage("Organization Name is required.")
 				.MinimumLength(2).WithMessage("Organization Name must be at least 2 characters.");
 		}

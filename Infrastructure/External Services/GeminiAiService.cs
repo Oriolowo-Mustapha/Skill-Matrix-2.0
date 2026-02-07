@@ -17,8 +17,8 @@ namespace Infrastructure.ExternalServices
 		public GeminiAiService(HttpClient httpClient, IConfiguration config)
 		{
 			_httpClient = httpClient;
-			_apiKey = config["Gemini:ApiKey"];
-			_model = config["Gemini:Model"];
+			_apiKey = config["Gemini:ApiKey"] ?? throw new InvalidOperationException("Gemini:ApiKey is not configured.");
+			_model = config["Gemini:Model"] ?? throw new InvalidOperationException("Gemini:Model is not configured.");
 		}
 
 		public async Task<IEnumerable<Assessment>> GenerateAssessmentQuestionsAsync(string skillName, string proficencyLevel, int count = 10)
@@ -43,6 +43,10 @@ namespace Infrastructure.ExternalServices
 			try
 			{
 				var dtos = JsonSerializer.Deserialize<List<GeminiQuestionDto>>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+				if (dtos == null)
+				{
+					throw new Exception("Failed to deserialize AI response into questions.");
+				}
 				return dtos.Select(d => d.ToEntity());
 			}
 			catch (JsonException)
@@ -73,6 +77,10 @@ namespace Infrastructure.ExternalServices
 			try
 			{
 				var dto = JsonSerializer.Deserialize<GeminiPlanDto>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+				if (dto == null)
+				{
+					throw new Exception("Failed to deserialize AI response into improvement plan.");
+				}
 				return dto.ToEntity();
 			}
 			catch (JsonException)
@@ -106,7 +114,7 @@ namespace Infrastructure.ExternalServices
 				.GetProperty("content")
 				.GetProperty("parts")[0]
 				.GetProperty("text")
-				.GetString();
+				.GetString() ?? throw new Exception("AI response text was null.");
 		}
 	}
 }

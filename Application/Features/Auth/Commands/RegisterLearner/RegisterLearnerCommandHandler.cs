@@ -2,6 +2,7 @@
 using Application.Exceptions;
 using Application.Extensions;
 using Application.Interfaces.Repository;
+using Application.Interfaces.Service; // Added
 using Domain.Entities;
 using MediatR;
 
@@ -10,10 +11,12 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 	public class RegisterLearnerCommandHandler : IRequestHandler<RegisterLearnerCommand, UserDTO>
 	{
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IEmailService _emailService;
 
-		public RegisterLearnerCommandHandler(IUnitOfWork unitOfWork)
+		public RegisterLearnerCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService) // Modified
 		{
 			_unitOfWork = unitOfWork;
+			_emailService = emailService;
 		}
 
 		public async Task<UserDTO> Handle(RegisterLearnerCommand request, CancellationToken cancellationToken)
@@ -39,6 +42,11 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 
 			await _unitOfWork.Learners.AddAsync(learner);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+			var subject = "Welcome to Skill Matrix!";
+			var body = $"Hello {learner.FirstName},\n\nWelcome to Skill Matrix. We are excited to have you on board!\n\nBest regards,\nThe Skill Matrix Team";
+			await _emailService.SendEmailAsync(learner.Email, subject, body);
+
 			return learner.ToDto();
 		}
 
