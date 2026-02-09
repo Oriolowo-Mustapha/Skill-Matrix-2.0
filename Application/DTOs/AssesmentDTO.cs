@@ -5,7 +5,7 @@
 		public Guid AssignedSkillId { get; set; }
 	}
 
-	public record StartAssesmentResponseDTO
+	public record StartAssessmentResponseDTO
 	{
 		public int AssessmentBatchId { get; set; }
 		public List<AssessmentQuestionDTO> Questions { get; set; } = new List<AssessmentQuestionDTO>();

@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.Repository;
 using Domain.Entities;
 using Infrastructure.Context;
+using Infrastructure.Implementation.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Implementation.Servicies

@@ -3,7 +3,7 @@ using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Infrastructure.Implementation.Servicies
+namespace Infrastructure.Implementation.Repositories
 {
 	public class GenericRepository<T> : IGenericRepository<T> where T : class
 	{
@@ -21,14 +21,16 @@ namespace Infrastructure.Implementation.Servicies
 			return await _dbSet.FindAsync(id);
 		}
 
-		public virtual async Task<T?> GetByIdAsync(int id)
-		{
-			return await _dbSet.FindAsync(id);
-		}
-
 		public virtual async Task<IReadOnlyList<T>> GetAllAsync()
 		{
 			return await _dbSet.ToListAsync();
+		}
+
+		public virtual async Task<IReadOnlyList<T>> GetAllAsync(params Expression<Func<T, object>>[] includes)
+		{
+			IQueryable<T> query = _dbSet;
+			query = ApplyIncludes(query, includes);
+			return await query.ToListAsync();
 		}
 
 		public virtual async Task<T> AddAsync(T entity)
@@ -59,11 +61,29 @@ namespace Infrastructure.Implementation.Servicies
 			return await _dbSet.AnyAsync(predicate);
 		}
 
-
 		public virtual async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities)
 		{
 			await _dbSet.AddRangeAsync(entities);
 			return entities;
+		}
+
+		public virtual async Task<IReadOnlyList<T>> FindAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+		{
+			IQueryable<T> query = _dbSet;
+			query = ApplyIncludes(query, includes);
+			return await query.Where(predicate).ToListAsync();
+		}
+
+		private IQueryable<T> ApplyIncludes(IQueryable<T> query, params Expression<Func<T, object>>[] includes)
+		{
+			if (includes != null)
+			{
+				foreach (var includeProperty in includes)
+				{
+					query = query.Include(includeProperty);
+				}
+			}
+			return query;
 		}
 	}
 }

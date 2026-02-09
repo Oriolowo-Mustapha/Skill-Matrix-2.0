@@ -1,5 +1,7 @@
-﻿using Application.DTOs;
+using Application.DTOs;
 using Domain.Entities;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Application.Extensions
 {
@@ -19,7 +21,7 @@ namespace Application.Extensions
 
 		public static SkillDTO ToDTO(this Domain.Entities.Skill skill)
 		{
-			return new new SkillDTO
+			return new SkillDTO
 			{
 				Id = skill.Id,
 				Name = skill.Name,
@@ -70,7 +72,7 @@ namespace Application.Extensions
 			};
 		}
 
-		public static AssessmentBatchDTO ToDTO(this AssessmentBatch batch)
+		public static AssessmentBatchDTO ToAssessmentBatchDTO(this AssessmentBatch batch)
 		{
 			return new AssessmentBatchDTO
 			{
@@ -86,7 +88,7 @@ namespace Application.Extensions
 
 		public static List<AssessmentBatchDTO> ToAssessmentBatchDTOList(this IEnumerable<AssessmentBatch> batches)
 		{
-			return batches.Select(b => b.ToDTO()).ToList();
+			return batches.Select(b => b.ToAssessmentBatchDTO()).ToList();
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Application.Interfaces.Repository;
+using FluentValidation;
 
 namespace Application.DTOs.Validators
 {
@@ -17,11 +18,11 @@ namespace Application.DTOs.Validators
 
 	public class RegisterLearnerRequestDTOValidator : AbstractValidator<RegisterLearnerRequestDTO>
 	{
-		// private readonly ILearnerRepository _learnerRepository; // Inject your repo
+		private readonly ILearnerRepository _learnerRepository;
 
-		public RegisterLearnerRequestDTOValidator(/* ILearnerRepository learnerRepository */)
+		public RegisterLearnerRequestDTOValidator(ILearnerRepository learnerRepository)
 		{
-			// _learnerRepository = learnerRepository;
+			_learnerRepository = learnerRepository;
 
 			RuleFor(x => x.FirstName).NotEmpty().MaximumLength(50);
 			RuleFor(x => x.LastName).NotEmpty().MaximumLength(50);

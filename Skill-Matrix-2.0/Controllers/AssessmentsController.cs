@@ -1,5 +1,5 @@
 using Application.DTOs;
-using Application.Features.Assessments.Commands.StartAsssessment;
+using Application.Features.Assessments.Commands.StartAssessment;
 using Application.Features.Assessments.Commands.SubmitAssessment;
 using Application.Features.Assessments.Queries.GetAssessmentResult;
 using MediatR;

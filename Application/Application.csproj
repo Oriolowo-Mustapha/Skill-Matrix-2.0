@@ -26,6 +26,15 @@
     <Folder Include="Features\Assessments\Queries\GetSkills\" />
     <Folder Include="Features\Assessments\Queries\GetAssessments\" />
     <Folder Include="Features\Assessments\Queries\GetImprovementPlans\" />
+    <Folder Include="Features\CareerPaths\Commands\DeleteCareerPathCommand\" />
+    <Folder Include="Features\CareerPaths\Commands\AssignCareerPathToLearnerCommand\" />
+    <Folder Include="Features\CareerPaths\Commands\AssignCareerPathToTeamMemberCommand\" />
+    <Folder Include="Features\CareerPaths\Commands\UnassignCareerPathFromTeamMemberCommand\" />
+    <Folder Include="Features\CareerPaths\Commands\UnassignCareerPathFromLearnerCommand\" />
+    <Folder Include="Features\CareerPaths\Queries\GetCareerPathByIdQuery\" />
+    <Folder Include="Features\CareerPaths\Queries\GetAllCareerPathsQuery\" />
+    <Folder Include="Features\CareerPaths\Queries\GetCareerPathsForLearnerQuery\" />
+    <Folder Include="Features\CareerPaths\Queries\GetCareerPathsForTeamMemberQuery\" />
   </ItemGroup>
 
 </Project>

@@ -17,7 +17,10 @@ namespace Application.Interfaces.Repository
 		IGenericRepository<Organization> Organizations { get; }
 
 		IGenericRepository<Badge> Badges { get; }
+		IGenericRepository<AssignedBadge> AssignedBadges { get; }
 		IGenericRepository<CareerPath> CareerPaths { get; }
+        IGenericRepository<CareerPathSkill> CareerPathSkills { get; }
+        IGenericRepository<AssignedCareerPath> AssignedCareerPaths { get; }
 
 		Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 	}

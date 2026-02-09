@@ -20,7 +20,7 @@ namespace Application.Features.Assessments.Commands.StartAssessment
 			_aiService = aiService;
 		}
 
-		public async Task<StartAssesmentResponseDTO> Handle(StartAssessmentCommand request, CancellationToken cancellationToken)
+		public async Task<StartAssessmentResponseDTO> Handle(StartAssessmentCommand request, CancellationToken cancellationToken)
 		{
 
 			var assignedSkill = await _unitOfWork.AssignedSkills.GetByUserAndSkillId(request.UserId, request.Dto.AssignedSkillId);

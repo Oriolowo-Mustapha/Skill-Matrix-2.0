@@ -3,16 +3,120 @@
   "WorkspaceRootPath": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{087A9487-DB17-4842-814F-3872ECAB2703}|Skill-Matrix-2.0\\Skill-Matrix-2.0.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\skill-matrix-2.0\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{087A9487-DB17-4842-814F-3872ECAB2703}|Skill-Matrix-2.0\\Skill-Matrix-2.0.csproj|solutionrelative:skill-matrix-2.0\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{087A9487-DB17-4842-814F-3872ECAB2703}|Skill-Matrix-2.0\\Skill-Matrix-2.0.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\skill-matrix-2.0\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{087A9487-DB17-4842-814F-3872ECAB2703}|Skill-Matrix-2.0\\Skill-Matrix-2.0.csproj|solutionrelative:skill-matrix-2.0\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\validators\\authvalidators.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\validators\\authvalidators.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\infrastructure\\implementation\\repositories\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\implementation\\repositories\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\extensions\\usermappingextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\extensions\\usermappingextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\infrastructure\\implementation\\repositories\\assessmentbatchrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\implementation\\repositories\\assessmentbatchrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\assessments\\commands\\submitassessment\\submitassessmentcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\assessments\\commands\\submitassessment\\submitassessmentcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\interfaces\\repository\\iassessmentbatchrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\interfaces\\repository\\iassessmentbatchrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{748A08BF-C8EE-4897-877F-0C8426DD02CD}|Domain\\Domain.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\domain\\entities\\assessmentbatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{748A08BF-C8EE-4897-877F-0C8426DD02CD}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\assessmentbatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\dtos\\assesmentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\dtos\\assesmentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{748A08BF-C8EE-4897-877F-0C8426DD02CD}|Domain\\Domain.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\domain\\entities\\userresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{748A08BF-C8EE-4897-877F-0C8426DD02CD}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\userresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\badges\\queries\\getassignedbadgesforlearner\\getassignedbadgesforlearnerqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\badges\\queries\\getassignedbadgesforlearner\\getassignedbadgesforlearnerqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\careerpaths\\commands\\deletecareerpathcommand\\deletecareerpathcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\careerpaths\\commands\\deletecareerpathcommand\\deletecareerpathcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\assessments\\queries\\getassessmentresult\\getassessmentresultqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\assessments\\queries\\getassessmentresult\\getassessmentresultqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\assessments\\commands\\improvementplans\\generateimprovementplancommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\assessments\\commands\\improvementplans\\generateimprovementplancommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\badges\\queries\\getbadgebyid\\getbadgebyidqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\badges\\queries\\getbadgebyid\\getbadgebyidqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\badges\\commands\\updatebadge\\updatebadgecommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\badges\\commands\\updatebadge\\updatebadgecommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\careerpaths\\commands\\updatecareerpathcommand\\updatecareerpathcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\careerpaths\\commands\\updatecareerpathcommand\\updatecareerpathcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\assessments\\commands\\updateskill\\updateskillcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\assessments\\commands\\updateskill\\updateskillcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\infrastructure\\implementation\\repositories\\teammemberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\implementation\\repositories\\teammemberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\infrastructure\\implementation\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\implementation\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\interfaces\\repository\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\interfaces\\repository\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\assessments\\commands\\updateuserprofile\\updateuserprofilecommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\assessments\\commands\\updateuserprofile\\updateuserprofilecommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\careerpaths\\commands\\unassigncareerpathfromteammembercommand\\unassigncareerpathfromteammembercommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\careerpaths\\commands\\unassigncareerpathfromteammembercommand\\unassigncareerpathfromteammembercommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\interfaces\\repository\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\interfaces\\repository\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\interfaces\\repository\\iteammemberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\interfaces\\repository\\iteammemberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\assessments\\commands\\deleteskill\\deleteskillcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\assessments\\commands\\deleteskill\\deleteskillcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\infrastructure\\implementation\\repositories\\assignedskillrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\implementation\\repositories\\assignedskillrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\infrastructure\\implementation\\repositories\\skillrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\implementation\\repositories\\skillrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\infrastructure\\implementation\\repositories\\learnerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\implementation\\repositories\\learnerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\infrastructure\\implementation\\repositories\\improvementplanrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33EC8C18-31EE-445C-ABA1-2110FC278FC8}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\implementation\\repositories\\improvementplanrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{748A08BF-C8EE-4897-877F-0C8426DD02CD}|Domain\\Domain.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\domain\\entities\\careerpath.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{748A08BF-C8EE-4897-877F-0C8426DD02CD}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\careerpath.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,40 +135,378 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Skill-Matrix-2.0\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "Skill-Matrix-2.0\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Skill-Matrix-2.0\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "Skill-Matrix-2.0\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAAADYAAAAAAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Skill-Matrix-2.0\\Program.cs",
+              "RelativeDocumentMoniker": "Skill-Matrix-2.0\\Program.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Skill-Matrix-2.0\\Program.cs*",
+              "RelativeToolTip": "Skill-Matrix-2.0\\Program.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-07T10:38:50.704Z",
+              "WhenOpened": "2026-02-09T14:00:09.526Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AuthValidators.cs",
-              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Validators\\AuthValidators.cs",
-              "RelativeDocumentMoniker": "Application\\Validators\\AuthValidators.cs",
-              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Validators\\AuthValidators.cs",
-              "RelativeToolTip": "Application\\Validators\\AuthValidators.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAAAEgAAAAiAAAAAAAAAA==",
+              "Title": "UnitOfWork.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\UnitOfWork.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Implementation\\Repositories\\UnitOfWork.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\UnitOfWork.cs",
+              "RelativeToolTip": "Infrastructure\\Implementation\\Repositories\\UnitOfWork.cs",
+              "ViewState": "AgIAAEsAAAAANDMzMzMLwBsAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-07T10:37:21.648Z",
+              "WhenOpened": "2026-02-09T13:59:36.992Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "UserMappingExtensions.cs",
-              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Extensions\\UserMappingExtensions.cs",
-              "RelativeDocumentMoniker": "Application\\Extensions\\UserMappingExtensions.cs",
-              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Extensions\\UserMappingExtensions.cs",
-              "RelativeToolTip": "Application\\Extensions\\UserMappingExtensions.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAACsAAAAXAAAAAAAAAA==",
+              "Title": "AssessmentBatchRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\AssessmentBatchRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Implementation\\Repositories\\AssessmentBatchRepository.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\AssessmentBatchRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Implementation\\Repositories\\AssessmentBatchRepository.cs",
+              "ViewState": "AgIAAA8AAABAMzMzMzMvwB4AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-07T10:37:06.187Z",
+              "WhenOpened": "2026-02-09T13:58:48.815Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AssessmentBatch.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\AssessmentBatch.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\AssessmentBatch.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\AssessmentBatch.cs",
+              "RelativeToolTip": "Domain\\Entities\\AssessmentBatch.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:57:35.538Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IAssessmentBatchRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Interfaces\\Repository\\IAssessmentBatchRepository.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\Repository\\IAssessmentBatchRepository.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Interfaces\\Repository\\IAssessmentBatchRepository.cs",
+              "RelativeToolTip": "Application\\Interfaces\\Repository\\IAssessmentBatchRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:57:20.27Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserResponse.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\UserResponse.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\UserResponse.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\UserResponse.cs",
+              "RelativeToolTip": "Domain\\Entities\\UserResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:54:23.53Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "GetAssignedBadgesForLearnerQueryHandler.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Badges\\Queries\\GetAssignedBadgesForLearner\\GetAssignedBadgesForLearnerQueryHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Badges\\Queries\\GetAssignedBadgesForLearner\\GetAssignedBadgesForLearnerQueryHandler.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Badges\\Queries\\GetAssignedBadgesForLearner\\GetAssignedBadgesForLearnerQueryHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Badges\\Queries\\GetAssignedBadgesForLearner\\GetAssignedBadgesForLearnerQueryHandler.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAEwA0AAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:53:46.096Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SubmitAssessmentCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Assessments\\Commands\\SubmitAssessment\\SubmitAssessmentCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Assessments\\Commands\\SubmitAssessment\\SubmitAssessmentCommandHandler.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Assessments\\Commands\\SubmitAssessment\\SubmitAssessmentCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Assessments\\Commands\\SubmitAssessment\\SubmitAssessmentCommandHandler.cs",
+              "ViewState": "AgIAAAQAAADg//////8VwBsAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:52:36.643Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DeleteCareerPathCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\CareerPaths\\Commands\\DeleteCareerPathCommand\\DeleteCareerPathCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\CareerPaths\\Commands\\DeleteCareerPathCommand\\DeleteCareerPathCommandHandler.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\CareerPaths\\Commands\\DeleteCareerPathCommand\\DeleteCareerPathCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\CareerPaths\\Commands\\DeleteCareerPathCommand\\DeleteCareerPathCommandHandler.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAEwBUAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:53:44.912Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AssesmentDTO.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\AssesmentDTO.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\AssesmentDTO.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\AssesmentDTO.cs",
+              "RelativeToolTip": "Application\\DTOs\\AssesmentDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:53:01.172Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "GetAssessmentResultQueryHandler.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Assessments\\Queries\\GetAssessmentResult\\GetAssessmentResultQueryHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Assessments\\Queries\\GetAssessmentResult\\GetAssessmentResultQueryHandler.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Assessments\\Queries\\GetAssessmentResult\\GetAssessmentResultQueryHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Assessments\\Queries\\GetAssessmentResult\\GetAssessmentResultQueryHandler.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAEwBMAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:53:43.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "GenerateImprovementPlanCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Assessments\\Commands\\ImprovementPlans\\GenerateImprovementPlanCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Assessments\\Commands\\ImprovementPlans\\GenerateImprovementPlanCommandHandler.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Assessments\\Commands\\ImprovementPlans\\GenerateImprovementPlanCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Assessments\\Commands\\ImprovementPlans\\GenerateImprovementPlanCommandHandler.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAApwB8AAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:53:40.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "GetBadgeByIdQueryHandler.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Badges\\Queries\\GetBadgeById\\GetBadgeByIdQueryHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Badges\\Queries\\GetBadgeById\\GetBadgeByIdQueryHandler.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Badges\\Queries\\GetBadgeById\\GetBadgeByIdQueryHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Badges\\Queries\\GetBadgeById\\GetBadgeByIdQueryHandler.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAEwAYAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:53:33.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "UpdateBadgeCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Badges\\Commands\\UpdateBadge\\UpdateBadgeCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Badges\\Commands\\UpdateBadge\\UpdateBadgeCommandHandler.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Badges\\Commands\\UpdateBadge\\UpdateBadgeCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Badges\\Commands\\UpdateBadge\\UpdateBadgeCommandHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAEwAUAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:52:29.581Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "UpdateCareerPathCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\CareerPaths\\Commands\\UpdateCareerPathCommand\\UpdateCareerPathCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\CareerPaths\\Commands\\UpdateCareerPathCommand\\UpdateCareerPathCommandHandler.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\CareerPaths\\Commands\\UpdateCareerPathCommand\\UpdateCareerPathCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\CareerPaths\\Commands\\UpdateCareerPathCommand\\UpdateCareerPathCommandHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:51:47.674Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "UpdateSkillCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Assessments\\Commands\\UpdateSkill\\UpdateSkillCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Assessments\\Commands\\UpdateSkill\\UpdateSkillCommandHandler.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Assessments\\Commands\\UpdateSkill\\UpdateSkillCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Assessments\\Commands\\UpdateSkill\\UpdateSkillCommandHandler.cs",
+              "ViewState": "AgIAABkAAABAMzMzMzMhwAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:51:38.26Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "TeamMemberRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\TeamMemberRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Implementation\\Repositories\\TeamMemberRepository.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\TeamMemberRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Implementation\\Repositories\\TeamMemberRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:51:16.202Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "UpdateUserProfileCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Assessments\\Commands\\UpdateUserProfile\\UpdateUserProfileCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Assessments\\Commands\\UpdateUserProfile\\UpdateUserProfileCommandHandler.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Assessments\\Commands\\UpdateUserProfile\\UpdateUserProfileCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Assessments\\Commands\\UpdateUserProfile\\UpdateUserProfileCommandHandler.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAEwBMAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:50:10.851Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "IUnitOfWork.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Interfaces\\Repository\\IUnitOfWork.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\Repository\\IUnitOfWork.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Interfaces\\Repository\\IUnitOfWork.cs",
+              "RelativeToolTip": "Application\\Interfaces\\Repository\\IUnitOfWork.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:48:37.205Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "UnassignCareerPathFromTeamMemberCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\CareerPaths\\Commands\\UnassignCareerPathFromTeamMemberCommand\\UnassignCareerPathFromTeamMemberCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\CareerPaths\\Commands\\UnassignCareerPathFromTeamMemberCommand\\UnassignCareerPathFromTeamMemberCommandHandler.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\CareerPaths\\Commands\\UnassignCareerPathFromTeamMemberCommand\\UnassignCareerPathFromTeamMemberCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\CareerPaths\\Commands\\UnassignCareerPathFromTeamMemberCommand\\UnassignCareerPathFromTeamMemberCommandHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:46:40.099Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "IGenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Interfaces\\Repository\\IGenericRepository.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\Repository\\IGenericRepository.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Interfaces\\Repository\\IGenericRepository.cs",
+              "RelativeToolTip": "Application\\Interfaces\\Repository\\IGenericRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:43:10.939Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Implementation\\Repositories\\GenericRepository.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\GenericRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Implementation\\Repositories\\GenericRepository.cs",
+              "ViewState": "AgIAACEAAACAMzMzMzMpwBIAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:17:18.58Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ITeamMemberRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Interfaces\\Repository\\ITeamMemberRepository.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\Repository\\ITeamMemberRepository.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Interfaces\\Repository\\ITeamMemberRepository.cs",
+              "RelativeToolTip": "Application\\Interfaces\\Repository\\ITeamMemberRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:48:36.721Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "DeleteSkillCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Assessments\\Commands\\DeleteSkill\\DeleteSkillCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Assessments\\Commands\\DeleteSkill\\DeleteSkillCommandHandler.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Assessments\\Commands\\DeleteSkill\\DeleteSkillCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Assessments\\Commands\\DeleteSkill\\DeleteSkillCommandHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:47:26.451Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "AssignedSkillRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\AssignedSkillRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Implementation\\Repositories\\AssignedSkillRepository.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\AssignedSkillRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Implementation\\Repositories\\AssignedSkillRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:45:50.99Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "SkillRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\SkillRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Implementation\\Repositories\\SkillRepository.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\SkillRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Implementation\\Repositories\\SkillRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:45:39.792Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "LearnerRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\LearnerRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Implementation\\Repositories\\LearnerRepository.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\LearnerRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Implementation\\Repositories\\LearnerRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:45:33.525Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "ImprovementPlanRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\ImprovementPlanRepository.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Implementation\\Repositories\\ImprovementPlanRepository.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Infrastructure\\Implementation\\Repositories\\ImprovementPlanRepository.cs",
+              "RelativeToolTip": "Infrastructure\\Implementation\\Repositories\\ImprovementPlanRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:45:19.262Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "CareerPath.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\CareerPath.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\CareerPath.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\CareerPath.cs",
+              "RelativeToolTip": "Domain\\Entities\\CareerPath.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-09T13:42:08.241Z",
               "EditorCaption": ""
             },
             {

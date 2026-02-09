@@ -6,5 +6,6 @@
 		public string Description { get; set; } = string.Empty;
 		public string IconURL { get; set; } = string.Empty;
 		public DateTime DateAdded { get; set; } = DateTime.UtcNow;
+		public ICollection<CareerPathSkill> CareerPathSkills { get; set; } = new List<CareerPathSkill>();
 	}
 }

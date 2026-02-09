@@ -1,16 +1,14 @@
 ﻿using Application.Interfaces.Repository;
 using Domain.Entities;
 using Infrastructure.Context;
-using Infrastructure.Implementation.Repositories;
 using Infrastructure.Implementation.Servicies;
 
-namespace Infrastructure.Repository
+namespace Infrastructure.Implementation.Repositories
 {
 	public class UnitOfWork : IUnitOfWork
 	{
 		private readonly MatrixDbContext _context;
 
-		// Backing fields for the repositories
 		private IAssessmentBatchRepository? _assessmentBatches;
 		private IGenericRepository<AssessmentResult>? _assessmentResults;
 		private IAssignedSkillRepository? _assignedSkills;
@@ -23,6 +21,9 @@ namespace Infrastructure.Repository
 		private IGenericRepository<Organization>? _organizations;
 		private IGenericRepository<Badge>? _badges;
 		private IGenericRepository<CareerPath>? _careerPaths;
+		private IGenericRepository<AssignedBadge>? _assignedBadge;
+		private IGenericRepository<AssignedCareerPath>? _assignedCareerPaths;
+		private IGenericRepository<CareerPathSkill>? _careerPathSkills;
 
 		public UnitOfWork(MatrixDbContext context)
 		{
@@ -62,9 +63,17 @@ namespace Infrastructure.Repository
 		public IGenericRepository<CareerPath> CareerPaths =>
 			_careerPaths ??= new GenericRepository<CareerPath>(_context);
 
+		public IGenericRepository<AssignedCareerPath> AssignedCareerPaths =>
+			_assignedCareerPaths ??= new GenericRepository<AssignedCareerPath>(_context);
+
+		public IGenericRepository<CareerPathSkill> CareerPathSkills =>
+			_careerPathSkills ??= new GenericRepository<CareerPathSkill>(_context);
+
 		public IUserResponseRepository UserResponses =>
 			_userResponseRepository ??= new UserResponseRepository(_context);
 
+		public IGenericRepository<AssignedBadge> AssignedBadges =>
+			_assignedBadge ??= new GenericRepository<AssignedBadge>(_context);
 		public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 		{
 			return await _context.SaveChangesAsync(cancellationToken);

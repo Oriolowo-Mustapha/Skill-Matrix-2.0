@@ -3,7 +3,7 @@ using Domain.Entities;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Implementation.Servicies
+namespace Infrastructure.Implementation.Repositories
 {
 	public class AssessmentBatchRepository : GenericRepository<AssessmentBatch>, IAssessmentBatchRepository
 	{
