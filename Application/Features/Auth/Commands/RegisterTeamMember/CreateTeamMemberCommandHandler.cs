@@ -37,17 +37,21 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 			}
 
 			var hashedPassword = HashPassword(request.request.Password);
+			var verificationToken = Guid.NewGuid().ToString();
 
 			var newTeamMember = new TeamMember
 			{
 				FirstName = request.request.FirstName,
 				LastName = request.request.LastName,
-				Email = request.request.Email, // 3. Set the email
+				Email = request.request.Email,
 				UserName = request.request.UserName,
 				ProfilePictureUrl = request.request.ProfilePicUrl,
 				PasswordHash = hashedPassword,
 				Manager = getManager,
-				Organization = getOrganization
+				Organization = getOrganization,
+				IsEmailVerified = false,
+				EmailVerificationToken = verificationToken,
+				EmailVerificationTokenExpiry = DateTime.UtcNow.AddHours(24)
 			};
 
 			await _unitOfWork.TeamMembers.AddAsync(newTeamMember);
@@ -65,20 +69,19 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 				ManagerId = newTeamMember.ManagerId
 			};
 
+			var verificationLink = $"https://yourdomain.com/api/auth/verify-email?token={verificationToken}&email={newTeamMember.Email}";
 			var subject = $"You're Invited to Skill Matrix 2.0 - Join {getOrganization.Name}!";
 			var body = $"""
 				Dear {newTeamMember.UserName},
 
 				You have been invited by {getManager.UserName} to join {getOrganization.Name} on Skill Matrix 2.0.
 
-				Skill Matrix 2.0 is a platform designed to help you track and develop your professional skills.
+				To activate your account, please verify your email by clicking the link below:
+				{verificationLink}
 
-				To activate your account and set up your password, please click on the following link:
-				[Activation Link]
+				This link will expire in 24 hours.
 
 				If you have any questions, please contact your manager, {getManager.UserName}, or our support team.
-
-				We look forward to seeing your progress!
 
 				Best regards,
 				The Skill Matrix 2.0 Team

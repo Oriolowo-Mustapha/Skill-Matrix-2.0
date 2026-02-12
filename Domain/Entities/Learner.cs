@@ -12,6 +12,11 @@ namespace Domain.Entities
 		public string PasswordHash { get; set; } = string.Empty;
 		public ProficiencyLevel ProficiencyLevel { get; set; } = ProficiencyLevel.Novice;
 		public string Role { get; set; } = Roles.Learner.ToString();
+		public bool IsEmailVerified { get; set; } = false;
+		public string? EmailVerificationToken { get; set; }
+		public DateTime? EmailVerificationTokenExpiry { get; set; }
+		public string? PasswordResetToken { get; set; }
+		public DateTime? PasswordResetTokenExpiry { get; set; }
 		public List<UserResponse> UserResponses { get; set; } = new List<UserResponse>();
 		public List<AssessmentResult> AssessmentResults { get; set; } = new List<AssessmentResult>();
 		public List<AssessmentBatch> AssessmentBatches { get; set; } = new List<AssessmentBatch>();

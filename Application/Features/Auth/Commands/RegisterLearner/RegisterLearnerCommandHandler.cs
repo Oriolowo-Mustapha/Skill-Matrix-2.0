@@ -2,7 +2,7 @@
 using Application.Exceptions;
 using Application.Extensions;
 using Application.Interfaces.Repository;
-using Application.Interfaces.Service; // Added
+using Application.Interfaces.Service;
 using Domain.Entities;
 using MediatR;
 
@@ -28,6 +28,7 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 			}
 
 			var hashedPassword = HashPassword(request.req.PasswordHash);
+			var verificationToken = Guid.NewGuid().ToString();
 
 			var learner = new Learner
 			{
@@ -37,25 +38,28 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 				UserName = request.req.UserName,
 				Role = request.req.Role,
 				ProfilePictureUrl = request.req.ProfilePicUrl,
-				PasswordHash = hashedPassword
+				PasswordHash = hashedPassword,
+				IsEmailVerified = false,
+				EmailVerificationToken = verificationToken,
+				EmailVerificationTokenExpiry = DateTime.UtcNow.AddHours(24)
 			};
 
 			await _unitOfWork.Learners.AddAsync(learner);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			var subject = "Welcome to Skill Matrix!";
+			var verificationLink = $"https://yourdomain.com/api/auth/verify-email?token={verificationToken}&email={learner.Email}";
+			var subject = "Verify Your Email - Skill Matrix 2.0";
 			var body = $"""
 				Dear {learner.FirstName},
 
 				Welcome to Skill Matrix 2.0! We are excited to have you on board.
 
-				Skill Matrix 2.0 is a platform designed to help you track and develop your professional skills.
+				To complete your registration, please verify your email address by clicking the link below:
+				{verificationLink}
 
-				To get started, please log in with your registered email and explore the available skills and assessments.
+				This link will expire in 24 hours.
 
-				If you have any questions, please don't hesitate to reach out to our support team.
-
-				We look forward to seeing your progress!
+				If you did not create an account, please ignore this email.
 
 				Best regards,
 				The Skill Matrix 2.0 Team
@@ -70,5 +74,4 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 			return BCrypt.Net.BCrypt.HashPassword(password);
 		}
 	}
-
 }

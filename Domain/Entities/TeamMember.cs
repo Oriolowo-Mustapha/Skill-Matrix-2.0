@@ -12,6 +12,11 @@ namespace Domain.Entities
 		public ProficiencyLevel ProficiencyLevel { get; set; } = ProficiencyLevel.Novice;
 		public string? ProfilePictureUrl { get; set; }
 		public string PasswordHash { get; set; } = string.Empty;
+		public bool IsEmailVerified { get; set; } = false;
+		public string? EmailVerificationToken { get; set; }
+		public DateTime? EmailVerificationTokenExpiry { get; set; }
+		public string? PasswordResetToken { get; set; }
+		public DateTime? PasswordResetTokenExpiry { get; set; }
 		public Guid ManagerId { get; set; }
 		public Manager Manager { get; set; } = null!;
 

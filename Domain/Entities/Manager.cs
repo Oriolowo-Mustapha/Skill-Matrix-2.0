@@ -11,6 +11,11 @@ namespace Domain.Entities
 		public string? ProfilePictureUrl { get; set; }
 		public string Role { get; set; } = Roles.Manager.ToString();
 		public string PasswordHash { get; set; } = string.Empty;
+		public bool IsEmailVerified { get; set; } = false;
+		public string? EmailVerificationToken { get; set; }
+		public DateTime? EmailVerificationTokenExpiry { get; set; }
+		public string? PasswordResetToken { get; set; }
+		public DateTime? PasswordResetTokenExpiry { get; set; }
 		public Guid OrganizationId { get; set; }
 		public Organization Organization { get; set; } = null!;
 		public List<TeamMember> TeamMembers { get; set; } = new List<TeamMember>();

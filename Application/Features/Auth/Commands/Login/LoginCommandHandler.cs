@@ -27,6 +27,7 @@ namespace Application.Features.Auth.Commands.Login
 		{
 			UserDTO? userDto = null;
 			string? passwordHash = null;
+			bool isEmailVerified = false;
 			List<string> roles = new List<string>();
 
 			var learner = await _unitOfWork.Learners.GetByEmailAsync(request.req.Email);
@@ -34,6 +35,7 @@ namespace Application.Features.Auth.Commands.Login
 			{
 				userDto = learner.ToDto();
 				passwordHash = learner.PasswordHash;
+				isEmailVerified = learner.IsEmailVerified;
 				roles.Add(learner.Role);
 			}
 			else
@@ -43,6 +45,7 @@ namespace Application.Features.Auth.Commands.Login
 				{
 					userDto = teamMember.ToDto();
 					passwordHash = teamMember.PasswordHash;
+					isEmailVerified = teamMember.IsEmailVerified;
 					roles.Add(teamMember.Role);
 				}
 				else
@@ -52,6 +55,7 @@ namespace Application.Features.Auth.Commands.Login
 					{
 						userDto = manager.ToDto();
 						passwordHash = manager.PasswordHash;
+						isEmailVerified = manager.IsEmailVerified;
 						roles.Add(manager.Role.ToString());
 					}
 				}
@@ -60,6 +64,11 @@ namespace Application.Features.Auth.Commands.Login
 			if (userDto == null || !VerifyPassword(request.req.Password, passwordHash))
 			{
 				throw new UnauthorizedException("Invalid email or password.");
+			}
+
+			if (!isEmailVerified)
+			{
+				throw new ForbiddenException("Please verify your email address before logging in.");
 			}
 
 			var token = GenerateJwtToken(userDto.Id.ToString(), userDto.Email, roles, _configuration);
@@ -93,7 +102,7 @@ namespace Application.Features.Auth.Commands.Login
 
 			foreach (var role in roles)
 			{
-				claims.Add(new Claim(ClaimTypes.Role, role));		
+				claims.Add(new Claim(ClaimTypes.Role, role));
 			}
 
 			var key = new SymmetricSecurityKey(
