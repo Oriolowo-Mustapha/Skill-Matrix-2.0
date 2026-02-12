@@ -3,24 +3,44 @@
   "WorkspaceRootPath": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\auth\\commands\\login\\logincommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\auth\\commands\\login\\logincommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{087A9487-DB17-4842-814F-3872ECAB2703}|Skill-Matrix-2.0\\Skill-Matrix-2.0.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\skill-matrix-2.0\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{087A9487-DB17-4842-814F-3872ECAB2703}|Skill-Matrix-2.0\\Skill-Matrix-2.0.csproj|solutionrelative:skill-matrix-2.0\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\auth\\commands\\verifyemail\\verifyemailcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\auth\\commands\\verifyemail\\verifyemailcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\auth\\commands\\forgotpassword\\forgotpasswordcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\auth\\commands\\forgotpassword\\forgotpasswordcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\auth\\commands\\verifyemail\\verifyemailcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\auth\\commands\\verifyemail\\verifyemailcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\auth\\commands\\forgotpassword\\forgotpasswordcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\auth\\commands\\forgotpassword\\forgotpasswordcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\auth\\commands\\registerorganization\\registerorganizationcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\auth\\commands\\registerorganization\\registerorganizationcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\auth\\commands\\resetpassword\\resetpasswordcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\auth\\commands\\resetpassword\\resetpasswordcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\auth\\commands\\registerteammember\\createteammembercommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\auth\\commands\\registerteammember\\createteammembercommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\features\\auth\\commands\\resetpassword\\resetpasswordcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\features\\auth\\commands\\resetpassword\\resetpasswordcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\dtos\\resetpasswordrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\dtos\\resetpasswordrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\application\\dtos\\forgotpasswordrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B4F8419-7547-4B81-A2F7-ABB46DE2E702}|Application\\Application.csproj|solutionrelative:application\\dtos\\forgotpasswordrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{748A08BF-C8EE-4897-877F-0C8426DD02CD}|Domain\\Domain.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\domain\\entities\\manager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{748A08BF-C8EE-4897-877F-0C8426DD02CD}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\manager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{748A08BF-C8EE-4897-877F-0C8426DD02CD}|Domain\\Domain.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\domain\\entities\\teammember.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{748A08BF-C8EE-4897-877F-0C8426DD02CD}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\teammember.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{748A08BF-C8EE-4897-877F-0C8426DD02CD}|Domain\\Domain.csproj|c:\\users\\oriolowo\\source\\repos\\skill-matrix-2.0\\domain\\entities\\learner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{748A08BF-C8EE-4897-877F-0C8426DD02CD}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\learner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -39,66 +59,118 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "LoginCommandHandler.cs",
-              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\Login\\LoginCommandHandler.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Auth\\Commands\\Login\\LoginCommandHandler.cs",
-              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\Login\\LoginCommandHandler.cs",
-              "RelativeToolTip": "Application\\Features\\Auth\\Commands\\Login\\LoginCommandHandler.cs",
-              "ViewState": "AgIAAE4AAAAAmpmZmZn5v34AAAABAAAAAAAAAA==",
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Skill-Matrix-2.0\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Skill-Matrix-2.0\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Skill-Matrix-2.0\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Skill-Matrix-2.0\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T13:58:16.901Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "VerifyEmailCommandHandler.cs",
-              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\VerifyEmail\\VerifyEmailCommandHandler.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Auth\\Commands\\VerifyEmail\\VerifyEmailCommandHandler.cs",
-              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\VerifyEmail\\VerifyEmailCommandHandler.cs",
-              "RelativeToolTip": "Application\\Features\\Auth\\Commands\\VerifyEmail\\VerifyEmailCommandHandler.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T13:57:25.326Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "VerifyEmailCommand.cs",
-              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\VerifyEmail\\VerifyEmailCommand.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Auth\\Commands\\VerifyEmail\\VerifyEmailCommand.cs",
-              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\VerifyEmail\\VerifyEmailCommand.cs",
-              "RelativeToolTip": "Application\\Features\\Auth\\Commands\\VerifyEmail\\VerifyEmailCommand.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAIwAUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T13:53:24.237Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "RegisterOrganizationCommandHandler.cs",
-              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\RegisterOrganization\\RegisterOrganizationCommandHandler.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Auth\\Commands\\RegisterOrganization\\RegisterOrganizationCommandHandler.cs",
-              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\RegisterOrganization\\RegisterOrganizationCommandHandler.cs",
-              "RelativeToolTip": "Application\\Features\\Auth\\Commands\\RegisterOrganization\\RegisterOrganizationCommandHandler.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T13:52:48.634Z",
+              "WhenOpened": "2026-02-12T14:10:38.048Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "CreateTeamMemberCommandHandler.cs",
-              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\RegisterTeamMember\\CreateTeamMemberCommandHandler.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Auth\\Commands\\RegisterTeamMember\\CreateTeamMemberCommandHandler.cs",
-              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\RegisterTeamMember\\CreateTeamMemberCommandHandler.cs",
-              "RelativeToolTip": "Application\\Features\\Auth\\Commands\\RegisterTeamMember\\CreateTeamMemberCommandHandler.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAADwv2IAAAABAAAAAAAAAA==",
+              "Title": "ResetPasswordCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\ResetPassword\\ResetPasswordCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Auth\\Commands\\ResetPassword\\ResetPasswordCommandHandler.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\ResetPassword\\ResetPasswordCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Auth\\Commands\\ResetPassword\\ResetPasswordCommandHandler.cs",
+              "ViewState": "AgIAADAAAACAZmZmZmYewDEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T13:51:51.204Z",
+              "WhenOpened": "2026-02-12T14:10:04.098Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ResetPasswordCommand.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\ResetPassword\\ResetPasswordCommand.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Auth\\Commands\\ResetPassword\\ResetPasswordCommand.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\ResetPassword\\ResetPasswordCommand.cs",
+              "RelativeToolTip": "Application\\Features\\Auth\\Commands\\ResetPassword\\ResetPasswordCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAIwAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-12T14:09:45.176Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ForgotPasswordCommandHandler.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\ForgotPassword\\ForgotPasswordCommandHandler.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Auth\\Commands\\ForgotPassword\\ForgotPasswordCommandHandler.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\ForgotPassword\\ForgotPasswordCommandHandler.cs",
+              "RelativeToolTip": "Application\\Features\\Auth\\Commands\\ForgotPassword\\ForgotPasswordCommandHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAIwFcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-12T14:09:16.208Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ForgotPasswordCommand.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\ForgotPassword\\ForgotPasswordCommand.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Auth\\Commands\\ForgotPassword\\ForgotPasswordCommand.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\Features\\Auth\\Commands\\ForgotPassword\\ForgotPasswordCommand.cs",
+              "RelativeToolTip": "Application\\Features\\Auth\\Commands\\ForgotPassword\\ForgotPasswordCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAIwAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-12T14:08:49.377Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ResetPasswordRequestDTO.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\ResetPasswordRequestDTO.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\ResetPasswordRequestDTO.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\ResetPasswordRequestDTO.cs",
+              "RelativeToolTip": "Application\\DTOs\\ResetPasswordRequestDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAIwAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-12T14:07:56.918Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ForgotPasswordRequestDTO.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\ForgotPasswordRequestDTO.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\ForgotPasswordRequestDTO.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Application\\DTOs\\ForgotPasswordRequestDTO.cs",
+              "RelativeToolTip": "Application\\DTOs\\ForgotPasswordRequestDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAIwAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-12T14:07:41.43Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Manager.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\Manager.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Manager.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\Manager.cs",
+              "RelativeToolTip": "Domain\\Entities\\Manager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-12T14:07:04.856Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Learner.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\Learner.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Learner.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\Learner.cs",
+              "RelativeToolTip": "Domain\\Entities\\Learner.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-12T14:02:56.132Z",
               "EditorCaption": ""
             },
             {
@@ -120,6 +192,19 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TeamMember.cs",
+              "DocumentMoniker": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\TeamMember.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\TeamMember.cs",
+              "ToolTip": "C:\\Users\\ORIOLOWO\\source\\repos\\Skill-Matrix-2.0\\Domain\\Entities\\TeamMember.cs",
+              "RelativeToolTip": "Domain\\Entities\\TeamMember.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAA+wCAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-12T14:06:20.513Z",
+              "EditorCaption": ""
             }
           ]
         }
