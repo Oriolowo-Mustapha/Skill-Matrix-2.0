@@ -7,18 +7,20 @@ using MediatR;
 
 namespace Application.Features.Auth.Commands.RegisterOrganization
 {
-	public class RegisterOrganizationCommandHandler : IRequestHandler<RegisterOrganizationCommand, OrganizationDTO>
+	public class RegisterOrganizationCommandHandler : IRequestHandler<RegisterOrganizationCommand, BaseResponse<string>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IEmailService _emailService;
+		private readonly IPhotoService _photoService;
 
-		public RegisterOrganizationCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService)
+		public RegisterOrganizationCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService, IPhotoService photoService)
 		{
 			_unitOfWork = unitOfWork;
 			_emailService = emailService;
+			_photoService = photoService;
 		}
 
-		public async Task<OrganizationDTO> Handle(RegisterOrganizationCommand command, CancellationToken cancellationToken)
+		public async Task<BaseResponse<string>> Handle(RegisterOrganizationCommand command, CancellationToken cancellationToken)
 		{
 			var request = command.Request;
 
@@ -32,11 +34,17 @@ namespace Application.Features.Auth.Commands.RegisterOrganization
 			{
 				throw new ConflictException($"User with email '{request.ManagerEmail}' already exists.");
 			}
+			string? orgProfilePicUrl = null;
+			if (request.OrganizationProfilePicture != null)
+			{
+				orgProfilePicUrl = await _photoService.AddPhotoAsync(request.OrganizationProfilePicture);
+			}
+
 			var newOrganization = new Organization
 			{
 				Name = request.OrganizationName,
 				Description = request.OrganizationDescription,
-				ProfilePictureUrl = request.OrganizationProfilePictureUrl,
+				ProfilePictureUrl = orgProfilePicUrl,
 				DateJoined = DateTime.UtcNow
 			};
 
@@ -81,14 +89,7 @@ namespace Application.Features.Auth.Commands.RegisterOrganization
 
 			await _emailService.SendEmailAsync(newManager.Email, subject, body);
 
-			return new OrganizationDTO
-			{
-				Id = newOrganization.Id,
-				Name = newOrganization.Name,
-				Description = newOrganization.Description,
-				ProfilePictureUrl = newOrganization.ProfilePictureUrl,
-				DateJoined = newOrganization.DateJoined
-			};
+			return BaseResponse<string>.SuccessResponse(null, "Registration Successful. You can now check your email to verify.");
 		}
 
 		private string HashPassword(string password)

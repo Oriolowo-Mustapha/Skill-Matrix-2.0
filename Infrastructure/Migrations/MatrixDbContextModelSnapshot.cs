@@ -47,8 +47,15 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("PasswordResetTokenExpiry")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -66,11 +73,11 @@ namespace Infrastructure.Migrations
                         {
                             Id = new Guid("f4b1f8b4-5b4a-4b4a-8b4a-5b4a4b4a4b4a"),
                             DateJoined = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "superAdmin@gmail.com",
+                            Email = "skillmatrix77@gmail.com",
                             FirstName = "Super",
                             LastName = "Admin",
-                            PasswordHash = "$2a$12$EGOawab0.yM2V9ZqlNwuxuDRiPQ1nsIM9M4rsfWwqzNzy1Y8qBl1u",
-                            Role = 1,
+                            PasswordHash = "$2a$12$U6EhdNjpXotPZ04t54w.ZeNsMONXMidmU1WMPjOdAehb5OylKpZK2",
+                            Role = "SuperAdmin",
                             UserName = "Superadmin"
                         });
                 });
@@ -89,6 +96,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("CorrectAnswer")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Questions")
                         .IsRequired()
@@ -175,7 +185,7 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("ImprovementPlanId")
+                    b.Property<Guid?>("ImprovementPlanId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("LearnerID")
@@ -230,23 +240,14 @@ namespace Infrastructure.Migrations
                     b.Property<Guid?>("AssignedSkillId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("BadgeId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("DateAwarded")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<Guid?>("LearnerID")
                         .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<Guid?>("TeamMemberId")
                         .HasColumnType("uuid");
@@ -254,6 +255,8 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AssignedSkillId");
+
+                    b.HasIndex("BadgeId");
 
                     b.HasIndex("LearnerID");
 
@@ -266,6 +269,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CareerPathId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("DateAssigned")
@@ -289,6 +295,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CareerPathId");
 
                     b.HasIndex("LearnerId");
 
@@ -343,6 +351,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Criteria")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("timestamp with time zone");
 
@@ -354,7 +366,11 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProficiencyLevel")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -387,6 +403,27 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CareerPaths");
+                });
+
+            modelBuilder.Entity("Domain.Entities.CareerPathSkill", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CareerPathId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SkillId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CareerPathId");
+
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("CareerPathSkill");
                 });
 
             modelBuilder.Entity("Domain.Entities.ImprovementPlan", b =>
@@ -430,9 +467,18 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("EmailVerificationToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("EmailVerificationTokenExpiry")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsEmailVerified")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -442,14 +488,21 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("PasswordResetTokenExpiry")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("ProficiencyLevel")
                         .HasColumnType("integer");
 
                     b.Property<string>("ProfilePictureUrl")
                         .HasColumnType("text");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -476,9 +529,18 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("EmailVerificationToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("EmailVerificationTokenExpiry")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsEmailVerified")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -491,11 +553,18 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("PasswordResetTokenExpiry")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("ProfilePictureUrl")
                         .HasColumnType("text");
 
-                    b.Property<int>("Roles")
-                        .HasColumnType("integer");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -506,8 +575,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("OrganizationId")
-                        .IsUnique();
+                    b.HasIndex("OrganizationId");
 
                     b.ToTable("Managers");
                 });
@@ -521,8 +589,9 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DateJoined")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("ManagerId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -602,9 +671,18 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("EmailVerificationToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("EmailVerificationTokenExpiry")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsEmailVerified")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -620,14 +698,21 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("PasswordResetTokenExpiry")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("ProficiencyLevel")
                         .HasColumnType("integer");
 
                     b.Property<string>("ProfilePictureUrl")
                         .HasColumnType("text");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -777,6 +862,12 @@ namespace Infrastructure.Migrations
                         .WithMany("Badges")
                         .HasForeignKey("AssignedSkillId");
 
+                    b.HasOne("Domain.Entities.Badge", "Badge")
+                        .WithMany()
+                        .HasForeignKey("BadgeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.Learner", "Learner")
                         .WithMany("Badges")
                         .HasForeignKey("LearnerID")
@@ -787,6 +878,8 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("TeamMemberId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.Navigation("Badge");
+
                     b.Navigation("Learner");
 
                     b.Navigation("TeamMember");
@@ -794,6 +887,12 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.AssignedCareerPath", b =>
                 {
+                    b.HasOne("Domain.Entities.CareerPath", "CareerPath")
+                        .WithMany()
+                        .HasForeignKey("CareerPathId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.Learner", "Learner")
                         .WithMany("LearnerCareerPaths")
                         .HasForeignKey("LearnerId")
@@ -803,6 +902,8 @@ namespace Infrastructure.Migrations
                         .WithMany("CareerPaths")
                         .HasForeignKey("TeamMemberId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("CareerPath");
 
                     b.Navigation("Learner");
 
@@ -834,6 +935,25 @@ namespace Infrastructure.Migrations
                     b.Navigation("TeamMember");
                 });
 
+            modelBuilder.Entity("Domain.Entities.CareerPathSkill", b =>
+                {
+                    b.HasOne("Domain.Entities.CareerPath", "CareerPath")
+                        .WithMany("CareerPathSkills")
+                        .HasForeignKey("CareerPathId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Skill", "Skill")
+                        .WithMany("CareerPathSkills")
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CareerPath");
+
+                    b.Navigation("Skill");
+                });
+
             modelBuilder.Entity("Domain.Entities.ImprovementPlan", b =>
                 {
                     b.HasOne("Domain.Entities.AssessmentResult", "AssessmentResult")
@@ -848,8 +968,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Manager", b =>
                 {
                     b.HasOne("Domain.Entities.Organization", "Organization")
-                        .WithOne("Manager")
-                        .HasForeignKey("Domain.Entities.Manager", "OrganizationId")
+                        .WithMany("Managers")
+                        .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -949,8 +1069,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.AssessmentResult", b =>
                 {
-                    b.Navigation("ImprovementPlan")
-                        .IsRequired();
+                    b.Navigation("ImprovementPlan");
                 });
 
             modelBuilder.Entity("Domain.Entities.AssignedSkill", b =>
@@ -962,6 +1081,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("Badges");
 
                     b.Navigation("UserCareerPaths");
+                });
+
+            modelBuilder.Entity("Domain.Entities.CareerPath", b =>
+                {
+                    b.Navigation("CareerPathSkills");
                 });
 
             modelBuilder.Entity("Domain.Entities.ImprovementPlan", b =>
@@ -991,8 +1115,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Organization", b =>
                 {
-                    b.Navigation("Manager")
-                        .IsRequired();
+                    b.Navigation("Managers");
 
                     b.Navigation("TeamMembers");
                 });
@@ -1000,6 +1123,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Skill", b =>
                 {
                     b.Navigation("AssignedSkills");
+
+                    b.Navigation("CareerPathSkills");
                 });
 
             modelBuilder.Entity("Domain.Entities.TeamMember", b =>

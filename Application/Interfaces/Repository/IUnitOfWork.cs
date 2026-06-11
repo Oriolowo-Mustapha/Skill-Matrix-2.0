@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 
 namespace Application.Interfaces.Repository
 {
@@ -12,6 +12,7 @@ namespace Application.Interfaces.Repository
 		IUserResponseRepository UserResponses { get; }
 
 		IManagerRepository ManagerRepository { get; }
+		IAdminRepository Admins { get; }
 		ILearnerRepository Learners { get; }
 		ITeamMemberRepository TeamMembers { get; }
 		IGenericRepository<Organization> Organizations { get; }

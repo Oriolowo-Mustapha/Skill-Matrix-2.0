@@ -1,6 +1,7 @@
+using Application.DTOs;
 using MediatR;
 
 namespace Application.Features.Auth.Commands.ResetPassword
 {
-	public record ResetPasswordCommand(string Email, string Token, string NewPassword) : IRequest<bool>;
+	public record ResetPasswordCommand(string Email, string Token, string NewPassword) : IRequest<BaseResponse<bool>>;
 }

@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+using Application.DTOs;
 using Application.Exceptions;
 using Application.Extensions;
 using Application.Interfaces.Repository;
@@ -12,7 +12,7 @@ using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegiste
 
 namespace Application.Features.Auth.Commands.Login
 {
-	public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponseDTO>
+	public class LoginCommandHandler : IRequestHandler<LoginCommand, BaseResponse<LoginResponseDTO>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IConfiguration _configuration;
@@ -23,40 +23,99 @@ namespace Application.Features.Auth.Commands.Login
 			_configuration = configuration;
 		}
 
-		public async Task<LoginResponseDTO> Handle(LoginCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<LoginResponseDTO>> Handle(LoginCommand request, CancellationToken cancellationToken)
 		{
 			UserDTO? userDto = null;
 			string? passwordHash = null;
 			bool isEmailVerified = false;
 			List<string> roles = new List<string>();
 
-			var learner = await _unitOfWork.Learners.GetByEmailAsync(request.req.Email);
-			if (learner != null)
+			if (!string.IsNullOrWhiteSpace(request.req.Email))
 			{
-				userDto = learner.ToDto();
-				passwordHash = learner.PasswordHash;
-				isEmailVerified = learner.IsEmailVerified;
-				roles.Add(learner.Role);
-			}
-			else
-			{
-				var teamMember = await _unitOfWork.TeamMembers.GetByEmailAsync(request.req.Email);
-				if (teamMember != null)
+				var learner = await _unitOfWork.Learners.GetByEmailAsync(request.req.Email);
+				if (learner != null)
 				{
-					userDto = teamMember.ToDto();
-					passwordHash = teamMember.PasswordHash;
-					isEmailVerified = teamMember.IsEmailVerified;
-					roles.Add(teamMember.Role);
+					userDto = learner.ToDto();
+					passwordHash = learner.PasswordHash;
+					isEmailVerified = learner.IsEmailVerified;
+					roles.Add(learner.Role);
 				}
 				else
 				{
-					var manager = await _unitOfWork.ManagerRepository.GetByEmailAsync(request.req.Email);
-					if (manager != null)
+					var teamMember = await _unitOfWork.TeamMembers.GetByEmailAsync(request.req.Email);
+					if (teamMember != null)
 					{
-						userDto = manager.ToDto();
-						passwordHash = manager.PasswordHash;
-						isEmailVerified = manager.IsEmailVerified;
-						roles.Add(manager.Role.ToString());
+						userDto = teamMember.ToDto();
+						passwordHash = teamMember.PasswordHash;
+						isEmailVerified = teamMember.IsEmailVerified;
+						roles.Add(teamMember.Role);
+					}
+					else
+					{
+						var manager = await _unitOfWork.ManagerRepository.GetByEmailAsync(request.req.Email);
+						if (manager != null)
+						{
+							userDto = manager.ToDto();
+							passwordHash = manager.PasswordHash;
+							isEmailVerified = manager.IsEmailVerified;
+							roles.Add(manager.Role.ToString());
+						}
+						else
+						{
+							var admin = await _unitOfWork.Admins.GetByEmailAsync(request.req.Email);
+							if (admin != null)
+							{
+								userDto = admin.ToDto();
+								passwordHash = admin.PasswordHash;
+								isEmailVerified = true; // Admins don't have this field, assume true
+								roles.Add(admin.Role);
+							}
+						}
+					}
+				}
+			}
+
+			if (userDto == null && !string.IsNullOrWhiteSpace(request.req.UserName))
+			{
+				var learner = await _unitOfWork.Learners.GetByUserName(request.req.UserName);
+				if (learner != null)
+				{
+					userDto = learner.ToDto();
+					passwordHash = learner.PasswordHash;
+					isEmailVerified = learner.IsEmailVerified;
+					roles.Add(learner.Role);
+				}
+				else
+				{
+					var teamMember = await _unitOfWork.TeamMembers.GetByUserNameAsync(request.req.UserName);
+					if (teamMember != null)
+					{
+						userDto = teamMember.ToDto();
+						passwordHash = teamMember.PasswordHash;
+						isEmailVerified = teamMember.IsEmailVerified;
+						roles.Add(teamMember.Role);
+					}
+					else
+					{
+						var manager = await _unitOfWork.ManagerRepository.GetByUsernameAsync(request.req.UserName);
+						if (manager != null)
+						{
+							userDto = manager.ToDto();
+							passwordHash = manager.PasswordHash;
+							isEmailVerified = manager.IsEmailVerified;
+							roles.Add(manager.Role.ToString());
+						}
+						else
+						{
+							var admin = await _unitOfWork.Admins.GetByUserNameAsync(request.req.UserName);
+							if (admin != null)
+							{
+								userDto = admin.ToDto();
+								passwordHash = admin.PasswordHash;
+								isEmailVerified = true;
+								roles.Add(admin.Role);
+							}
+						}
 					}
 				}
 			}
@@ -73,11 +132,11 @@ namespace Application.Features.Auth.Commands.Login
 
 			var token = GenerateJwtToken(userDto.Id.ToString(), userDto.Email, roles, _configuration);
 
-			return new LoginResponseDTO
+			return BaseResponse<LoginResponseDTO>.SuccessResponse(new LoginResponseDTO
 			{
 				Token = token,
 				User = userDto
-			};
+			}, "Login successful.");
 		}
 
 

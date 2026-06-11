@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+using Application.DTOs;
 using Application.Exceptions;
 using Application.Extensions;
 using Application.Interfaces.Repository;
@@ -8,18 +8,20 @@ using MediatR;
 
 namespace Application.Features.Auth.Commands.RegisterLearner
 {
-	public class RegisterLearnerCommandHandler : IRequestHandler<RegisterLearnerCommand, UserDTO>
+	public class RegisterLearnerCommandHandler : IRequestHandler<RegisterLearnerCommand, BaseResponse<string>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IEmailService _emailService;
+		private readonly IPhotoService _photoService;
 
-		public RegisterLearnerCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService)
+		public RegisterLearnerCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService, IPhotoService photoService)
 		{
 			_unitOfWork = unitOfWork;
 			_emailService = emailService;
+			_photoService = photoService;
 		}
 
-		public async Task<UserDTO> Handle(RegisterLearnerCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<string>> Handle(RegisterLearnerCommand request, CancellationToken cancellationToken)
 		{
 			var learnerExits = await _unitOfWork.Learners.GetByEmailAsync(request.req.Email);
 			if (learnerExits != null)
@@ -29,6 +31,12 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 
 			var hashedPassword = HashPassword(request.req.PasswordHash);
 			var verificationToken = Guid.NewGuid().ToString();
+			
+			string? profilePicUrl = null;
+			if (request.req.ProfilePic != null)
+			{
+				profilePicUrl = await _photoService.AddPhotoAsync(request.req.ProfilePic);
+			}
 
 			var learner = new Learner
 			{
@@ -36,8 +44,8 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 				LastName = request.req.LastName,
 				Email = request.req.Email,
 				UserName = request.req.UserName,
-				Role = request.req.Role,
-				ProfilePictureUrl = request.req.ProfilePicUrl,
+				Role = Domain.Enum.Roles.Learner.ToString(),
+				ProfilePictureUrl = profilePicUrl,
 				PasswordHash = hashedPassword,
 				IsEmailVerified = false,
 				EmailVerificationToken = verificationToken,
@@ -66,7 +74,7 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 				""";
 			await _emailService.SendEmailAsync(learner.Email, subject, body);
 
-			return learner.ToDto();
+			return BaseResponse<string>.SuccessResponse(null, "Registration Successful. You can now check your email to verify.");
 		}
 
 		private string HashPassword(string password)

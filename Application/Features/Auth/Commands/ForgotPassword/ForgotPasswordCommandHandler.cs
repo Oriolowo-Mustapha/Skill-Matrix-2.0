@@ -1,10 +1,11 @@
+using Application.DTOs;
 using Application.Interfaces.Repository;
 using Application.Interfaces.Service;
 using MediatR;
 
 namespace Application.Features.Auth.Commands.ForgotPassword
 {
-	public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand, bool>
+	public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand, BaseResponse<bool>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IEmailService _emailService;
@@ -15,7 +16,7 @@ namespace Application.Features.Auth.Commands.ForgotPassword
 			_emailService = emailService;
 		}
 
-		public async Task<bool> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<bool>> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
 		{
 			var resetToken = Guid.NewGuid().ToString();
 			var tokenExpiry = DateTime.UtcNow.AddHours(1);
@@ -53,12 +54,23 @@ namespace Application.Features.Auth.Commands.ForgotPassword
 						userEmail = manager.Email;
 						userName = manager.UserName;
 					}
+					else
+					{
+						var admin = await _unitOfWork.Admins.GetByEmailAsync(request.Email);
+						if (admin != null)
+						{
+							admin.PasswordResetToken = resetToken;
+							admin.PasswordResetTokenExpiry = tokenExpiry;
+							await _unitOfWork.Admins.UpdateAsync(admin);
+							userEmail = admin.Email;
+							userName = admin.UserName;
+						}
+					}
 				}
 			}
 
-			// Always return true to prevent email enumeration attacks
 			if (userEmail == null)
-				return true;
+				return BaseResponse<bool>.SuccessResponse(true, "If an account with that email exists, a password reset link has been sent.");
 
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
@@ -82,7 +94,7 @@ namespace Application.Features.Auth.Commands.ForgotPassword
 
 			await _emailService.SendEmailAsync(userEmail, subject, body);
 
-			return true;
+			return BaseResponse<bool>.SuccessResponse(true, "If an account with that email exists, a password reset link has been sent.");
 		}
 	}
 }

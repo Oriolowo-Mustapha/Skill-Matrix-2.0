@@ -184,11 +184,13 @@ namespace Infrastructure.Context
 						Id = new Guid("f4b1f8b4-5b4a-4b4a-8b4a-5b4a4b4a4b4a"),
 						FirstName = "Super",
 						LastName = "Admin",
-						Email = "superAdmin@gmail.com",
+						Email = "skillmatrix77@gmail.com",
 						UserName = "Superadmin",
-						PasswordHash = "$2a$12$EGOawab0.yM2V9ZqlNwuxuDRiPQ1nsIM9M4rsfWwqzNzy1Y8qBl1u",
+						PasswordHash = "$2a$12$U6EhdNjpXotPZ04t54w.ZeNsMONXMidmU1WMPjOdAehb5OylKpZK2",
 						Role = Domain.Enum.Roles.SuperAdmin.ToString(),
-						DateJoined = new DateTime(2024, 01, 01, 0, 0, 0, DateTimeKind.Utc)
+						DateJoined = new DateTime(2024, 01, 01, 0, 0, 0, DateTimeKind.Utc),
+						PasswordResetToken = default,
+						PasswordResetTokenExpiry = default
 					}
 				);
 		}

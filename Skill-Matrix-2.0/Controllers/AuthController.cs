@@ -2,6 +2,7 @@ using Application.DTOs;
 using Application.Features.Auth.Commands.ForgotPassword;
 using Application.Features.Auth.Commands.Login;
 using Application.Features.Auth.Commands.RegisterLearner;
+using Application.Features.Auth.Commands.RegisterOrganization;
 using Application.Features.Auth.Commands.ResetPassword;
 using Application.Features.Auth.Commands.VerifyEmail;
 using MediatR;
@@ -24,15 +25,25 @@ namespace Skill_Matrix_2._0.Controllers
 		}
 
 		[HttpPost("register-learner")]
-		public async Task<ActionResult<UserDTO>> RegisterLearner([FromBody] RegisterLearnerRequestDTO request)
+		[Consumes("multipart/form-data")]
+		public async Task<ActionResult<BaseResponse<string>>> RegisterLearner([FromForm] RegisterLearnerRequestDTO request)
 		{
 			var command = new RegisterLearnerCommand(request);
 			var result = await _mediator.Send(command);
 			return Ok(result);
 		}
 
-		[HttpPost("login")]
-		public async Task<ActionResult<UserDTO>> Login([FromBody] LoginRequestDTO request)
+        [HttpPost("register-organization")]
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<BaseResponse<string>>> RegisterOrganization([FromForm] RegisterOrganizationRequestDTO request)
+        {
+            var command = new RegisterOrganizationCommand(request);
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPost("login")]
+		public async Task<ActionResult<BaseResponse<LoginResponseDTO>>> Login([FromBody] LoginRequestDTO request)
 		{
 			var command = new LoginCommand(request);
 			var result = await _mediator.Send(command);
@@ -40,27 +51,27 @@ namespace Skill_Matrix_2._0.Controllers
 		}
 
 		[HttpGet("verify-email")]
-		public async Task<IActionResult> VerifyEmail([FromQuery] string token, [FromQuery] string email)
+		public async Task<ActionResult<BaseResponse<bool>>> VerifyEmail([FromQuery] string token, [FromQuery] string email)
 		{
 			var command = new VerifyEmailCommand(email, token);
-			await _mediator.Send(command);
-			return Ok(new { Message = "Email verified successfully. You can now log in." });
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpPost("forgot-password")]
-		public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequestDTO request)
+		public async Task<ActionResult<BaseResponse<bool>>> ForgotPassword([FromBody] ForgotPasswordRequestDTO request)
 		{
 			var command = new ForgotPasswordCommand(request.Email);
-			await _mediator.Send(command);
-			return Ok(new { Message = "If an account with that email exists, a password reset link has been sent." });
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpPost("reset-password")]
-		public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequestDTO request)
+		public async Task<ActionResult<BaseResponse<bool>>> ResetPassword([FromBody] ResetPasswordRequestDTO request)
 		{
 			var command = new ResetPasswordCommand(request.Email, request.Token, request.NewPassword);
-			await _mediator.Send(command);
-			return Ok(new { Message = "Password has been reset successfully. You can now log in with your new password." });
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpGet("google-login")]

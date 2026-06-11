@@ -1,10 +1,11 @@
+using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
 using MediatR;
 
 namespace Application.Features.Auth.Commands.VerifyEmail
 {
-	public class VerifyEmailCommandHandler : IRequestHandler<VerifyEmailCommand, bool>
+	public class VerifyEmailCommandHandler : IRequestHandler<VerifyEmailCommand, BaseResponse<bool>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 
@@ -13,7 +14,7 @@ namespace Application.Features.Auth.Commands.VerifyEmail
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<bool> Handle(VerifyEmailCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<bool>> Handle(VerifyEmailCommand request, CancellationToken cancellationToken)
 		{
 			var learner = await _unitOfWork.Learners.GetByEmailAsync(request.Email);
 			if (learner != null)
@@ -33,7 +34,7 @@ namespace Application.Features.Auth.Commands.VerifyEmail
 
 				await _unitOfWork.Learners.UpdateAsync(learner);
 				await _unitOfWork.SaveChangesAsync(cancellationToken);
-				return true;
+				return BaseResponse<bool>.SuccessResponse(true, "Email verified successfully. You can now log in.");
 			}
 
 			var teamMember = await _unitOfWork.TeamMembers.GetByEmailAsync(request.Email);
@@ -54,7 +55,7 @@ namespace Application.Features.Auth.Commands.VerifyEmail
 
 				await _unitOfWork.TeamMembers.UpdateAsync(teamMember);
 				await _unitOfWork.SaveChangesAsync(cancellationToken);
-				return true;
+				return BaseResponse<bool>.SuccessResponse(true, "Email verified successfully. You can now log in.");
 			}
 
 			var manager = await _unitOfWork.ManagerRepository.GetByEmailAsync(request.Email);
@@ -75,7 +76,7 @@ namespace Application.Features.Auth.Commands.VerifyEmail
 
 				await _unitOfWork.ManagerRepository.UpdateAsync(manager);
 				await _unitOfWork.SaveChangesAsync(cancellationToken);
-				return true;
+				return BaseResponse<bool>.SuccessResponse(true, "Email verified successfully. You can now log in.");
 			}
 
 			throw new NotFoundException($"No user found with email {request.Email}.");

@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities
+namespace Domain.Entities
 {
 	public class ImprovementPlan : BaseEntity
 	{
@@ -7,6 +7,6 @@
 		public DateTime DateGenerated { get; set; } = DateTime.UtcNow;
 		public Guid AssessmentResultId { get; set; }
 		public AssessmentResult AssessmentResult { get; set; } = null!;
-		public List<RecommendedResource> RecommendedResources = new List<RecommendedResource>();
+		public List<RecommendedResource> RecommendedResources { get; set; } = new List<RecommendedResource>();
 	}
 }

@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities
+namespace Domain.Entities
 {
 	public class Assessment
 	{
@@ -9,6 +9,6 @@
 		public AssessmentBatch AssessmentBatch { get; set; } = null!;
 		public List<AssessmentOptions> AssessmentOptions { get; set; } = new List<AssessmentOptions>();
 		public List<UserResponse> UserResponses { get; set; } = new List<UserResponse>();
-		public DateTime CreatedAt = DateTime.UtcNow;
+		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 	}
 }

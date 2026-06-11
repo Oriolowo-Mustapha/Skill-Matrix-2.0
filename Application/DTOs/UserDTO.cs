@@ -1,4 +1,5 @@
-﻿using Domain.Enum;
+using Domain.Enum;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.DTOs
 {
@@ -32,8 +33,7 @@ namespace Application.DTOs
 		public string LastName { get; set; } = string.Empty;
 		public string Email { get; set; } = string.Empty;
 		public string UserName { get; set; } = string.Empty;
-		public string Role { get; set; } = Roles.Learner.ToString();
-		public string? ProfilePicUrl { get; set; }
+		public IFormFile? ProfilePic { get; set; }
 		public string PasswordHash { get; set; } = string.Empty;
 	}
 
@@ -43,7 +43,7 @@ namespace Application.DTOs
 		public string LastName { get; set; } = string.Empty;
 		public string UserName { get; set; } = string.Empty;
 		public string Email { get; set; } = string.Empty;
-		public string? ProfilePictureUrl { get; set; }
+		public IFormFile? ProfilePic { get; set; }
 		public string PasswordHash { get; set; } = string.Empty;
 	}
 
@@ -51,6 +51,6 @@ namespace Application.DTOs
 	{
 		public string FirstName { get; set; } = string.Empty;
 		public string LastName { get; set; } = string.Empty;
-		public string? ProfilePictureUrl { get; set; }
+		public IFormFile? ProfilePic { get; set; }
 	}
 }

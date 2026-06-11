@@ -1,3 +1,4 @@
+using Application.DTOs;
 using MediatR;
 
 namespace Application.Features.Badges.Commands.AssignBadgeToLearner

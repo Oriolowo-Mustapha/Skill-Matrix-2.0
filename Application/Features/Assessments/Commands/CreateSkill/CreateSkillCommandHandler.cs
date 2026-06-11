@@ -1,3 +1,4 @@
+using Application.DTOs;
 ﻿using Application.Exceptions;
 using Application.Interfaces.Repository;
 using Domain.Entities;
@@ -5,7 +6,7 @@ using MediatR;
 
 namespace Application.Features.Assessments.Commands.CreateSkill
 {
-	public class CreateSkillCommandHandler : IRequestHandler<CreateSkillCommand, Guid>
+	public class CreateSkillCommandHandler : IRequestHandler<CreateSkillCommand, BaseResponse<string>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 
@@ -14,7 +15,7 @@ namespace Application.Features.Assessments.Commands.CreateSkill
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<Guid> Handle(CreateSkillCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<string>> Handle(CreateSkillCommand request, CancellationToken cancellationToken)
 		{
 			var existingSkill = await _unitOfWork.Skills.GetByNameAsync(request.Name);
 
@@ -33,7 +34,7 @@ namespace Application.Features.Assessments.Commands.CreateSkill
 			await _unitOfWork.Skills.AddAsync(newSkill);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			return newSkill.Id;
+			return BaseResponse<string>.SuccessResponse(newSkill.Name, $"{newSkill.Name} has been created successfully.");
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using Domain.Enum;
+using Domain.Enum;
 
 namespace Domain.Entities
 {
@@ -10,6 +10,8 @@ namespace Domain.Entities
 		public string Email { get; set; } = string.Empty;
 		public string UserName { get; set; } = string.Empty;
 		public string PasswordHash { get; set; } = string.Empty;
+		public string? PasswordResetToken { get; set; }
+		public DateTime? PasswordResetTokenExpiry { get; set; }
 		public string Role { get; set; } = Roles.Admin.ToString();
 		public DateTime DateJoined { get; set; }
 	}

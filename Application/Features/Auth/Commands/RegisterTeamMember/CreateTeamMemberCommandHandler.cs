@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
 using Application.Interfaces.Service;
@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Features.Auth.Commands.RegisterTeamMember
 {
-	public class CreateTeamMemberCommandHandler : IRequestHandler<CreateTeamMemberCommand, TeamMemberDTO>
+	public class CreateTeamMemberCommandHandler : IRequestHandler<CreateTeamMemberCommand, BaseResponse<TeamMemberDTO>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IEmailService _emailService;
@@ -17,7 +17,7 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 			_unitOfWork = unitOfWork;
 			_emailService = emailService;
 		}
-		public async Task<TeamMemberDTO> Handle(CreateTeamMemberCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<TeamMemberDTO>> Handle(CreateTeamMemberCommand request, CancellationToken cancellationToken)
 		{
 			var getManager = await _unitOfWork.ManagerRepository.GetByIdAsync(request.ManagerId);
 			if (getManager == null)
@@ -88,7 +88,7 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 				""";
 
 			await _emailService.SendEmailAsync(newTeamMember.Email, subject, body);
-			return toDTO;
+			return BaseResponse<TeamMemberDTO>.SuccessResponse(toDTO, "Team member successfully registered.");
 		}
 
 		private string HashPassword(string password)

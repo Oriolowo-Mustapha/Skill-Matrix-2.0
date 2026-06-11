@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Repository;
+using Application.Interfaces.Repository;
 using Domain.Entities;
 using Infrastructure.Context;
 using Infrastructure.Implementation.Servicies;
@@ -18,6 +18,7 @@ namespace Infrastructure.Implementation.Repositories
 		private ILearnerRepository? _learners;
 		private ITeamMemberRepository? _teamMembers;
 		private IManagerRepository? _managers;
+		private IAdminRepository? _admins;
 		private IGenericRepository<Organization>? _organizations;
 		private IGenericRepository<Badge>? _badges;
 		private IGenericRepository<CareerPath>? _careerPaths;
@@ -53,6 +54,9 @@ namespace Infrastructure.Implementation.Repositories
 
 		public IManagerRepository ManagerRepository =>
 			_managers ??= new ManagerRepository(_context);
+
+		public IAdminRepository Admins =>
+			_admins ??= new AdminRepository(_context);
 
 		public IGenericRepository<Organization> Organizations =>
 			_organizations ??= new GenericRepository<Organization>(_context);

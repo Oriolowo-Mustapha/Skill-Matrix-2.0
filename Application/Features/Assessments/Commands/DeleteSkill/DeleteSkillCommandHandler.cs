@@ -1,10 +1,11 @@
+using Application.DTOs;
 ﻿using Application.Exceptions;
 using Application.Interfaces.Repository;
 using MediatR;
 
 namespace Application.Features.Assessments.Commands.DeleteSkill
 {
-	public class DeleteSkillCommandHandler : IRequestHandler<DeleteSkillCommand, Unit>
+	public class DeleteSkillCommandHandler : IRequestHandler<DeleteSkillCommand, BaseResponse<Unit>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 
@@ -12,7 +13,7 @@ namespace Application.Features.Assessments.Commands.DeleteSkill
 		{
 			_unitOfWork = unitOfWork;
 		}
-		public async Task<Unit> Handle(DeleteSkillCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<Unit>> Handle(DeleteSkillCommand request, CancellationToken cancellationToken)
 		{
 			var fetchSkill = await _unitOfWork.Skills.GetByIdAsync(request.Id);
 			if (fetchSkill == null)
@@ -28,7 +29,7 @@ namespace Application.Features.Assessments.Commands.DeleteSkill
 			}
 			await _unitOfWork.Skills.DeleteAsync(fetchSkill);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
-			return Unit.Value;
+			return BaseResponse<Unit>.SuccessResponse(Unit.Value);
 		}
 	}
 }

@@ -1,5 +1,7 @@
+using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
+using Application.Interfaces.Service;
 using Domain.Entities;
 using MediatR;
 
@@ -8,10 +10,12 @@ namespace Application.Features.Badges.Commands.AssignBadgeToLearner
 	public class AssignBadgeToLearnerCommandHandler : IRequestHandler<AssignBadgeToLearnerCommand, Guid>
 	{
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IBadgeEligibilityChecker _eligibilityChecker;
 
-		public AssignBadgeToLearnerCommandHandler(IUnitOfWork unitOfWork)
+		public AssignBadgeToLearnerCommandHandler(IUnitOfWork unitOfWork, IBadgeEligibilityChecker eligibilityChecker)
 		{
 			_unitOfWork = unitOfWork;
+			_eligibilityChecker = eligibilityChecker;
 		}
 
 		public async Task<Guid> Handle(AssignBadgeToLearnerCommand request, CancellationToken cancellationToken)
@@ -35,17 +39,11 @@ namespace Application.Features.Badges.Commands.AssignBadgeToLearner
 				throw new ConflictException($"Badge '{badge.Name}' is already assigned to Learner '{learner.Id}'.");
 			}
 
-			// 3. Criteria Checking (Conceptual)
-			// If the Badge has a Criteria string, this implies there are conditions to be met.
-			// In a real-world scenario with structured criteria (e.g., required skills, completed assessments),
-			// this section would involve querying the learner's progress and evaluating against the badge's criteria.
-			// For this implementation, we acknowledge the criteria but assume an external process
-			// or manual review ensures they are met before this command is executed.
-			if (!string.IsNullOrWhiteSpace(badge.Criteria))
+			// 3. Criteria Checking
+			var isEligible = await _eligibilityChecker.EvaluateEligibilityAsync(request.LearnerId, badge.ProficiencyLevel, badge.Criteria);
+			if (!isEligible)
 			{
-				// Add logging or further checks here if criteria were machine-readable.
-				// For now, we proceed assuming the criteria have been considered.
-				// Example: Console.WriteLine($"Note: Badge '{badge.Name}' has criteria: '{badge.Criteria}'. Assignment proceeding assuming criteria met.");
+				throw new BadRequestException($"Learner has not achieved the required criteria or proficiency level ('{badge.ProficiencyLevel}') to earn this badge.");
 			}
 
 			var assignedBadge = new AssignedBadge

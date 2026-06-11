@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Application.Features.Assessments.Commands.ImprovementPlans
 {
-	public class GenerateImprovementPlanCommandHandler : IRequestHandler<GenerateImprovementPlanCommand, ImprovementPlanDTO>
+	public class GenerateImprovementPlanCommandHandler : IRequestHandler<GenerateImprovementPlanCommand, BaseResponse<ImprovementPlanDTO>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IAiService _aiService;
@@ -20,13 +20,13 @@ namespace Application.Features.Assessments.Commands.ImprovementPlans
 			_aiService = aiService;
 		}
 
-		public async Task<ImprovementPlanDTO> Handle(GenerateImprovementPlanCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<ImprovementPlanDTO>> Handle(GenerateImprovementPlanCommand request, CancellationToken cancellationToken)
 		{
 			var existingPlan = await _unitOfWork.ImprovementPlans.GetByAssessmentResultIdAsync(request.AssessmentResultId);
 
 			if (existingPlan != null)
 			{
-				return existingPlan.ToDto();
+				return BaseResponse<ImprovementPlanDTO>.SuccessResponse(existingPlan.ToDto());
 			}
 
 			var assessmentResult = await _unitOfWork.AssessmentResults.GetByIdAsync(request.AssessmentResultId);
@@ -58,7 +58,7 @@ namespace Application.Features.Assessments.Commands.ImprovementPlans
 			await _unitOfWork.ImprovementPlans.AddAsync(newPlan);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			return newPlan.ToDto();
+			return BaseResponse<ImprovementPlanDTO>.SuccessResponse(newPlan.ToDto());
 		}
 	}
 }

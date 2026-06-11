@@ -30,8 +30,8 @@ namespace Skill_Matrix_2_0.Controllers
 			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
 
 			var command = new StartAssessmentCommand(assesmentDto, userId, userRole);
-			var result = await _mediator.Send(command);
-			return Ok(result);
+			await _mediator.Send(command);
+			return NoContent();
 		}
 
 		[HttpPost("submit")]
@@ -43,8 +43,8 @@ namespace Skill_Matrix_2_0.Controllers
 			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
 
 			var command = new SubmitAssessmentCommand(submitDto, userId, userRole);
-			var result = await _mediator.Send(command);
-			return Ok(result);
+			await _mediator.Send(command);
+			return NoContent();
 		}
 
 		[HttpGet("results/{id}")]
@@ -55,8 +55,8 @@ namespace Skill_Matrix_2_0.Controllers
 			var userId = Guid.Parse(userIdClaim);
 
 			var query = new GetAssessmentResultQuery(id, userId);
-			var result = await _mediator.Send(query);
-			return Ok(result);
+			await _mediator.Send(query);
+			return NoContent();
 		}
 	}
 }

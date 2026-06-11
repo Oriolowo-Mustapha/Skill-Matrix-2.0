@@ -1,6 +1,8 @@
+using Application.DTOs;
 using Application.Exceptions;
 using Application.Features.Badges.Commands.AssignBadgeToTeamMember;
 using Application.Interfaces.Repository;
+using Application.Interfaces.Service;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -12,10 +14,12 @@ namespace Application.Features.Badges.Commands.AssignBadgeToTeamMember
     public class AssignBadgeToTeamMemberCommandHandler : IRequestHandler<AssignBadgeToTeamMemberCommand, Guid>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IBadgeEligibilityChecker _eligibilityChecker;
 
-        public AssignBadgeToTeamMemberCommandHandler(IUnitOfWork unitOfWork)
+        public AssignBadgeToTeamMemberCommandHandler(IUnitOfWork unitOfWork, IBadgeEligibilityChecker eligibilityChecker)
         {
             _unitOfWork = unitOfWork;
+            _eligibilityChecker = eligibilityChecker;
         }
 
         public async Task<Guid> Handle(AssignBadgeToTeamMemberCommand request, CancellationToken cancellationToken)
@@ -41,11 +45,11 @@ namespace Application.Features.Badges.Commands.AssignBadgeToTeamMember
                 throw new ConflictException($"Badge '{badge.Name}' is already assigned to Team Member '{teamMember.Id}'.");
             }
 
-            // 3. Criteria Checking (Conceptual) - Same logic as AssignBadgeToLearnerCommandHandler
-            if (!string.IsNullOrWhiteSpace(badge.Criteria))
+            // 3. Criteria Checking
+            var isEligible = await _eligibilityChecker.EvaluateEligibilityAsync(request.TeamMemberId, badge.ProficiencyLevel, badge.Criteria);
+            if (!isEligible)
             {
-                // Add logging or further checks here if criteria were machine-readable.
-                // For now, we proceed assuming the criteria have been considered.
+                throw new BadRequestException($"Team Member has not achieved the required criteria or proficiency level ('{badge.ProficiencyLevel}') to earn this badge.");
             }
 
             // 4. Create AssignedBadge entity

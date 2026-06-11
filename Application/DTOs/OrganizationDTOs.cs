@@ -1,10 +1,12 @@
+using Microsoft.AspNetCore.Http;
+
 namespace Application.DTOs
 {
     public record RegisterOrganizationRequestDTO
     {
         // Organization Details
         public string OrganizationName { get; set; } = string.Empty;
-        public string? OrganizationProfilePictureUrl { get; set; }
+        public IFormFile? OrganizationProfilePicture { get; set; }
         public string OrganizationDescription { get; set; } = string.Empty;
 
         // Manager Details

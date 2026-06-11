@@ -1,3 +1,4 @@
+using Application.DTOs;
 using Application.Exceptions;
 using Application.Features.Badges.Commands.DeleteBadge;
 using Application.Interfaces.Repository;

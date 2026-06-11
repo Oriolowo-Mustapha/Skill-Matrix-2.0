@@ -1,7 +1,7 @@
-﻿using Application.DTOs;
+using Application.DTOs;
 using MediatR;
 
 namespace Application.Features.Auth.Commands.Login
 {
-	public record LoginCommand(LoginRequestDTO req) : IRequest<LoginResponseDTO>;
+	public record LoginCommand(LoginRequestDTO req) : IRequest<BaseResponse<LoginResponseDTO>>;
 }
