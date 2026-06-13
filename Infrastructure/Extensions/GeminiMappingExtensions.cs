@@ -9,21 +9,39 @@ namespace Infrastructure.Extensions
 	{
 		public static Assessment ToEntity(this GeminiQuestionDto dto)
 		{
+			var isCoding = dto.QuestionType.Equals("Coding", StringComparison.OrdinalIgnoreCase);
 			return new Assessment
 			{
 				Questions = dto.QuestionText,
 				CorrectAnswer = dto.CorrectAnswer,
-				AssessmentOptions = dto.Options.Select(o => new AssessmentOptions { OptionText = o }).ToList()
+				QuestionType = isCoding ? QuestionType.Coding : QuestionType.MultipleChoice,
+				ExpectedOutput = dto.ExpectedOutput,
+				Concept = dto.Concept,
+				AssessmentOptions = isCoding ? new List<AssessmentOptions>() : dto.Options.Select(o => new AssessmentOptions { OptionText = o }).ToList()
 			};
 		}
 
 		public static ImprovementPlan ToEntity(this GeminiPlanDto dto)
 		{
+			var resources = dto.Resources.Select(r => r.ToEntity()).ToList();
+			var tasks = dto.Tasks.Select(t =>
+			{
+				var matchingResource = resources.FirstOrDefault(r => r.Title.Equals(t.ResourceTitle, StringComparison.OrdinalIgnoreCase));
+				return new ImprovementTask
+				{
+					Concept = t.Concept,
+					Description = t.Description,
+					Status = "Pending",
+					RecommendedResource = matchingResource
+				};
+			}).ToList();
+
 			return new ImprovementPlan
 			{
 				GeneratedSummary = dto.Summary,
 				FocusArea = dto.FocusAreas,
-				RecommendedResources = dto.Resources.Select(r => r.ToEntity()).ToList()
+				RecommendedResources = resources,
+				Tasks = tasks
 			};
 		}
 
@@ -34,7 +52,8 @@ namespace Infrastructure.Extensions
 				Title = dto.Title,
 				Url = dto.Url,
 				Description = "AI Recommended",
-				ResourseType = Enum.TryParse<ResourseType>(dto.Type, true, out var t) ? t : ResourseType.Article
+				Concept = dto.Concept,
+				ResourseType = System.Enum.TryParse<ResourseType>(dto.Type, true, out var t) ? t : ResourseType.Article
 			};
 		}
 	}

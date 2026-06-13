@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Repository;
+using Application.Interfaces.Repository;
 using Domain.Entities;
 using Infrastructure.Context;
 using Infrastructure.Implementation.Repositories;
@@ -14,7 +14,8 @@ namespace Infrastructure.Implementation.Servicies
 
 		public async Task<TeamMember?> GetByEmailAsync(string email)
 		{
-			return await _context.TeamMembers.FirstOrDefaultAsync(t => t.Email == email);
+			var normalizedEmail = email.Trim().ToLowerInvariant();
+			return await _context.TeamMembers.FirstOrDefaultAsync(t => t.Email.ToLower() == normalizedEmail);
 		}
 
 		public async Task<IEnumerable<TeamMember>> GetByManagerIdAsync(Guid managerId)
@@ -26,8 +27,9 @@ namespace Infrastructure.Implementation.Servicies
 
 		public async Task<TeamMember?> GetByUserNameAsync(string userName)
 		{
+			var normalizedUserName = userName.Trim().ToLowerInvariant();
 			return await _context.TeamMembers
-				.FirstOrDefaultAsync(t => t.UserName == userName);
+				.FirstOrDefaultAsync(t => t.UserName.ToLower() == normalizedUserName);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Repository;
+using Application.Interfaces.Repository;
 using Domain.Entities;
 using Infrastructure.Context;
 using Infrastructure.Implementation.Repositories;
@@ -14,7 +14,8 @@ namespace Infrastructure.Implementation.Servicies
 
 		public async Task<Skill?> GetByNameAsync(string name)
 		{
-			return await _context.Skills.FirstOrDefaultAsync(s => s.Name == name);
+			var normalizedName = name.Trim().ToLower();
+			return await _context.Skills.FirstOrDefaultAsync(s => s.Name.ToLower() == normalizedName);
 		}
 	}
 }

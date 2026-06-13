@@ -8,5 +8,7 @@ namespace Domain.Entities
 		public Guid AssessmentResultId { get; set; }
 		public AssessmentResult AssessmentResult { get; set; } = null!;
 		public List<RecommendedResource> RecommendedResources { get; set; } = new List<RecommendedResource>();
+		public List<ImprovementTask> Tasks { get; set; } = new List<ImprovementTask>();
+		public bool IsAiGenerated { get; set; } = false;
 	}
 }

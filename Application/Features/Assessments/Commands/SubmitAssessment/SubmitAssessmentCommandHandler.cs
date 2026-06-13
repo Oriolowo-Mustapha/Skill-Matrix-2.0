@@ -1,10 +1,12 @@
-﻿using Application.DTOs;
+using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
 using Application.Interfaces.Service;
 using Domain.Entities;
 using Domain.Enum;
 using MediatR;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Application.Features.Assessments.Commands.SubmitAssessment
 {
@@ -33,42 +35,86 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				throw new AssessmentAlreadyCompletedException();
 			}
 
-			int correctAnswers = 0;
-			int totalQuestions = batch.Assessments.Count;
-			var userResponses = new List<UserResponse>();
-
-			foreach (var answerDto in request.requestDto.UserAnswers)
+			// Timer enforcement with 1-minute grace period
+			if (batch.StartedAt.HasValue && batch.TimeLimitMinutes.HasValue)
 			{
-				var question = batch.Assessments.FirstOrDefault(q => q.Id == answerDto.AssessmentQuestionId);
-
-				if (question == null) continue;
-				var response = new UserResponse
+				var deadline = batch.StartedAt.Value.AddMinutes(batch.TimeLimitMinutes.Value).AddMinutes(1);
+				if (DateTime.UtcNow > deadline)
 				{
-					AssessmentBatchId = batch.Id,
-					AssessmentQuestionId = question.Id,
-					SelectedOptionId = answerDto.SelectedOptionId,
-					Timestamp = DateTime.UtcNow
-				};
-
-				if (request.UserRole == Roles.Learner.ToString())
-					response.LearnerId = request.UserId;
-				else
-					response.TeamMemberId = request.UserId;
-
-				var selectedOption = question.AssessmentOptions.FirstOrDefault(o => o.Id == answerDto.SelectedOptionId);
-
-				bool isCorrect = false;
-				if (selectedOption != null && selectedOption.OptionText == question.CorrectAnswer)
-				{
-					isCorrect = true;
-					correctAnswers++;
+					throw new BadRequestException("Assessment time limit exceeded. Your submission was not accepted in time.");
 				}
-
-				response.IsCorrect = isCorrect;
-				userResponses.Add(response);
 			}
 
-			int score = (int)((double)correctAnswers / totalQuestions * 100);
+			int correctAnswers = 0;
+			int unansweredCount = 0;
+			int totalQuestions = batch.Assessments.Count;
+			var userResponses = new List<UserResponse>();
+			var conceptScores = new Dictionary<string, (int Correct, int Total)>(StringComparer.OrdinalIgnoreCase);
+
+			foreach (var question in batch.Assessments)
+			{
+				var answerDto = request.requestDto.UserAnswers.FirstOrDefault(a => a.AssessmentQuestionId == question.Id);
+				bool isCorrect = false;
+				bool isAnswered = answerDto != null;
+
+				if (isAnswered)
+				{
+					int selectedOptionId = answerDto!.SelectedOptionId;
+
+					// Grade based on question type
+					if (question.QuestionType == QuestionType.Coding)
+					{
+						// For coding questions, the grading happens via the run-code endpoint.
+						// The frontend sends SelectedOptionId = -1 for passed, 0 for failed.
+						isCorrect = selectedOptionId == -1;
+					}
+					else
+					{
+						var selectedOption = question.AssessmentOptions.FirstOrDefault(o => o.Id == selectedOptionId);
+						if (selectedOption != null && selectedOption.OptionText == question.CorrectAnswer)
+						{
+							isCorrect = true;
+						}
+					}
+
+					var response = new UserResponse
+					{
+						AssessmentBatchId = batch.Id,
+						AssessmentQuestionId = question.Id,
+						SelectedOptionId = selectedOptionId,
+						Timestamp = DateTime.UtcNow,
+						IsCorrect = isCorrect
+					};
+
+					if (request.UserRole == Roles.Learner.ToString())
+						response.LearnerId = request.UserId;
+					else
+						response.TeamMemberId = request.UserId;
+
+					userResponses.Add(response);
+				}
+				else
+				{
+					unansweredCount++;
+				}
+
+				if (isCorrect) correctAnswers++;
+
+				// Concept/Subtopic Aggregation (Edge Case: handle missing/empty concepts)
+				string concept = string.IsNullOrWhiteSpace(question.Concept) ? "General Theory" : question.Concept.Trim();
+				if (!conceptScores.ContainsKey(concept))
+				{
+					conceptScores[concept] = (0, 0);
+				}
+				var current = conceptScores[concept];
+				conceptScores[concept] = (current.Correct + (isCorrect ? 1 : 0), current.Total + 1);
+			}
+
+			int score = totalQuestions > 0 ? (int)((double)correctAnswers / totalQuestions * 100) : 0;
+
+			// Determine passing threshold based on proficiency level
+			int passingScore = GetPassingThreshold(batch.AssignedSkill.ProficiencyLevel);
+			bool passed = score >= passingScore;
 
 			var result = new AssessmentResult
 			{
@@ -77,6 +123,7 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				TotalQuestions = totalQuestions,
 				NoOfCorrectAnswers = correctAnswers,
 				NoOfWrongAnswers = totalQuestions - correctAnswers,
+				NoOfUnansweredQuestions = unansweredCount,
 				Score = score,
 				ProficiencyLevel = batch.AssignedSkill.ProficiencyLevel,
 				DateCreated = DateTime.UtcNow,
@@ -96,8 +143,59 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			// Generate Improvement Plan
-			var improvementPlan = await _aiService.GenerateImprovementPlanAsync(result);
+			// Identify Gaps and update/resolve existing active gaps (Edge Case: resolve duplicates)
+			var skillGaps = new List<SkillGap>();
+			foreach (var kvp in conceptScores)
+			{
+				string conceptName = kvp.Key;
+				var stats = kvp.Value;
+				int conceptScore = stats.Total > 0 ? (int)((double)stats.Correct / stats.Total * 100) : 0;
+
+				// Threshold for competence is 70%
+				if (conceptScore < 70)
+				{
+					var gap = new SkillGap
+					{
+						SkillId = batch.SkillId,
+						AssessmentResultId = result.Id,
+						Concept = conceptName,
+						Score = conceptScore,
+						DateIdentified = DateTime.UtcNow,
+						Status = "Active"
+					};
+
+					if (request.UserRole == Roles.Learner.ToString())
+						gap.LearnerId = request.UserId;
+					else
+						gap.TeamMemberId = request.UserId;
+
+					skillGaps.Add(gap);
+				}
+			}
+
+			// Clean up previous active gaps for this user and skill
+			var existingGapsList = await _unitOfWork.SkillGaps.GetAllAsync();
+			var userGaps = existingGapsList.Where(g =>
+				g.SkillId == batch.SkillId &&
+				g.Status == "Active" &&
+				(request.UserRole == Roles.Learner.ToString() ? g.LearnerId == request.UserId : g.TeamMemberId == request.UserId)
+			).ToList();
+
+			foreach (var oldGap in userGaps)
+			{
+				oldGap.Status = "Resolved";
+				await _unitOfWork.SkillGaps.UpdateAsync(oldGap);
+			}
+
+			if (skillGaps.Any())
+			{
+				await _unitOfWork.SkillGaps.AddRangeAsync(skillGaps);
+			}
+
+			await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+			// Generate Tailored Improvement Plan (passing active gaps)
+			var improvementPlan = await _aiService.GenerateImprovementPlanAsync(result, skillGaps);
 			improvementPlan.AssessmentResultId = result.Id;
 			await _unitOfWork.ImprovementPlans.AddAsync(improvementPlan);
 			
@@ -113,7 +211,22 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				NoOfWrongAnswers = result.NoOfWrongAnswers,
 				TotalQuestions = result.TotalQuestions,
 				ProficiencyLevel = result.ProficiencyLevel.ToString(),
-				DateCompleted = result.DateCreated
+				DateCompleted = result.DateCreated,
+				Passed = passed,
+				PassingScore = passingScore
+			};
+		}
+
+		private static int GetPassingThreshold(ProficiencyLevel level)
+		{
+			return level switch
+			{
+				ProficiencyLevel.Novice => 50,
+				ProficiencyLevel.Begineer => 60,
+				ProficiencyLevel.Intermediate => 70,
+				ProficiencyLevel.Proficient => 80,
+				ProficiencyLevel.Expert => 90,
+				_ => 70
 			};
 		}
 	}

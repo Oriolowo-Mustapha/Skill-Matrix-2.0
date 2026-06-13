@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs
+namespace Application.DTOs
 {
 	public record AssesmentDTO
 	{
@@ -8,6 +8,7 @@
 	public record StartAssessmentResponseDTO
 	{
 		public int AssessmentBatchId { get; set; }
+		public int TimeLimitMinutes { get; set; }
 		public List<AssessmentQuestionDTO> Questions { get; set; } = new List<AssessmentQuestionDTO>();
 	}
 
@@ -15,6 +16,7 @@
 	{
 		public int Id { get; set; }
 		public string QuestionText { get; set; } = string.Empty;
+		public string QuestionType { get; set; } = "MultipleChoice";
 		public List<AssessmentOptionDTO> Options { get; set; } = new List<AssessmentOptionDTO>();
 	}
 

@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Repository;
+using Application.Interfaces.Repository;
 using Domain.Entities;
 using Infrastructure.Context;
 using Infrastructure.Implementation.Servicies;
@@ -14,12 +14,14 @@ namespace Infrastructure.Implementation.Repositories
 
 		public async Task<Manager?> GetByEmailAsync(string email)
 		{
-			return await _context.Managers.FirstOrDefaultAsync(m => m.Email == email);
+			var normalizedEmail = email.Trim().ToLowerInvariant();
+			return await _context.Managers.FirstOrDefaultAsync(m => m.Email.ToLower() == normalizedEmail);
 		}
 
 		public async Task<Manager?> GetByUsernameAsync(string userName)
 		{
-			return await _context.Managers.FirstOrDefaultAsync(m => m.UserName == userName);
+			var normalizedUserName = userName.Trim().ToLowerInvariant();
+			return await _context.Managers.FirstOrDefaultAsync(m => m.UserName.ToLower() == normalizedUserName);
 		}
 	}
 }

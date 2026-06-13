@@ -1,4 +1,4 @@
-﻿using Domain.Enum;
+using Domain.Enum;
 
 namespace Domain.Entities
 {
@@ -8,6 +8,7 @@ namespace Domain.Entities
 		public string Url { get; set; } = string.Empty;
 		public string Description { get; set; } = string.Empty;
 		public ResourseType ResourseType { get; set; }
+		public string Concept { get; set; } = string.Empty;
 		public Guid ImprovementPlanId { get; set; }
 		public ImprovementPlan ImprovementPlan { get; set; } = null!;
 	}

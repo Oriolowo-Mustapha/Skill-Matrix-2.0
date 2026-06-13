@@ -4,6 +4,7 @@ using Application.Features.Assessments.Commands.DeleteSkill;
 using Application.Features.Assessments.Commands.UpdateSkill;
 using Application.Features.Assessments.Commands.TeamManagement;
 using Application.Features.Assessments.Queries.GetSkills;
+using Application.Features.Skills.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,19 +25,19 @@ namespace Skill_Matrix_2._0.Controllers
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<List<SkillDTO>>> GetAllSkills()
+		public async Task<ActionResult<BaseResponse<List<SkillDTO>>>> GetAllSkills()
 		{
 			var query = new GetSkillsQuery();
-			await _mediator.Send(query);
-			return NoContent();
+			var response = await _mediator.Send(query);
+			return Ok(response);
 		}
 
 		[HttpPost]
 		[Authorize(Roles = "Admin, SuperAdmin")]
-		public async Task<ActionResult<Guid>> CreateSkill([FromBody] CreateSkillCommand command)
+		public async Task<ActionResult<BaseResponse<string>>> CreateSkill([FromBody] CreateSkillCommand command)
 		{
-			await _mediator.Send(command);
-			return NoContent();
+			var response = await _mediator.Send(command);
+			return Ok(response);
 		}
 
 		[HttpPut("{id}")]
@@ -46,8 +47,8 @@ namespace Skill_Matrix_2._0.Controllers
 			if (id != command.Id)
 				return BadRequest("Route ID and Command ID must match.");
 
-			await _mediator.Send(command);
-			return NoContent();
+			var response = await _mediator.Send(command);
+			return Ok(response);
 		}
 
 		[HttpDelete("{id}")]
@@ -55,8 +56,17 @@ namespace Skill_Matrix_2._0.Controllers
         public async Task<IActionResult> DeleteSkill(Guid id)
 		{
 			var command = new DeleteSkillCommand(id);
-			await _mediator.Send(command);
-			return NoContent();
+			var response = await _mediator.Send(command);
+			return Ok(response);
+		}
+
+		[HttpPost("sync-lightcast")]
+		[Authorize(Roles = "Admin, SuperAdmin")]
+		public async Task<ActionResult<BaseResponse<string>>> SyncLightcastSkills([FromQuery] int limit = 500, [FromQuery] string version = "latest")
+		{
+			var command = new SyncLightcastSkillsCommand { Limit = limit, TaxonomyVersion = version };
+			var response = await _mediator.Send(command);
+			return Ok(response);
 		}
 
 		[HttpPost("assign")]
@@ -71,8 +81,8 @@ namespace Skill_Matrix_2._0.Controllers
 
 			var finalCommand = new AssignSkillCommand(managerId, command.TeamMemberId, command.SkillId);
 			
-			await _mediator.Send(finalCommand);
-			return NoContent();
+			var response = await _mediator.Send(finalCommand);
+			return Ok(response);
 		}
 	}
 }

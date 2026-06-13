@@ -5,5 +5,8 @@ namespace Infrastructure.DTOs
 		public string QuestionText { get; set; } = string.Empty;
 		public List<string> Options { get; set; } = new List<string>();
 		public string CorrectAnswer { get; set; } = string.Empty;
+		public string QuestionType { get; set; } = "MultipleChoice"; // "MultipleChoice" or "Coding"
+		public string? ExpectedOutput { get; set; }
+		public string Concept { get; set; } = string.Empty;
 	}
 }

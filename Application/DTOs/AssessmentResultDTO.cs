@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs
+namespace Application.DTOs
 {
 	public record AssessmentResultDTO
 	{
@@ -11,5 +11,7 @@
 		public string ProficiencyLevel { get; set; } = string.Empty;
 		public DateTime DateCompleted { get; set; }
 		public Guid ImprovementPlanId { get; set; }
+		public bool Passed { get; set; }
+		public int PassingScore { get; set; }
 	}
 }

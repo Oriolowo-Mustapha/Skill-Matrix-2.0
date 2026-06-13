@@ -10,5 +10,8 @@ namespace Domain.Entities
 		public List<AssessmentOptions> AssessmentOptions { get; set; } = new List<AssessmentOptions>();
 		public List<UserResponse> UserResponses { get; set; } = new List<UserResponse>();
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+		public Domain.Enum.QuestionType QuestionType { get; set; } = Domain.Enum.QuestionType.MultipleChoice;
+		public string? ExpectedOutput { get; set; }
+		public string Concept { get; set; } = string.Empty;
 	}
 }

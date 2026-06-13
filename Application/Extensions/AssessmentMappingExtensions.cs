@@ -50,6 +50,7 @@ namespace Application.Extensions
 			{
 				Id = assessment.Id,
 				QuestionText = assessment.Questions,
+				QuestionType = assessment.QuestionType.ToString(),
 				Options = assessment.AssessmentOptions.Select(o => o.ToDTO()).ToList()
 			};
 		}
@@ -59,6 +60,7 @@ namespace Application.Extensions
 			return new StartAssessmentResponseDTO
 			{
 				AssessmentBatchId = batch.Id,
+				TimeLimitMinutes = batch.TimeLimitMinutes ?? 30,
 				Questions = batch.Assessments.Select(a => a.ToDTO()).ToList()
 			};
 		}

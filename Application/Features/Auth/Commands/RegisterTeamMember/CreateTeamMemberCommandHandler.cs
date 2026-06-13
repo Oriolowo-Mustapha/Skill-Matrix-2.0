@@ -24,7 +24,10 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 			{
 				throw new UnauthorizedException("Unauthorized: No manager found with the provided ID.");
 			}
-			var getIfEmailExists = await _unitOfWork.TeamMembers.GetByEmailAsync(request.request.Email);
+			var email = request.request.Email.Trim().ToLowerInvariant();
+			var userName = request.request.UserName.Trim().ToLowerInvariant();
+
+			var getIfEmailExists = await _unitOfWork.TeamMembers.GetByEmailAsync(email);
 			if (getIfEmailExists != null)
 			{
 				throw new ConflictException($"Email {request.request.Email} already exists");
@@ -43,8 +46,8 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 			{
 				FirstName = request.request.FirstName,
 				LastName = request.request.LastName,
-				Email = request.request.Email,
-				UserName = request.request.UserName,
+				Email = email,
+				UserName = userName,
 				ProfilePictureUrl = request.request.ProfilePicUrl,
 				PasswordHash = hashedPassword,
 				Manager = getManager,

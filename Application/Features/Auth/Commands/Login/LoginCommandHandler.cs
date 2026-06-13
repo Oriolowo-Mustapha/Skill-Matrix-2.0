@@ -32,7 +32,8 @@ namespace Application.Features.Auth.Commands.Login
 
 			if (!string.IsNullOrWhiteSpace(request.req.Email))
 			{
-				var learner = await _unitOfWork.Learners.GetByEmailAsync(request.req.Email);
+				var email = request.req.Email.Trim().ToLowerInvariant();
+				var learner = await _unitOfWork.Learners.GetByEmailAsync(email);
 				if (learner != null)
 				{
 					userDto = learner.ToDto();
@@ -42,7 +43,7 @@ namespace Application.Features.Auth.Commands.Login
 				}
 				else
 				{
-					var teamMember = await _unitOfWork.TeamMembers.GetByEmailAsync(request.req.Email);
+					var teamMember = await _unitOfWork.TeamMembers.GetByEmailAsync(email);
 					if (teamMember != null)
 					{
 						userDto = teamMember.ToDto();
@@ -52,7 +53,7 @@ namespace Application.Features.Auth.Commands.Login
 					}
 					else
 					{
-						var manager = await _unitOfWork.ManagerRepository.GetByEmailAsync(request.req.Email);
+						var manager = await _unitOfWork.ManagerRepository.GetByEmailAsync(email);
 						if (manager != null)
 						{
 							userDto = manager.ToDto();
@@ -62,7 +63,7 @@ namespace Application.Features.Auth.Commands.Login
 						}
 						else
 						{
-							var admin = await _unitOfWork.Admins.GetByEmailAsync(request.req.Email);
+							var admin = await _unitOfWork.Admins.GetByEmailAsync(email);
 							if (admin != null)
 							{
 								userDto = admin.ToDto();
@@ -77,7 +78,8 @@ namespace Application.Features.Auth.Commands.Login
 
 			if (userDto == null && !string.IsNullOrWhiteSpace(request.req.UserName))
 			{
-				var learner = await _unitOfWork.Learners.GetByUserName(request.req.UserName);
+				var userName = request.req.UserName.Trim().ToLowerInvariant();
+				var learner = await _unitOfWork.Learners.GetByUserName(userName);
 				if (learner != null)
 				{
 					userDto = learner.ToDto();
@@ -87,7 +89,7 @@ namespace Application.Features.Auth.Commands.Login
 				}
 				else
 				{
-					var teamMember = await _unitOfWork.TeamMembers.GetByUserNameAsync(request.req.UserName);
+					var teamMember = await _unitOfWork.TeamMembers.GetByUserNameAsync(userName);
 					if (teamMember != null)
 					{
 						userDto = teamMember.ToDto();
@@ -97,7 +99,7 @@ namespace Application.Features.Auth.Commands.Login
 					}
 					else
 					{
-						var manager = await _unitOfWork.ManagerRepository.GetByUsernameAsync(request.req.UserName);
+						var manager = await _unitOfWork.ManagerRepository.GetByUsernameAsync(userName);
 						if (manager != null)
 						{
 							userDto = manager.ToDto();
@@ -107,7 +109,7 @@ namespace Application.Features.Auth.Commands.Login
 						}
 						else
 						{
-							var admin = await _unitOfWork.Admins.GetByUserNameAsync(request.req.UserName);
+							var admin = await _unitOfWork.Admins.GetByUserNameAsync(userName);
 							if (admin != null)
 							{
 								userDto = admin.ToDto();

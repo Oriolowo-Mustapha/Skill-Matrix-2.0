@@ -1,4 +1,4 @@
-﻿using Domain.Enum;
+using Domain.Enum;
 
 namespace Domain.Entities
 {
@@ -24,5 +24,6 @@ namespace Domain.Entities
 		public List<AssignedCareerPath> LearnerCareerPaths { get; set; } = new List<AssignedCareerPath>();
 		public List<AssignedSkill> LearnerSkills { get; set; } = new List<AssignedSkill>();
 		public DateTime DateJoined { get; set; } = DateTime.UtcNow;
+		public int TotalPoints { get; set; } = 0;
 	}
 }

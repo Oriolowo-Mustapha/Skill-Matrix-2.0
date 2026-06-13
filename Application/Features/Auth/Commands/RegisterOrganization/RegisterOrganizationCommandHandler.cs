@@ -29,7 +29,10 @@ namespace Application.Features.Auth.Commands.RegisterOrganization
 			{
 				throw new ConflictException($"Organization with name '{request.OrganizationName}' already exists.");
 			}
-			var managerExists = await _unitOfWork.ManagerRepository.GetByEmailAsync(request.ManagerEmail);
+			var email = request.ManagerEmail.Trim().ToLowerInvariant();
+			var userName = request.ManagerUserName.Trim().ToLowerInvariant();
+
+			var managerExists = await _unitOfWork.ManagerRepository.GetByEmailAsync(email);
 			if (managerExists != null)
 			{
 				throw new ConflictException($"User with email '{request.ManagerEmail}' already exists.");
@@ -55,8 +58,8 @@ namespace Application.Features.Auth.Commands.RegisterOrganization
 			{
 				FirstName = request.ManagerFirstName,
 				LastName = request.ManagerLastName,
-				Email = request.ManagerEmail,
-				UserName = request.ManagerUserName,
+				Email = email,
+				UserName = userName,
 				PasswordHash = hashedPassword,
 				Organization = newOrganization,
 				IsEmailVerified = false,

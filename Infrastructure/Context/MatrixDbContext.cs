@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Context
@@ -25,6 +25,9 @@ namespace Infrastructure.Context
 		public DbSet<AssignedCareerPath> AssignedCareerPaths { get; set; }
 		public DbSet<ImprovementPlan> ImprovementPlans { get; set; }
 		public DbSet<RecommendedResource> RecommendedResources { get; set; }
+		public DbSet<PeerEndorsement> PeerEndorsements { get; set; }
+		public DbSet<SkillGap> SkillGaps { get; set; }
+		public DbSet<ImprovementTask> ImprovementTasks { get; set; }
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,6 +38,10 @@ namespace Infrastructure.Context
 			modelBuilder.Entity<Learner>().HasIndex(l => l.Email).IsUnique();
 			modelBuilder.Entity<Manager>().HasIndex(m => m.Email).IsUnique();
 			modelBuilder.Entity<TeamMember>().HasIndex(t => t.Email).IsUnique();
+
+			modelBuilder.Entity<PeerEndorsement>()
+				.HasIndex(p => new { p.EndorserId, p.EndorseeId, p.SkillId })
+				.IsUnique();
 
 			modelBuilder.Entity<Organization>()
 			    .HasMany(o => o.Managers) // An Organization has many Managers
@@ -176,6 +183,42 @@ namespace Infrastructure.Context
 				.HasOne(ip => ip.ImprovementPlan)
 				.WithMany(rr => rr.RecommendedResources)
 				.HasForeignKey(ip => ip.ImprovementPlanId);
+
+			modelBuilder.Entity<SkillGap>()
+				.HasOne(sg => sg.Learner)
+				.WithMany()
+				.HasForeignKey(sg => sg.LearnerId)
+				.OnDelete(DeleteBehavior.Restrict);
+
+			modelBuilder.Entity<SkillGap>()
+				.HasOne(sg => sg.TeamMember)
+				.WithMany()
+				.HasForeignKey(sg => sg.TeamMemberId)
+				.OnDelete(DeleteBehavior.Restrict);
+
+			modelBuilder.Entity<SkillGap>()
+				.HasOne(sg => sg.Skill)
+				.WithMany()
+				.HasForeignKey(sg => sg.SkillId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<SkillGap>()
+				.HasOne(sg => sg.AssessmentResult)
+				.WithMany()
+				.HasForeignKey(sg => sg.AssessmentResultId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<ImprovementTask>()
+				.HasOne(it => it.ImprovementPlan)
+				.WithMany(ip => ip.Tasks)
+				.HasForeignKey(it => it.ImprovementPlanId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<ImprovementTask>()
+				.HasOne(it => it.RecommendedResource)
+				.WithMany()
+				.HasForeignKey(it => it.RecommendedResourceId)
+				.OnDelete(DeleteBehavior.SetNull);
 
 			modelBuilder.Entity<Admin>().HasData
 				(

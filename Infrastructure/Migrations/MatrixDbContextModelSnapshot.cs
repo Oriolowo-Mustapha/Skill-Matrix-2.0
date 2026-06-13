@@ -93,12 +93,22 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AssessmentBatchId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Concept")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("CorrectAnswer")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ExpectedOutput")
+                        .HasColumnType("text");
+
+                    b.Property<int>("QuestionType")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Questions")
                         .IsRequired()
@@ -122,6 +132,13 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AssessmentStatus")
                         .HasColumnType("integer");
 
+                    b.Property<string>("BatchType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ConceptFocus")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
@@ -131,8 +148,14 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("SkillId")
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime?>("StartedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<Guid?>("TeamMemberID")
                         .HasColumnType("uuid");
+
+                    b.Property<int?>("TimeLimitMinutes")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -417,6 +440,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("SkillId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("TargetLevel")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CareerPathId");
@@ -446,12 +472,51 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsAiGenerated")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AssessmentResultId")
                         .IsUnique();
 
                     b.ToTable("ImprovementPlans");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ImprovementTask", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Concept")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ImprovementPlanId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("RecommendedResourceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImprovementPlanId");
+
+                    b.HasIndex("RecommendedResourceId");
+
+                    b.ToTable("ImprovementTasks");
                 });
 
             modelBuilder.Entity("Domain.Entities.Learner", b =>
@@ -503,6 +568,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("TotalPoints")
+                        .HasColumnType("integer");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -605,11 +673,45 @@ namespace Infrastructure.Migrations
                     b.ToTable("Organizations");
                 });
 
+            modelBuilder.Entity("Domain.Entities.PeerEndorsement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateEndorsed")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("EndorseeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("EndorserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SkillId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EndorserId", "EndorseeId", "SkillId")
+                        .IsUnique();
+
+                    b.ToTable("PeerEndorsements");
+                });
+
             modelBuilder.Entity("Domain.Entities.RecommendedResource", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Concept")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -649,13 +751,71 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("ExternalId")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsCustomized")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("RequiresCoding")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Source")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.ToTable("Skills");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SkillGap", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AssessmentResultId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Concept")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateIdentified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("LearnerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("SkillId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("TeamMemberId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssessmentResultId");
+
+                    b.HasIndex("LearnerId");
+
+                    b.HasIndex("SkillId");
+
+                    b.HasIndex("TeamMemberId");
+
+                    b.ToTable("SkillGaps");
                 });
 
             modelBuilder.Entity("Domain.Entities.TeamMember", b =>
@@ -713,6 +873,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("TotalPoints")
+                        .HasColumnType("integer");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -965,6 +1128,24 @@ namespace Infrastructure.Migrations
                     b.Navigation("AssessmentResult");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ImprovementTask", b =>
+                {
+                    b.HasOne("Domain.Entities.ImprovementPlan", "ImprovementPlan")
+                        .WithMany("Tasks")
+                        .HasForeignKey("ImprovementPlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.RecommendedResource", "RecommendedResource")
+                        .WithMany()
+                        .HasForeignKey("RecommendedResourceId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("ImprovementPlan");
+
+                    b.Navigation("RecommendedResource");
+                });
+
             modelBuilder.Entity("Domain.Entities.Manager", b =>
                 {
                     b.HasOne("Domain.Entities.Organization", "Organization")
@@ -985,6 +1166,39 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("ImprovementPlan");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SkillGap", b =>
+                {
+                    b.HasOne("Domain.Entities.AssessmentResult", "AssessmentResult")
+                        .WithMany()
+                        .HasForeignKey("AssessmentResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Learner", "Learner")
+                        .WithMany()
+                        .HasForeignKey("LearnerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Entities.AssignedSkill", "Skill")
+                        .WithMany()
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.TeamMember", "TeamMember")
+                        .WithMany()
+                        .HasForeignKey("TeamMemberId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("AssessmentResult");
+
+                    b.Navigation("Learner");
+
+                    b.Navigation("Skill");
+
+                    b.Navigation("TeamMember");
                 });
 
             modelBuilder.Entity("Domain.Entities.TeamMember", b =>
@@ -1091,6 +1305,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.ImprovementPlan", b =>
                 {
                     b.Navigation("RecommendedResources");
+
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("Domain.Entities.Learner", b =>

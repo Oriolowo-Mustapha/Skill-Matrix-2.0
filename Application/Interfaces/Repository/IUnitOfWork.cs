@@ -22,6 +22,9 @@ namespace Application.Interfaces.Repository
 		IGenericRepository<CareerPath> CareerPaths { get; }
         IGenericRepository<CareerPathSkill> CareerPathSkills { get; }
         IGenericRepository<AssignedCareerPath> AssignedCareerPaths { get; }
+		IGenericRepository<PeerEndorsement> PeerEndorsements { get; }
+		IGenericRepository<SkillGap> SkillGaps { get; }
+		IGenericRepository<ImprovementTask> ImprovementTasks { get; }
 
 		Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 	}

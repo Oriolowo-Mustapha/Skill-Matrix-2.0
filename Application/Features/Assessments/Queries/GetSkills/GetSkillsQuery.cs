@@ -4,5 +4,5 @@ using System.Collections.Generic;
 
 namespace Application.Features.Assessments.Queries.GetSkills
 {
-    public record GetSkillsQuery : IRequest<List<SkillDTO>>;
+    public record GetSkillsQuery : IRequest<BaseResponse<List<SkillDTO>>>;
 }

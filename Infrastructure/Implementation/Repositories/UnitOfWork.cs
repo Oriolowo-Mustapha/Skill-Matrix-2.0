@@ -25,6 +25,9 @@ namespace Infrastructure.Implementation.Repositories
 		private IGenericRepository<AssignedBadge>? _assignedBadge;
 		private IGenericRepository<AssignedCareerPath>? _assignedCareerPaths;
 		private IGenericRepository<CareerPathSkill>? _careerPathSkills;
+		private IGenericRepository<PeerEndorsement>? _peerEndorsements;
+		private IGenericRepository<SkillGap>? _skillGaps;
+		private IGenericRepository<ImprovementTask>? _improvementTasks;
 
 		public UnitOfWork(MatrixDbContext context)
 		{
@@ -78,6 +81,16 @@ namespace Infrastructure.Implementation.Repositories
 
 		public IGenericRepository<AssignedBadge> AssignedBadges =>
 			_assignedBadge ??= new GenericRepository<AssignedBadge>(_context);
+			
+		public IGenericRepository<PeerEndorsement> PeerEndorsements =>
+			_peerEndorsements ??= new GenericRepository<PeerEndorsement>(_context);
+
+		public IGenericRepository<SkillGap> SkillGaps =>
+			_skillGaps ??= new GenericRepository<SkillGap>(_context);
+
+		public IGenericRepository<ImprovementTask> ImprovementTasks =>
+			_improvementTasks ??= new GenericRepository<ImprovementTask>(_context);
+
 		public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 		{
 			return await _context.SaveChangesAsync(cancellationToken);

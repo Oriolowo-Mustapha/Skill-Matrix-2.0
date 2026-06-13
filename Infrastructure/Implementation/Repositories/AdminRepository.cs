@@ -13,12 +13,14 @@ namespace Infrastructure.Implementation.Repositories
 
         public async Task<Admin?> GetByEmailAsync(string email)
         {
-            return await _context.Admins.FirstOrDefaultAsync(a => a.Email == email);
+            var normalizedEmail = email.Trim().ToLowerInvariant();
+            return await _context.Admins.FirstOrDefaultAsync(a => a.Email.ToLower() == normalizedEmail);
         }
 
         public async Task<Admin?> GetByUserNameAsync(string userName)
         {
-            return await _context.Admins.FirstOrDefaultAsync(a => a.UserName == userName);
+            var normalizedUserName = userName.Trim().ToLowerInvariant();
+            return await _context.Admins.FirstOrDefaultAsync(a => a.UserName.ToLower() == normalizedUserName);
         }
     }
 }

@@ -23,7 +23,10 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 
 		public async Task<BaseResponse<string>> Handle(RegisterLearnerCommand request, CancellationToken cancellationToken)
 		{
-			var learnerExits = await _unitOfWork.Learners.GetByEmailAsync(request.req.Email);
+			var email = request.req.Email.Trim().ToLowerInvariant();
+			var userName = request.req.UserName.Trim().ToLowerInvariant();
+
+			var learnerExits = await _unitOfWork.Learners.GetByEmailAsync(email);
 			if (learnerExits != null)
 			{
 				throw new ConflictException($"User with {request.req.Email} already exists.");
@@ -42,8 +45,8 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 			{
 				FirstName = request.req.FirstName,
 				LastName = request.req.LastName,
-				Email = request.req.Email,
-				UserName = request.req.UserName,
+				Email = email,
+				UserName = userName,
 				Role = Domain.Enum.Roles.Learner.ToString(),
 				ProfilePictureUrl = profilePicUrl,
 				PasswordHash = hashedPassword,

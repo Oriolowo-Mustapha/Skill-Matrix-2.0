@@ -1,4 +1,4 @@
-﻿using Domain.Enum;
+using Domain.Enum;
 
 namespace Domain.Entities
 {
@@ -15,5 +15,9 @@ namespace Domain.Entities
 		public TeamMember? TeamMember { get; set; }
 		public List<Assessment> Assessments { get; set; } = new List<Assessment>();
 		public AssessmentResult AssessmentResult { get; set; } = null!;
+		public DateTime? StartedAt { get; set; }
+		public int? TimeLimitMinutes { get; set; }
+		public string BatchType { get; set; } = "Initial"; // "Initial", "ImprovementCheck"
+		public string? ConceptFocus { get; set; }
 	}
 }

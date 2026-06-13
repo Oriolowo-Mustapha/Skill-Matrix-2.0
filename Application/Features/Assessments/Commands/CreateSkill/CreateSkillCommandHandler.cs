@@ -21,13 +21,15 @@ namespace Application.Features.Assessments.Commands.CreateSkill
 
 			if (existingSkill != null)
 			{
-				throw new ConflictException($"A skill with the name '{request.Name}' already exists.");
+				throw new ConflictException($"A skill with the name '{request.Name.Trim()}' already exists.");
 			}
 
 			var newSkill = new Skill
 			{
-				Name = request.Name,
+				Name = request.Name.Trim(),
 				Category = request.Category,
+				Source = "Admin",
+				IsCustomized = true,
 				DateAdded = DateTime.UtcNow
 			};
 

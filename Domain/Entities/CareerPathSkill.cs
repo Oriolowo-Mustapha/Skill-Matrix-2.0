@@ -10,5 +10,7 @@ namespace Domain.Entities
 
         public Guid SkillId { get; set; }
         public Skill Skill { get; set; } = null!;
+
+        public Domain.Enum.ProficiencyLevel TargetLevel { get; set; } = Domain.Enum.ProficiencyLevel.Novice;
     }
 }

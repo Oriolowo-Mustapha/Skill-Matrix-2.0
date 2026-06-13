@@ -68,8 +68,15 @@ builder.Services.AddHttpClient<IEmailService, Infrastructure.ExternalServices.Br
 
 builder.Services.AddHttpClient<IAiService, GeminiAiService>();
 
+builder.Services.AddScoped<ICodeExecutionService, CodeExecutionService>();
+builder.Services.AddScoped<IReminderService, ReminderService>();
+
 builder.Services.Configure<Infrastructure.ExternalServices.Cloudinary.CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
 builder.Services.AddScoped<IPhotoService, Infrastructure.ExternalServices.Cloudinary.CloudinaryPhotoService>();
+
+builder.Services.AddMemoryCache();
+builder.Services.Configure<Infrastructure.ExternalServices.LightcastSettings>(builder.Configuration.GetSection("Lightcast"));
+builder.Services.AddHttpClient<ILightcastService, Infrastructure.ExternalServices.LightcastService>();
 
 builder.Services.AddOpenApi(options =>
 {
@@ -127,6 +134,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseHangfireDashboard("/jobs");
+
+RecurringJob.AddOrUpdate<IReminderService>(
+	"weekly-assessment-reminders",
+	service => service.SendWeeklyRemindersAsync(),
+	Cron.Weekly);
 
 app.MapControllers();
 
