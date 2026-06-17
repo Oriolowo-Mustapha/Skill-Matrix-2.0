@@ -1,4 +1,4 @@
-﻿using Domain.Enum;
+using Domain.Enum;
 
 namespace Domain.Entities
 {
@@ -7,6 +7,7 @@ namespace Domain.Entities
 		public string Name { get; set; } = string.Empty;
 		public string Category { get; set; } = string.Empty;
 		public ProficiencyLevel ProficiencyLevel { get; set; } = ProficiencyLevel.Novice;
+		public bool IsFullyMastered { get; set; } = false;
 		public Learner? Learner { get; set; }
 		public Guid? LearnerId { get; set; }
 		public TeamMember? TeamMember { get; set; }

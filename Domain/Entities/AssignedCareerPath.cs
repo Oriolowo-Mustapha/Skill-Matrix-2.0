@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities
+namespace Domain.Entities
 {
 	public class AssignedCareerPath : BaseEntity
 	{
@@ -14,5 +14,6 @@
         public CareerPath CareerPath { get; set; } = null!;
 
 		public DateTime DateAssigned { get; set; }
+		public int ProgressPercentage { get; set; } = 0;
 	}
 }

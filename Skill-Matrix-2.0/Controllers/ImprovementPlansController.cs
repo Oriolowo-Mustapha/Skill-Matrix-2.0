@@ -32,6 +32,7 @@ namespace Skill_Matrix_2._0.Controllers
 
 
 		[HttpPost("generate-ai")]
+		[Consumes("application/json")]
 		public async Task<ActionResult<BaseResponse<AIImprovementPlanResponseDTO>>> GenerateAiImprovementPlan([FromBody] GenerateAiImprovementPlanCommand command)
 		{
 			var response = await _mediator.Send(command);

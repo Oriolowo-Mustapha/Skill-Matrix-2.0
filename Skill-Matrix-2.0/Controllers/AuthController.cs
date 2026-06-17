@@ -9,7 +9,9 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Skill_Matrix_2._0.Controllers
 {
@@ -43,6 +45,7 @@ namespace Skill_Matrix_2._0.Controllers
         }
 
         [HttpPost("login")]
+        [Consumes("application/json")]
 		public async Task<ActionResult<BaseResponse<LoginResponseDTO>>> Login([FromBody] LoginRequestDTO request)
 		{
 			var command = new LoginCommand(request);
@@ -59,6 +62,7 @@ namespace Skill_Matrix_2._0.Controllers
 		}
 
 		[HttpPost("forgot-password")]
+        [Consumes("application/json")]
 		public async Task<ActionResult<BaseResponse<bool>>> ForgotPassword([FromBody] ForgotPasswordRequestDTO request)
 		{
 			var command = new ForgotPasswordCommand(request.Email);
@@ -67,11 +71,26 @@ namespace Skill_Matrix_2._0.Controllers
 		}
 
 		[HttpPost("reset-password")]
+        [Consumes("application/json")]
 		public async Task<ActionResult<BaseResponse<bool>>> ResetPassword([FromBody] ResetPasswordRequestDTO request)
 		{
 			var command = new ResetPasswordCommand(request.Email, request.Token, request.NewPassword);
 			var result = await _mediator.Send(command);
 			return Ok(result);
+		}
+
+		[HttpPut("profile")]
+		[Consumes("multipart/form-data")]
+		[Authorize]
+		public async Task<ActionResult<BaseResponse<UserDTO>>> UpdateProfile([FromForm] UpdateUserRequestDTO request)
+		{
+			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
+				?? throw new UnauthorizedAccessException("User ID claim not found.");
+			var userId = Guid.Parse(userIdClaim);
+
+			var command = new Application.Features.Assessments.Commands.UpdateUserProfile.UpdateUserProfileCommand(userId, request);
+			var result = await _mediator.Send(command);
+			return Ok(BaseResponse<UserDTO>.SuccessResponse(result, "Profile updated successfully."));
 		}
 
 		[HttpGet("google-login")]

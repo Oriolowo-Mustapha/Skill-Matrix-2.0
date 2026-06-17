@@ -15,6 +15,7 @@ namespace Application.Extensions
 				Name = skill.Name,
 				Category = skill.Category,
 				ProficiencyLevel = skill.ProficiencyLevel.ToString(),
+				IsFullyMastered = skill.IsFullyMastered,
 				DateAssigned = skill.DateAssigned
 			};
 		}

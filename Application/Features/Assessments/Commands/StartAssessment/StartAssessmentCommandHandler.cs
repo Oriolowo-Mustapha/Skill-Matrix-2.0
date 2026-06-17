@@ -77,7 +77,7 @@ namespace Application.Features.Assessments.Commands.StartAssessment
 
 			var batch = new AssessmentBatch
 			{
-				SkillId = assignedSkill.SkillId,
+				SkillId = assignedSkill.Id,
 				AssessmentStatus = AssessmentStatus.InProgress,
 				DateCreated = DateTime.UtcNow,
 				StartedAt = DateTime.UtcNow,
@@ -102,7 +102,34 @@ namespace Application.Features.Assessments.Commands.StartAssessment
 			await _unitOfWork.AssessmentBatches.AddAsync(batch);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			return batch.ToDTO();
+			string? warningMessage = null;
+			var recentResults = await _unitOfWork.AssessmentResults.FindAsync(
+				r => r.SkillId == assignedSkill.Id &&
+				     r.DateCreated > DateTime.UtcNow.AddDays(-1) &&
+				     (request.UserRole == Roles.Learner.ToString() ? r.LearnerID == request.UserId : r.TeamMemberID == request.UserId)
+			);
+			var actuallyPassed = recentResults.Any(r => r.Score >= GetPassingThreshold(r.ProficiencyLevel));
+			if (actuallyPassed)
+			{
+				warningMessage = "You recently unlocked this level. We recommend completing at least one preparation task before taking this assessment, but you may bypass this and proceed if desired.";
+			}
+
+			var dto = batch.ToDTO();
+			dto.WarningMessage = warningMessage;
+			return dto;
+		}
+
+		private static int GetPassingThreshold(ProficiencyLevel level)
+		{
+			return level switch
+			{
+				ProficiencyLevel.Novice => 50,
+				ProficiencyLevel.Begineer => 60,
+				ProficiencyLevel.Intermediate => 70,
+				ProficiencyLevel.Proficient => 80,
+				ProficiencyLevel.Expert => 90,
+				_ => 70
+			};
 		}
 	}
 }

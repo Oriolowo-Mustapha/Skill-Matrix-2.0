@@ -20,6 +20,7 @@ namespace Skill_Matrix_2._0.Controllers
 		}
 
 		[HttpPost("lms-course-completed")]
+		[Consumes("application/json")]
 		public async Task<ActionResult<BaseResponse<bool>>> LmsCourseCompleted([FromBody] LmsCourseCompletedWebhookDTO payload)
 		{
 			// Basic security: require an API Key header "X-Webhook-Secret"

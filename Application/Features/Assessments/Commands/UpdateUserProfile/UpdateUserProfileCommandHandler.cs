@@ -60,6 +60,23 @@ namespace Application.Features.Assessments.Commands.UpdateUserProfile
 				return teamMember.ToDto();
 			}
 
+			var manager = await _unitOfWork.ManagerRepository.GetByIdAsync(request.userId);
+
+			if (manager != null)
+			{
+				manager.FirstName = request.Dto.FirstName;
+				manager.LastName = request.Dto.LastName;
+				if (newProfilePicUrl != null)
+				{
+					manager.ProfilePictureUrl = newProfilePicUrl;
+				}
+
+				await _unitOfWork.ManagerRepository.UpdateAsync(manager);
+				await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+				return manager.ToDto();
+			}
+
 			throw new NotFoundException("User", request.userId);
 		}
 	}

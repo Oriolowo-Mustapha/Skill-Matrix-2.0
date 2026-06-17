@@ -26,10 +26,22 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 			var email = request.req.Email.Trim().ToLowerInvariant();
 			var userName = request.req.UserName.Trim().ToLowerInvariant();
 
-			var learnerExits = await _unitOfWork.Learners.GetByEmailAsync(email);
-			if (learnerExits != null)
+			bool emailExists = await _unitOfWork.Learners.GetByEmailAsync(email) != null ||
+			                  await _unitOfWork.TeamMembers.GetByEmailAsync(email) != null ||
+			                  await _unitOfWork.ManagerRepository.GetByEmailAsync(email) != null ||
+			                  await _unitOfWork.Admins.GetByEmailAsync(email) != null;
+			if (emailExists)
 			{
-				throw new ConflictException($"User with {request.req.Email} already exists.");
+				throw new ConflictException($"User with email '{request.req.Email}' already exists.");
+			}
+
+			bool usernameExists = await _unitOfWork.Learners.GetByUserName(userName) != null ||
+			                     await _unitOfWork.TeamMembers.GetByUserNameAsync(userName) != null ||
+			                     await _unitOfWork.ManagerRepository.GetByUsernameAsync(userName) != null ||
+			                     await _unitOfWork.Admins.GetByUserNameAsync(userName) != null;
+			if (usernameExists)
+			{
+				throw new ConflictException($"User with username '{request.req.UserName}' already exists.");
 			}
 
 			var hashedPassword = HashPassword(request.req.PasswordHash);

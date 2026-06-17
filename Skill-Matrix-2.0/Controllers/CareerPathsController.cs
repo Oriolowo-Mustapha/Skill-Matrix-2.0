@@ -26,6 +26,7 @@ namespace Skill_Matrix_2._0.Controllers
 
 		[HttpPost]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
+		[Consumes("application/json")]
 		public async Task<ActionResult<Guid>> CreateCareerPath([FromBody] CreateCareerPathCommand command)
 		{
 			await _mediator.Send(command);
@@ -34,6 +35,7 @@ namespace Skill_Matrix_2._0.Controllers
 
 		[HttpPut("{id}")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
+		[Consumes("application/json")]
 		public async Task<IActionResult> UpdateCareerPath(Guid id, [FromBody] UpdateCareerPathCommand command)
 		{
 			if (id != command.Id)
@@ -54,6 +56,7 @@ namespace Skill_Matrix_2._0.Controllers
 
 		[HttpPost("assign-learner")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
+		[Consumes("application/json")]
 		public async Task<IActionResult> AssignToLearner([FromBody] AssignCareerPathToLearnerCommand command)
 		{
 			await _mediator.Send(command);
@@ -62,6 +65,7 @@ namespace Skill_Matrix_2._0.Controllers
 
 		[HttpPost("assign-team-member")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
+		[Consumes("application/json")]
 		public async Task<IActionResult> AssignToTeamMember([FromBody] AssignCareerPathToTeamMemberCommand command)
 		{
 			await _mediator.Send(command);
@@ -70,6 +74,7 @@ namespace Skill_Matrix_2._0.Controllers
 
 		[HttpPost("unassign-learner")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
+		[Consumes("application/json")]
 		public async Task<IActionResult> UnassignFromLearner([FromBody] UnassignCareerPathFromLearnerCommand command)
 		{
 			await _mediator.Send(command);
@@ -78,6 +83,7 @@ namespace Skill_Matrix_2._0.Controllers
 
 		[HttpPost("unassign-team-member")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
+		[Consumes("application/json")]
 		public async Task<IActionResult> UnassignFromTeamMember([FromBody] UnassignCareerPathFromTeamMemberCommand command)
 		{
 			await _mediator.Send(command);

@@ -13,5 +13,9 @@ namespace Application.DTOs
 		public Guid ImprovementPlanId { get; set; }
 		public bool Passed { get; set; }
 		public int PassingScore { get; set; }
+		public bool LevelUp { get; set; } = false;
+		public string NewProficiencyLevel { get; set; } = string.Empty;
+		public bool BadgeUnlocked { get; set; } = false;
+		public string BadgeTitle { get; set; } = string.Empty;
 	}
 }

@@ -24,6 +24,7 @@ namespace Skill_Matrix_2_0.Controllers
 		}
 
 		[HttpPost("start")]
+		[Consumes("application/json")]
 		public async Task<IActionResult> StartAssessment([FromBody] AssesmentDTO assesmentDto)
 		{
 			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
@@ -37,6 +38,7 @@ namespace Skill_Matrix_2_0.Controllers
 		}
 
 		[HttpPost("submit")]
+		[Consumes("application/json")]
 		public async Task<IActionResult> SubmitAssessment([FromBody] SubmitAssessmentRequestDTO submitDto)
 		{
 			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
@@ -63,6 +65,7 @@ namespace Skill_Matrix_2_0.Controllers
 		}
 
 		[HttpPost("improvement-check/submit")]
+		[Consumes("application/json")]
 		public async Task<IActionResult> SubmitImprovementCheck([FromBody] SubmitAssessmentRequestDTO submitDto)
 		{
 			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
@@ -88,6 +91,7 @@ namespace Skill_Matrix_2_0.Controllers
 		}
 
 		[HttpPost("run-code")]
+		[Consumes("application/json")]
 		public async Task<ActionResult<Application.DTOs.Assessments.CodeExecutionResponseDTO>> RunCode([FromBody] Application.DTOs.Assessments.CodeExecutionRequestDTO request)
 		{
 			var response = await _codeExecutionService.ExecuteCodeAsync(request);

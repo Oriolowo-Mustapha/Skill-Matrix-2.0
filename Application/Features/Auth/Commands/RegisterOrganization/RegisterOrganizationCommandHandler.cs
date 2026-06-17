@@ -32,10 +32,22 @@ namespace Application.Features.Auth.Commands.RegisterOrganization
 			var email = request.ManagerEmail.Trim().ToLowerInvariant();
 			var userName = request.ManagerUserName.Trim().ToLowerInvariant();
 
-			var managerExists = await _unitOfWork.ManagerRepository.GetByEmailAsync(email);
-			if (managerExists != null)
+			bool emailExists = await _unitOfWork.Learners.GetByEmailAsync(email) != null ||
+			                  await _unitOfWork.TeamMembers.GetByEmailAsync(email) != null ||
+			                  await _unitOfWork.ManagerRepository.GetByEmailAsync(email) != null ||
+			                  await _unitOfWork.Admins.GetByEmailAsync(email) != null;
+			if (emailExists)
 			{
 				throw new ConflictException($"User with email '{request.ManagerEmail}' already exists.");
+			}
+
+			bool usernameExists = await _unitOfWork.Learners.GetByUserName(userName) != null ||
+			                     await _unitOfWork.TeamMembers.GetByUserNameAsync(userName) != null ||
+			                     await _unitOfWork.ManagerRepository.GetByUsernameAsync(userName) != null ||
+			                     await _unitOfWork.Admins.GetByUserNameAsync(userName) != null;
+			if (usernameExists)
+			{
+				throw new ConflictException($"User with username '{request.ManagerUserName}' already exists.");
 			}
 			string? orgProfilePicUrl = null;
 			if (request.OrganizationProfilePicture != null)

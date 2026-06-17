@@ -141,6 +141,76 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 			await _unitOfWork.AssessmentResults.AddAsync(result);
 			await _unitOfWork.AssessmentBatches.UpdateAsync(batch);
 
+			// Level Promotion and Badges
+			bool levelUp = false;
+			ProficiencyLevel newLevel = batch.AssignedSkill.ProficiencyLevel;
+			bool badgeUnlocked = false;
+			string badgeTitle = string.Empty;
+
+			if (passed)
+			{
+				string targetBadgeLevel;
+				if (batch.AssignedSkill.ProficiencyLevel != ProficiencyLevel.Expert)
+				{
+					levelUp = true;
+					newLevel = batch.AssignedSkill.ProficiencyLevel switch
+					{
+						ProficiencyLevel.Novice => ProficiencyLevel.Begineer,
+						ProficiencyLevel.Begineer => ProficiencyLevel.Intermediate,
+						ProficiencyLevel.Intermediate => ProficiencyLevel.Proficient,
+						ProficiencyLevel.Proficient => ProficiencyLevel.Expert,
+						_ => batch.AssignedSkill.ProficiencyLevel
+					};
+
+					batch.AssignedSkill.ProficiencyLevel = newLevel;
+					await _unitOfWork.AssignedSkills.UpdateAsync(batch.AssignedSkill);
+					targetBadgeLevel = newLevel.ToString();
+				}
+				else
+				{
+					batch.AssignedSkill.IsFullyMastered = true;
+					await _unitOfWork.AssignedSkills.UpdateAsync(batch.AssignedSkill);
+					targetBadgeLevel = "Master";
+				}
+
+				// Award Milestone Badges (Edge Case: prevent duplicate badge awards)
+				var badgesList = await _unitOfWork.Badges.FindAsync(
+					b => b.ProficiencyLevel.Equals(targetBadgeLevel, StringComparison.OrdinalIgnoreCase)
+				);
+				var milestoneBadge = badgesList.FirstOrDefault();
+
+				if (milestoneBadge != null)
+				{
+					bool alreadyEarned = false;
+					if (request.UserRole == Roles.Learner.ToString())
+					{
+						alreadyEarned = await _unitOfWork.AssignedBadges.ExistsAsync(ab => ab.LearnerID == request.UserId && ab.BadgeId == milestoneBadge.Id);
+					}
+					else
+					{
+						alreadyEarned = await _unitOfWork.AssignedBadges.ExistsAsync(ab => ab.TeamMemberId == request.UserId && ab.BadgeId == milestoneBadge.Id);
+					}
+
+					if (!alreadyEarned)
+					{
+						var assignedBadge = new AssignedBadge
+						{
+							BadgeId = milestoneBadge.Id,
+							DateAwarded = DateTime.UtcNow
+						};
+
+						if (request.UserRole == Roles.Learner.ToString())
+							assignedBadge.LearnerID = request.UserId;
+						else
+							assignedBadge.TeamMemberId = request.UserId;
+
+						await _unitOfWork.AssignedBadges.AddAsync(assignedBadge);
+						badgeUnlocked = true;
+						badgeTitle = milestoneBadge.Name;
+					}
+				}
+			}
+
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
 			// Identify Gaps and update/resolve existing active gaps (Edge Case: resolve duplicates)
@@ -201,7 +271,6 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 			
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-
 			return new AssessmentResultDTO
 			{
 				Id = result.Id,
@@ -213,7 +282,11 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				ProficiencyLevel = result.ProficiencyLevel.ToString(),
 				DateCompleted = result.DateCreated,
 				Passed = passed,
-				PassingScore = passingScore
+				PassingScore = passingScore,
+				LevelUp = levelUp,
+				NewProficiencyLevel = newLevel.ToString(),
+				BadgeUnlocked = badgeUnlocked,
+				BadgeTitle = badgeTitle
 			};
 		}
 

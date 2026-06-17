@@ -8,5 +8,6 @@ namespace Application.DTOs
 		public string? ImageUrl { get; set; }
 		public Guid CareerPathId { get; set; }
 		public DateTime DateAssigned { get; set; }
+		public int ProgressPercentage { get; set; }
 	}
 }

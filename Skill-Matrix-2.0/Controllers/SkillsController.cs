@@ -34,6 +34,7 @@ namespace Skill_Matrix_2._0.Controllers
 
 		[HttpPost]
 		[Authorize(Roles = "Admin, SuperAdmin")]
+		[Consumes("application/json")]
 		public async Task<ActionResult<BaseResponse<string>>> CreateSkill([FromBody] CreateSkillCommand command)
 		{
 			var response = await _mediator.Send(command);
@@ -42,6 +43,7 @@ namespace Skill_Matrix_2._0.Controllers
 
 		[HttpPut("{id}")]
         [Authorize(Roles = "Admin, SuperAdmin")]
+		[Consumes("application/json")]
         public async Task<IActionResult> UpdateSkill(Guid id, [FromBody] UpdateSkillCommand command)
 		{
 			if (id != command.Id)
@@ -71,6 +73,7 @@ namespace Skill_Matrix_2._0.Controllers
 
 		[HttpPost("assign")]
         [Authorize(Roles = "Manager")]
+		[Consumes("application/json")]
         public async Task<IActionResult> AssignSkill([FromBody] AssignSkillCommand command)
 		{
 			var managerIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);

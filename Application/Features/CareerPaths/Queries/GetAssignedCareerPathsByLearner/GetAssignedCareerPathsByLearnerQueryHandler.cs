@@ -32,7 +32,8 @@ namespace Application.Features.CareerPaths.Queries.GetAssignedCareerPathsByLearn
 				Description = acp.Description,
 				ImageUrl = acp.ImageUrl,
 				CareerPathId = acp.CareerPathId,
-				DateAssigned = acp.DateAssigned
+				DateAssigned = acp.DateAssigned,
+				ProgressPercentage = acp.ProgressPercentage
 			}).ToList();
 		}
 	}

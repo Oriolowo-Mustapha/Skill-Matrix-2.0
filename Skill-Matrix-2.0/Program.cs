@@ -67,6 +67,7 @@ builder.Services.Configure<Infrastructure.ExternalServices.EmailSettings>(builde
 builder.Services.AddHttpClient<IEmailService, Infrastructure.ExternalServices.BrevoEmailService>();
 
 builder.Services.AddHttpClient<IAiService, GeminiAiService>();
+builder.Services.AddHttpClient<IAiAnalysisService, AiAnalysisService>();
 
 builder.Services.AddScoped<ICodeExecutionService, CodeExecutionService>();
 builder.Services.AddScoped<IReminderService, ReminderService>();

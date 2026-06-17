@@ -27,10 +27,22 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 			var email = request.request.Email.Trim().ToLowerInvariant();
 			var userName = request.request.UserName.Trim().ToLowerInvariant();
 
-			var getIfEmailExists = await _unitOfWork.TeamMembers.GetByEmailAsync(email);
-			if (getIfEmailExists != null)
+			bool emailExists = await _unitOfWork.Learners.GetByEmailAsync(email) != null ||
+			                  await _unitOfWork.TeamMembers.GetByEmailAsync(email) != null ||
+			                  await _unitOfWork.ManagerRepository.GetByEmailAsync(email) != null ||
+			                  await _unitOfWork.Admins.GetByEmailAsync(email) != null;
+			if (emailExists)
 			{
-				throw new ConflictException($"Email {request.request.Email} already exists");
+				throw new ConflictException($"User with email '{request.request.Email}' already exists.");
+			}
+
+			bool usernameExists = await _unitOfWork.Learners.GetByUserName(userName) != null ||
+			                     await _unitOfWork.TeamMembers.GetByUserNameAsync(userName) != null ||
+			                     await _unitOfWork.ManagerRepository.GetByUsernameAsync(userName) != null ||
+			                     await _unitOfWork.Admins.GetByUserNameAsync(userName) != null;
+			if (usernameExists)
+			{
+				throw new ConflictException($"User with username '{request.request.UserName}' already exists.");
 			}
 
 			var getOrganization = await _unitOfWork.Organizations.GetByIdAsync(getManager.OrganizationId);

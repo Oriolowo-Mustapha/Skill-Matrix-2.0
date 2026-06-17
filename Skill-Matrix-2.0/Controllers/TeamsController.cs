@@ -20,6 +20,7 @@ namespace Skill_Matrix_2._0.Controllers
 		}
 
 		[HttpPost("register-member")]
+		[Consumes("application/json")]
 		public async Task<ActionResult<BaseResponse<TeamMemberDTO>>> RegisterTeamMember([FromBody] RegisterTeamMemberRequestDTO request)
 		{
 			var managerIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);

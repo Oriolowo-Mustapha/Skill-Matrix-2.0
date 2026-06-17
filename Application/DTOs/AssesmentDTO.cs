@@ -10,6 +10,7 @@ namespace Application.DTOs
 		public int AssessmentBatchId { get; set; }
 		public int TimeLimitMinutes { get; set; }
 		public List<AssessmentQuestionDTO> Questions { get; set; } = new List<AssessmentQuestionDTO>();
+		public string? WarningMessage { get; set; }
 	}
 
 	public record AssessmentQuestionDTO

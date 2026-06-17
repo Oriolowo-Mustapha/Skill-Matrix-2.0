@@ -21,6 +21,7 @@ namespace Skill_Matrix_2._0.Controllers
 		}
 
 		[HttpPost("endorse")]
+		[Consumes("application/json")]
 		public async Task<ActionResult<BaseResponse<bool>>> EndorsePeer([FromBody] EndorsePeerCommand command)
 		{
 			var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
