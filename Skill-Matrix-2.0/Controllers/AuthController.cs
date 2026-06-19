@@ -3,6 +3,7 @@ using Application.Features.Auth.Commands.ForgotPassword;
 using Application.Features.Auth.Commands.Login;
 using Application.Features.Auth.Commands.RegisterLearner;
 using Application.Features.Auth.Commands.RegisterOrganization;
+using Application.Features.Auth.Commands.RegisterTeamMember;
 using Application.Features.Auth.Commands.ResetPassword;
 using Application.Features.Auth.Commands.VerifyEmail;
 using MediatR;
@@ -44,8 +45,22 @@ namespace Skill_Matrix_2._0.Controllers
             return Ok(result);
         }
 
+        [HttpPost("register-member")]
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<BaseResponse<TeamMemberDTO>>> RegisterTeamMember([FromForm] RegisterTeamMemberRequestDTO request)
+        {
+            var managerIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(managerIdString) || !Guid.TryParse(managerIdString, out Guid managerId))
+            {
+                return Unauthorized("Invalid user token.");
+            }
+
+            var command = new CreateTeamMemberCommand(managerId, request);
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
         [HttpPost("login")]
-        [Consumes("application/json")]
 		public async Task<ActionResult<BaseResponse<LoginResponseDTO>>> Login([FromBody] LoginRequestDTO request)
 		{
 			var command = new LoginCommand(request);
@@ -62,7 +77,6 @@ namespace Skill_Matrix_2._0.Controllers
 		}
 
 		[HttpPost("forgot-password")]
-        [Consumes("application/json")]
 		public async Task<ActionResult<BaseResponse<bool>>> ForgotPassword([FromBody] ForgotPasswordRequestDTO request)
 		{
 			var command = new ForgotPasswordCommand(request.Email);
@@ -71,7 +85,6 @@ namespace Skill_Matrix_2._0.Controllers
 		}
 
 		[HttpPost("reset-password")]
-        [Consumes("application/json")]
 		public async Task<ActionResult<BaseResponse<bool>>> ResetPassword([FromBody] ResetPasswordRequestDTO request)
 		{
 			var command = new ResetPasswordCommand(request.Email, request.Token, request.NewPassword);

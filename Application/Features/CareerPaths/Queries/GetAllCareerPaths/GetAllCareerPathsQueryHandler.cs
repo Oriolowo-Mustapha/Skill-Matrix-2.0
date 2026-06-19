@@ -17,7 +17,17 @@ namespace Application.Features.CareerPaths.Queries.GetAllCareerPaths
 		public async Task<List<CareerPathDTO>> Handle(GetAllCareerPathsQuery request, CancellationToken cancellationToken)
 		{
 			var careerPaths = await _unitOfWork.CareerPaths.GetAllAsync(
-				cp => cp.CareerPathSkills);
+				cp => cp.CareerPathSkills,
+				cp => cp.Tracks);
+
+			var pathIds = careerPaths.Select(cp => cp.Id).ToList();
+			if (pathIds.Any())
+			{
+				await _unitOfWork.CareerPathSkills.FindAsync(
+					cps => pathIds.Contains(cps.CareerPathId),
+					cps => cps.Skill
+				);
+			}
 
 			return careerPaths.ToDtoList();
 		}

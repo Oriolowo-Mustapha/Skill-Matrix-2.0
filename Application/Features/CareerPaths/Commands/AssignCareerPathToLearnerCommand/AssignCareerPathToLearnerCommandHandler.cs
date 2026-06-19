@@ -5,6 +5,7 @@ using Domain.Entities;
 using Domain.Enum;
 using MediatR;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,10 +30,22 @@ namespace Application.Features.CareerPaths.Commands.AssignCareerPathToLearnerCom
                 throw new NotFoundException($"CareerPath with ID {request.CareerPathId} not found.");
             }
 
+            // Validate TrackId if provided
+            if (request.TrackId.HasValue)
+            {
+                var trackExists = await _unitOfWork.CareerPathTracks.ExistsAsync(
+                    t => t.Id == request.TrackId.Value && t.CareerPathId == request.CareerPathId);
+                if (!trackExists)
+                {
+                    throw new NotFoundException($"Track with ID {request.TrackId.Value} not found for CareerPath {request.CareerPathId}.");
+                }
+            }
+
             var assignedCareerPath = new AssignedCareerPath
             {
                 LearnerId = request.LearnerId,
                 CareerPathId = request.CareerPathId,
+                CareerPathTrackId = request.TrackId,
                 Title = careerPath.Title,
                 Description = careerPath.Description,
                 ImageUrl = careerPath.IconURL,
@@ -41,9 +54,10 @@ namespace Application.Features.CareerPaths.Commands.AssignCareerPathToLearnerCom
 
             await _unitOfWork.AssignedCareerPaths.AddAsync(assignedCareerPath);
 
-            // Auto-assign career path skills (Edge Case: batch assignment to prevent DB round-trips)
+            // Auto-assign career path skills: Core skills (TrackId == null) + selected Track's skills
             var pathSkills = await _unitOfWork.CareerPathSkills.FindAsync(
-                cps => cps.CareerPathId == request.CareerPathId,
+                cps => cps.CareerPathId == request.CareerPathId &&
+                       (cps.CareerPathTrackId == null || cps.CareerPathTrackId == request.TrackId),
                 cps => cps.Skill
             );
 
@@ -63,14 +77,13 @@ namespace Application.Features.CareerPaths.Commands.AssignCareerPathToLearnerCom
                         SkillId = pathSkill.SkillId,
                         Name = pathSkill.Skill.Name,
                         Category = pathSkill.Skill.Category,
-                        ProficiencyLevel = pathSkill.TargetLevel, // Map to the required level of the career path
+                        ProficiencyLevel = pathSkill.TargetLevel,
                         DateAssigned = DateTime.UtcNow
                     };
                     newAssignedSkills.Add(newAssigned);
                 }
                 else
                 {
-                    // Edge Case: Conflicting Proficiency Targets (upgrade existing target level if the career path requires it)
                     if (pathSkill.TargetLevel > existingSkill.ProficiencyLevel)
                     {
                         existingSkill.ProficiencyLevel = pathSkill.TargetLevel;

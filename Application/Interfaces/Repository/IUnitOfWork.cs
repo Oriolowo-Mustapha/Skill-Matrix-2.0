@@ -21,6 +21,7 @@ namespace Application.Interfaces.Repository
 		IGenericRepository<AssignedBadge> AssignedBadges { get; }
 		IGenericRepository<CareerPath> CareerPaths { get; }
         IGenericRepository<CareerPathSkill> CareerPathSkills { get; }
+        IGenericRepository<CareerPathTrack> CareerPathTracks { get; }
         IGenericRepository<AssignedCareerPath> AssignedCareerPaths { get; }
 		IGenericRepository<PeerEndorsement> PeerEndorsements { get; }
 		IGenericRepository<SkillGap> SkillGaps { get; }

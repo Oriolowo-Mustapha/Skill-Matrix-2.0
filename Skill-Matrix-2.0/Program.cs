@@ -69,7 +69,7 @@ builder.Services.AddHttpClient<IEmailService, Infrastructure.ExternalServices.Br
 builder.Services.AddHttpClient<IAiService, GeminiAiService>();
 builder.Services.AddHttpClient<IAiAnalysisService, AiAnalysisService>();
 
-builder.Services.AddScoped<ICodeExecutionService, CodeExecutionService>();
+builder.Services.AddHttpClient<ICodeExecutionService, CodeExecutionService>();
 builder.Services.AddScoped<IReminderService, ReminderService>();
 
 builder.Services.Configure<Infrastructure.ExternalServices.Cloudinary.CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));

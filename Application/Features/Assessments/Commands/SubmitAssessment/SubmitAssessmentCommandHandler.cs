@@ -1,12 +1,16 @@
 using Application.DTOs;
+using Application.DTOs.Assessments;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
 using Application.Interfaces.Service;
 using Domain.Entities;
 using Domain.Enum;
 using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Assessments.Commands.SubmitAssessment
 {
@@ -14,11 +18,13 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IAiService _aiService;
+		private readonly ICodeExecutionService _codeExecutionService;
 
-		public SubmitAssessmentCommandHandler(IUnitOfWork unitOfWork, IAiService aiService)
+		public SubmitAssessmentCommandHandler(IUnitOfWork unitOfWork, IAiService aiService, ICodeExecutionService codeExecutionService)
 		{
 			_unitOfWork = unitOfWork;
 			_aiService = aiService;
+			_codeExecutionService = codeExecutionService;
 		}
 
 		public async Task<AssessmentResultDTO> Handle(SubmitAssessmentCommand request, CancellationToken cancellationToken)
@@ -45,6 +51,35 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				}
 			}
 
+			// Parallel Execution for Coding Questions
+			var codingTasks = new List<(Assessment Question, UserAnswerDTO Answer, Task<CodeExecutionResponseDTO> Task)>();
+			foreach (var question in batch.Assessments.Where(q => q.QuestionType == QuestionType.Coding))
+			{
+				var answerDto = request.requestDto.UserAnswers.FirstOrDefault(a => a.AssessmentQuestionId == question.Id);
+				if (answerDto != null && !string.IsNullOrWhiteSpace(answerDto.SubmittedCode))
+				{
+					var lang = string.IsNullOrWhiteSpace(question.CorrectAnswer) ? "csharp" : question.CorrectAnswer.Trim();
+					var executionRequest = new CodeExecutionRequestDTO
+					{
+						Language = lang,
+						SourceCode = answerDto.SubmittedCode,
+						ExpectedOutput = question.ExpectedOutput ?? string.Empty
+					};
+					var task = _codeExecutionService.ExecuteCodeAsync(executionRequest);
+					codingTasks.Add((question, answerDto, task));
+				}
+			}
+
+			if (codingTasks.Any())
+			{
+				await Task.WhenAll(codingTasks.Select(t => t.Task));
+			}
+
+			var codingResults = codingTasks.ToDictionary(
+				t => t.Question.Id,
+				t => t.Task.Result
+			);
+
 			int correctAnswers = 0;
 			int unansweredCount = 0;
 			int totalQuestions = batch.Assessments.Count;
@@ -64,9 +99,14 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 					// Grade based on question type
 					if (question.QuestionType == QuestionType.Coding)
 					{
-						// For coding questions, the grading happens via the run-code endpoint.
-						// The frontend sends SelectedOptionId = -1 for passed, 0 for failed.
-						isCorrect = selectedOptionId == -1;
+						if (codingResults.TryGetValue(question.Id, out var executionResult))
+						{
+							isCorrect = executionResult.IsSuccess;
+						}
+						else
+						{
+							isCorrect = false;
+						}
 					}
 					else
 					{
@@ -83,7 +123,8 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 						AssessmentQuestionId = question.Id,
 						SelectedOptionId = selectedOptionId,
 						Timestamp = DateTime.UtcNow,
-						IsCorrect = isCorrect
+						IsCorrect = isCorrect,
+						SubmittedCode = answerDto?.SubmittedCode
 					};
 
 					if (request.UserRole == Roles.Learner.ToString())

@@ -28,6 +28,7 @@ namespace Infrastructure.Context
 		public DbSet<PeerEndorsement> PeerEndorsements { get; set; }
 		public DbSet<SkillGap> SkillGaps { get; set; }
 		public DbSet<ImprovementTask> ImprovementTasks { get; set; }
+		public DbSet<CareerPathTrack> CareerPathTracks { get; set; }
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,11 +44,23 @@ namespace Infrastructure.Context
 				.HasIndex(p => new { p.EndorserId, p.EndorseeId, p.SkillId })
 				.IsUnique();
 
+			modelBuilder.Entity<CareerPath>()
+				.HasMany(cp => cp.Tracks)
+				.WithOne(t => t.CareerPath)
+				.HasForeignKey(t => t.CareerPathId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			modelBuilder.Entity<CareerPathTrack>()
+				.HasMany(t => t.CareerPathSkills)
+				.WithOne(cps => cps.CareerPathTrack)
+				.HasForeignKey(cps => cps.CareerPathTrackId)
+				.OnDelete(DeleteBehavior.Restrict);
+
 			modelBuilder.Entity<Organization>()
-			    .HasMany(o => o.Managers) // An Organization has many Managers
-			    .WithOne(m => m.Organization) // A Manager has one Organization
-			    .HasForeignKey(m => m.OrganizationId) // The foreign key is on the Manager entity
-			    .OnDelete(DeleteBehavior.Cascade); // Deleting an org will delete its managers
+			    .HasMany(o => o.Managers) 
+			    .WithOne(m => m.Organization) 
+			    .HasForeignKey(m => m.OrganizationId) 
+			    .OnDelete(DeleteBehavior.Cascade);
 			modelBuilder.Entity<Manager>()
 				.HasMany(m => m.TeamMembers)
 				.WithOne(t => t.Manager)

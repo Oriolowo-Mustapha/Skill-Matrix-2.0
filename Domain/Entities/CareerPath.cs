@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities
+namespace Domain.Entities
 {
 	public class CareerPath : BaseEntity
 	{
@@ -7,5 +7,6 @@
 		public string IconURL { get; set; } = string.Empty;
 		public DateTime DateAdded { get; set; } = DateTime.UtcNow;
 		public ICollection<CareerPathSkill> CareerPathSkills { get; set; } = new List<CareerPathSkill>();
+		public ICollection<CareerPathTrack> Tracks { get; set; } = new List<CareerPathTrack>();
 	}
 }

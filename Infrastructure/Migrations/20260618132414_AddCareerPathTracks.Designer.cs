@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MatrixDbContext))]
-    partial class MatrixDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260618132414_AddCareerPathTracks")]
+    partial class AddCareerPathTracks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -956,9 +959,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("SelectedOptionId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("SubmittedCode")
-                        .HasColumnType("text");
 
                     b.Property<Guid?>("TeamMemberId")
                         .HasColumnType("uuid");

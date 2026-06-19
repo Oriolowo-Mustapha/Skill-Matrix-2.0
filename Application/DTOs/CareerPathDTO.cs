@@ -10,5 +10,6 @@ namespace Application.DTOs
 		public string IconURL { get; set; } = string.Empty;
 		public DateTime DateAdded { get; set; }
 		public List<SkillDTO> Skills { get; set; } = new();
+		public List<CareerPathTrackDTO> Tracks { get; set; } = new();
 	}
 }

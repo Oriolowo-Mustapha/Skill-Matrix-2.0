@@ -6,5 +6,6 @@ namespace Application.Features.CareerPaths.Commands.AssignCareerPathToTeamMember
 {
     public record AssignCareerPathToTeamMemberCommand(
         Guid TeamMemberId,
-        Guid CareerPathId) : IRequest<Guid>; // Returns the Id of the new AssignedCareerPath
+        Guid CareerPathId,
+        Guid? TrackId = null) : IRequest<Guid>;
 }

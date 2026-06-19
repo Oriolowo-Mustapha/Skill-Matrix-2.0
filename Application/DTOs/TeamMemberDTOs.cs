@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+
 namespace Application.DTOs
 {
 	public record RegisterTeamMemberRequestDTO
@@ -6,7 +8,7 @@ namespace Application.DTOs
 		public string LastName { get; set; } = string.Empty;
 		public string Email { get; set; } = string.Empty;
 		public string UserName { get; set; } = string.Empty;
-		public string? ProfilePicUrl { get; set; }
+		public IFormFile? ProfilePicUrl { get; set; }
 		public string Password { get; set; } = string.Empty;
 	}
 

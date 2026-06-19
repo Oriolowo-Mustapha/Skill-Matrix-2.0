@@ -25,6 +25,7 @@ namespace Infrastructure.Implementation.Repositories
 		private IGenericRepository<AssignedBadge>? _assignedBadge;
 		private IGenericRepository<AssignedCareerPath>? _assignedCareerPaths;
 		private IGenericRepository<CareerPathSkill>? _careerPathSkills;
+		private IGenericRepository<CareerPathTrack>? _careerPathTracks;
 		private IGenericRepository<PeerEndorsement>? _peerEndorsements;
 		private IGenericRepository<SkillGap>? _skillGaps;
 		private IGenericRepository<ImprovementTask>? _improvementTasks;
@@ -75,6 +76,9 @@ namespace Infrastructure.Implementation.Repositories
 
 		public IGenericRepository<CareerPathSkill> CareerPathSkills =>
 			_careerPathSkills ??= new GenericRepository<CareerPathSkill>(_context);
+
+		public IGenericRepository<CareerPathTrack> CareerPathTracks =>
+			_careerPathTracks ??= new GenericRepository<CareerPathTrack>(_context);
 
 		public IUserResponseRepository UserResponses =>
 			_userResponseRepository ??= new UserResponseRepository(_context);

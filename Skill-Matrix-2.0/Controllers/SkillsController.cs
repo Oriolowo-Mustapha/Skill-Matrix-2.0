@@ -74,7 +74,7 @@ namespace Skill_Matrix_2._0.Controllers
 		[HttpPost("assign")]
         [Authorize(Roles = "Manager")]
 		[Consumes("application/json")]
-        public async Task<IActionResult> AssignSkill([FromBody] AssignSkillCommand command)
+        public async Task<IActionResult> AssignSkill([FromBody] AssignSkillRequestDTO request)
 		{
 			var managerIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			if (string.IsNullOrEmpty(managerIdString) || !Guid.TryParse(managerIdString, out Guid managerId))
@@ -82,10 +82,26 @@ namespace Skill_Matrix_2._0.Controllers
 				return Unauthorized("Invalid user token.");
 			}
 
-			var finalCommand = new AssignSkillCommand(managerId, command.TeamMemberId, command.SkillId);
+			var finalCommand = new AssignSkillCommand(managerId, request.TeamMemberId, request.SkillId);
 			
 			var response = await _mediator.Send(finalCommand);
 			return Ok(response);
+		}
+
+		[HttpPost("self-assign")]
+		[Authorize(Roles = "Learner")]
+		[Consumes("application/json")]
+		public async Task<IActionResult> SelfAssignSkill([FromBody] SelfAssignSkillRequestDTO request)
+		{
+			var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId))
+			{
+				return Unauthorized("Invalid user token.");
+			}
+
+			var command = new Application.Features.Skills.Commands.SelfAssignSkill.SelfAssignSkillCommand(userId, request.SkillId);
+			var response = await _mediator.Send(command);
+			return Ok(BaseResponse<bool>.SuccessResponse(response, "Skill successfully added to your profile."));
 		}
 	}
 }

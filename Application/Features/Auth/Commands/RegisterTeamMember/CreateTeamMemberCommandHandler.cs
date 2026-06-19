@@ -7,17 +7,19 @@ using MediatR;
 
 namespace Application.Features.Auth.Commands.RegisterTeamMember
 {
-	public class CreateTeamMemberCommandHandler : IRequestHandler<CreateTeamMemberCommand, BaseResponse<TeamMemberDTO>>
+	public class CreateTeamMemberCommandHandler : IRequestHandler<CreateTeamMemberCommand, BaseResponse<string>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IEmailService _emailService;
+		private readonly IPhotoService _photoService;
 
-		public CreateTeamMemberCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService)
+		public CreateTeamMemberCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService, IPhotoService photoService)
 		{
 			_unitOfWork = unitOfWork;
 			_emailService = emailService;
+			_photoService = photoService;
 		}
-		public async Task<BaseResponse<TeamMemberDTO>> Handle(CreateTeamMemberCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<string>> Handle(CreateTeamMemberCommand request, CancellationToken cancellationToken)
 		{
 			var getManager = await _unitOfWork.ManagerRepository.GetByIdAsync(request.ManagerId);
 			if (getManager == null)
@@ -54,13 +56,19 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 			var hashedPassword = HashPassword(request.request.Password);
 			var verificationToken = Guid.NewGuid().ToString();
 
-			var newTeamMember = new TeamMember
+            string? profilePicUrl = null;
+            if (request.request.ProfilePicUrl != null)
+            {
+                profilePicUrl = await _photoService.AddPhotoAsync(request.request.ProfilePicUrl);
+            }
+
+            var newTeamMember = new TeamMember
 			{
 				FirstName = request.request.FirstName,
 				LastName = request.request.LastName,
 				Email = email,
 				UserName = userName,
-				ProfilePictureUrl = request.request.ProfilePicUrl,
+				ProfilePictureUrl = profilePicUrl,
 				PasswordHash = hashedPassword,
 				Manager = getManager,
 				Organization = getOrganization,
@@ -91,6 +99,11 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 
 				You have been invited by {getManager.UserName} to join {getOrganization.Name} on Skill Matrix 2.0.
 
+				Here are your account credentials:
+				- Username: {newTeamMember.UserName}
+				- Email: {newTeamMember.Email}
+				- Password: {request.request.Password}
+
 				To activate your account, please verify your email by clicking the link below:
 				{verificationLink}
 
@@ -103,7 +116,7 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 				""";
 
 			await _emailService.SendEmailAsync(newTeamMember.Email, subject, body);
-			return BaseResponse<TeamMemberDTO>.SuccessResponse(toDTO, "Team member successfully registered.");
+			return BaseResponse<string>.SuccessResponse(null, "Team member successfully registered.");
 		}
 
 		private string HashPassword(string password)

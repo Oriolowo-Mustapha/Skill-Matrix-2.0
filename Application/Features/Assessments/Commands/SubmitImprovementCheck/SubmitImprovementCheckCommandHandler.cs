@@ -1,6 +1,8 @@
 using Application.DTOs;
+using Application.DTOs.Assessments;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
+using Application.Interfaces.Service;
 using Domain.Entities;
 using Domain.Enum;
 using MediatR;
@@ -15,10 +17,12 @@ namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 	public class SubmitImprovementCheckCommandHandler : IRequestHandler<SubmitImprovementCheckCommand, AssessmentResultDTO>
 	{
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly ICodeExecutionService _codeExecutionService;
 
-		public SubmitImprovementCheckCommandHandler(IUnitOfWork unitOfWork)
+		public SubmitImprovementCheckCommandHandler(IUnitOfWork unitOfWork, ICodeExecutionService codeExecutionService)
 		{
 			_unitOfWork = unitOfWork;
+			_codeExecutionService = codeExecutionService;
 		}
 
 		public async Task<AssessmentResultDTO> Handle(SubmitImprovementCheckCommand request, CancellationToken cancellationToken)
@@ -50,6 +54,35 @@ namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 				}
 			}
 
+			// Parallel Execution for Coding Questions
+			var codingTasks = new List<(Assessment Question, UserAnswerDTO Answer, Task<CodeExecutionResponseDTO> Task)>();
+			foreach (var question in batch.Assessments.Where(q => q.QuestionType == QuestionType.Coding))
+			{
+				var answerDto = request.requestDto.UserAnswers.FirstOrDefault(a => a.AssessmentQuestionId == question.Id);
+				if (answerDto != null && !string.IsNullOrWhiteSpace(answerDto.SubmittedCode))
+				{
+					var lang = string.IsNullOrWhiteSpace(question.CorrectAnswer) ? "csharp" : question.CorrectAnswer.Trim();
+					var executionRequest = new CodeExecutionRequestDTO
+					{
+						Language = lang,
+						SourceCode = answerDto.SubmittedCode,
+						ExpectedOutput = question.ExpectedOutput ?? string.Empty
+					};
+					var task = _codeExecutionService.ExecuteCodeAsync(executionRequest);
+					codingTasks.Add((question, answerDto, task));
+				}
+			}
+
+			if (codingTasks.Any())
+			{
+				await Task.WhenAll(codingTasks.Select(t => t.Task));
+			}
+
+			var codingResults = codingTasks.ToDictionary(
+				t => t.Question.Id,
+				t => t.Task.Result
+			);
+
 			int correctAnswers = 0;
 			int totalQuestions = batch.Assessments.Count;
 			int unansweredCount = 0;
@@ -68,7 +101,14 @@ namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 					// Grade based on question type
 					if (question.QuestionType == QuestionType.Coding)
 					{
-						isCorrect = selectedOptionId == -1;
+						if (codingResults.TryGetValue(question.Id, out var executionResult))
+						{
+							isCorrect = executionResult.IsSuccess;
+						}
+						else
+						{
+							isCorrect = false;
+						}
 					}
 					else
 					{
@@ -85,7 +125,8 @@ namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 						AssessmentQuestionId = question.Id,
 						SelectedOptionId = selectedOptionId,
 						Timestamp = DateTime.UtcNow,
-						IsCorrect = isCorrect
+						IsCorrect = isCorrect,
+						SubmittedCode = answerDto?.SubmittedCode
 					};
 
 					if (request.UserRole == Roles.Learner.ToString())

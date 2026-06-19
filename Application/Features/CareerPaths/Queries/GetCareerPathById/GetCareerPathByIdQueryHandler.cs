@@ -19,7 +19,8 @@ namespace Application.Features.CareerPaths.Queries.GetCareerPathById
 		{
 			var careerPaths = await _unitOfWork.CareerPaths.FindAsync(
 				cp => cp.Id == request.Id,
-				cp => cp.CareerPathSkills);
+				cp => cp.CareerPathSkills,
+				cp => cp.Tracks);
 
 			var careerPath = careerPaths.FirstOrDefault();
 
@@ -27,6 +28,11 @@ namespace Application.Features.CareerPaths.Queries.GetCareerPathById
 			{
 				throw new NotFoundException($"CareerPath with ID {request.Id} not found.");
 			}
+
+			await _unitOfWork.CareerPathSkills.FindAsync(
+				cps => cps.CareerPathId == request.Id,
+				cps => cps.Skill
+			);
 
 			return careerPath.ToDto();
 		}

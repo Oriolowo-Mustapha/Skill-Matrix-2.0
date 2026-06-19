@@ -5,6 +5,12 @@ namespace Application.DTOs
 		public Guid AssignedSkillId { get; set; }
 	}
 
+	public record AssignSkillRequestDTO
+	{
+		public Guid TeamMemberId { get; set; }
+		public Guid SkillId { get; set; }
+	}
+
 	public record StartAssessmentResponseDTO
 	{
 		public int AssessmentBatchId { get; set; }
@@ -37,5 +43,11 @@ namespace Application.DTOs
 	{
 		public int AssessmentQuestionId { get; set; }
 		public int SelectedOptionId { get; set; }
+		public string? SubmittedCode { get; set; }
+	}
+
+	public record SelfAssignSkillRequestDTO
+	{
+		public Guid SkillId { get; set; }
 	}
 }

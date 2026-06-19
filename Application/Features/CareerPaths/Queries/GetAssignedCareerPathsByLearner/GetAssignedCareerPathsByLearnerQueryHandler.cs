@@ -23,7 +23,8 @@ namespace Application.Features.CareerPaths.Queries.GetAssignedCareerPathsByLearn
 			}
 
 			var assignedCareerPaths = await _unitOfWork.AssignedCareerPaths.FindAsync(
-				acp => acp.LearnerId == request.LearnerId);
+				acp => acp.LearnerId == request.LearnerId,
+				acp => acp.CareerPathTrack!);
 
 			return assignedCareerPaths.Select(acp => new AssignedCareerPathDTO
 			{
@@ -32,6 +33,8 @@ namespace Application.Features.CareerPaths.Queries.GetAssignedCareerPathsByLearn
 				Description = acp.Description,
 				ImageUrl = acp.ImageUrl,
 				CareerPathId = acp.CareerPathId,
+				CareerPathTrackId = acp.CareerPathTrackId,
+				TrackName = acp.CareerPathTrack?.Name,
 				DateAssigned = acp.DateAssigned,
 				ProgressPercentage = acp.ProgressPercentage
 			}).ToList();

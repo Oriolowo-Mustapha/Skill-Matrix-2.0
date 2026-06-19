@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Features.Assessments.Commands.TeamManagement
 {
-	public class AssignSkillCommandHandler : IRequestHandler<AssignSkillCommand, bool>
+	public class AssignSkillCommandHandler : IRequestHandler<AssignSkillCommand, BaseResponse<bool>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IEmailService _emailService;
@@ -17,7 +17,7 @@ namespace Application.Features.Assessments.Commands.TeamManagement
 			_unitOfWork = unitOfWork;
 			_emailService = emailService;
 		}
-		public async Task<bool> Handle(AssignSkillCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<bool>> Handle(AssignSkillCommand request, CancellationToken cancellationToken)
 		{
 			var FetchTeamMemberById = await _unitOfWork.TeamMembers.GetByIdAsync(request.TeamMemberId);
 			if (FetchTeamMemberById == null)
@@ -77,7 +77,12 @@ namespace Application.Features.Assessments.Commands.TeamManagement
 
 			await _emailService.SendEmailAsync(FetchTeamMemberById.Email, subject, body);
 
-			return true;
+			return new BaseResponse<bool>
+			{
+				Data = true,
+				Message = "Skill Assigned Successfully", 
+				Success = true,
+			};
 		}
 	}
 }

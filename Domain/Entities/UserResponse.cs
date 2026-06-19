@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities
+namespace Domain.Entities
 {
 	public class UserResponse : BaseEntity
 	{
@@ -18,5 +18,7 @@
 		public DateTime Timestamp { get; set; } = DateTime.UtcNow;
 
 		public bool IsCorrect { get; set; }
+
+		public string? SubmittedCode { get; set; }
 	}
 }

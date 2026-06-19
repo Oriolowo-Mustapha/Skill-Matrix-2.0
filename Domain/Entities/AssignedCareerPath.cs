@@ -13,6 +13,10 @@ namespace Domain.Entities
         public Guid CareerPathId { get; set; }
         public CareerPath CareerPath { get; set; } = null!;
 
+		// Track selected by the user (null if career path has no tracks)
+		public Guid? CareerPathTrackId { get; set; }
+		public CareerPathTrack? CareerPathTrack { get; set; }
+
 		public DateTime DateAssigned { get; set; }
 		public int ProgressPercentage { get; set; } = 0;
 	}

@@ -6,5 +6,6 @@ namespace Application.Features.CareerPaths.Commands.AssignCareerPathToLearnerCom
 {
     public record AssignCareerPathToLearnerCommand(
         Guid LearnerId,
-        Guid CareerPathId) : IRequest<Guid>; // Returns the Id of the new AssignedCareerPath
+        Guid CareerPathId,
+        Guid? TrackId = null) : IRequest<Guid>;
 }
