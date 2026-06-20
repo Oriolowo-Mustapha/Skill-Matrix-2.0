@@ -116,7 +116,7 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 				""";
 
 			await _emailService.SendEmailAsync(newTeamMember.Email, subject, body);
-			return BaseResponse<string>.SuccessResponse(null, "Team member successfully registered.");
+			return BaseResponse<string>.SuccessResponse(" ", "Team member successfully registered.");
 		}
 
 		private string HashPassword(string password)

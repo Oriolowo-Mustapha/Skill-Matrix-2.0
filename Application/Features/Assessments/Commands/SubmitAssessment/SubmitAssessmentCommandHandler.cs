@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Assessments.Commands.SubmitAssessment
 {
-	public class SubmitAssessmentCommandHandler : IRequestHandler<SubmitAssessmentCommand, AssessmentResultDTO>
+	public class SubmitAssessmentCommandHandler : IRequestHandler<SubmitAssessmentCommand, BaseResponse<AssessmentResultDTO>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IAiService _aiService;
@@ -27,7 +27,7 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 			_codeExecutionService = codeExecutionService;
 		}
 
-		public async Task<AssessmentResultDTO> Handle(SubmitAssessmentCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<AssessmentResultDTO>> Handle(SubmitAssessmentCommand request, CancellationToken cancellationToken)
 		{
 			var batch = await _unitOfWork.AssessmentBatches.GetBatchForGradingAsync(request.requestDto.AssessmentBatchId);
 
@@ -312,7 +312,7 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 			
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			return new AssessmentResultDTO
+			var responseDto = new AssessmentResultDTO
 			{
 				Id = result.Id,
 				SkillName = batch.AssignedSkill.Name,
@@ -329,6 +329,8 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				BadgeUnlocked = badgeUnlocked,
 				BadgeTitle = badgeTitle
 			};
+
+			return BaseResponse<AssessmentResultDTO>.SuccessResponse(responseDto, "Assessment submitted and graded successfully.");
 		}
 
 		private static int GetPassingThreshold(ProficiencyLevel level)

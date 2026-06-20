@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Features.Badges.Commands.UnassignBadgeFromLearner
 {
-	public class UnassignBadgeFromLearnerCommandHandler : IRequestHandler<UnassignBadgeFromLearnerCommand, Unit>
+	public class UnassignBadgeFromLearnerCommandHandler : IRequestHandler<UnassignBadgeFromLearnerCommand, BaseResponse<string>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 
@@ -14,7 +14,7 @@ namespace Application.Features.Badges.Commands.UnassignBadgeFromLearner
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<Unit> Handle(UnassignBadgeFromLearnerCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<string>> Handle(UnassignBadgeFromLearnerCommand request, CancellationToken cancellationToken)
 		{
 			var assignedBadge = (await _unitOfWork.AssignedBadges.GetAllAsync())
 								.FirstOrDefault(ab => ab.BadgeId == request.BadgeId && ab.LearnerID == request.LearnerId);
@@ -27,7 +27,7 @@ namespace Application.Features.Badges.Commands.UnassignBadgeFromLearner
 			await _unitOfWork.AssignedBadges.DeleteAsync(assignedBadge);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			return Unit.Value;
+			return BaseResponse<string>.SuccessResponse(" ", "Badge successfully unassigned from learner.");
 		}
 	}
 }

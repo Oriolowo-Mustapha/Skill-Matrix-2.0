@@ -1,4 +1,5 @@
 using FluentValidation;
+using Application.Extensions;
 
 namespace Application.DTOs.Validators
 {
@@ -14,7 +15,8 @@ namespace Application.DTOs.Validators
 				.NotEmpty().WithMessage("Last Name is required.")
 				.MaximumLength(50).WithMessage("Last Name cannot exceed 50 characters.");
 
-
+			RuleFor(x => x.ProfilePic)
+				.IsValidImage();
 		}
 	}
 }

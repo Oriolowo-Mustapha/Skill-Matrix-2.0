@@ -52,32 +52,32 @@ namespace Skill_Matrix_2._0.Controllers
 
 		[HttpPost]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
-		[Consumes("application/json")]
-		public async Task<ActionResult<Guid>> CreateCareerPath([FromBody] CreateCareerPathCommand command)
+		[Consumes("multipart/form-data")]
+		public async Task<ActionResult<BaseResponse<Guid>>> CreateCareerPath([FromForm] CreateCareerPathCommand command)
 		{
-			var id = await _mediator.Send(command);
-			return CreatedAtAction(nameof(GetById), new { id }, id);
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpPut("{id}")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
 		[Consumes("application/json")]
-		public async Task<IActionResult> UpdateCareerPath(Guid id, [FromBody] UpdateCareerPathCommand command)
+		public async Task<ActionResult<BaseResponse<string>>> UpdateCareerPath(Guid id, [FromBody] UpdateCareerPathCommand command)
 		{
 			if (id != command.Id)
 				return BadRequest("Route ID and Command ID must match.");
 
-			await _mediator.Send(command);
-			return NoContent();
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpDelete("{id}")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
-		public async Task<IActionResult> DeleteCareerPath(Guid id)
+		public async Task<ActionResult<BaseResponse<string>>> DeleteCareerPath(Guid id)
 		{
 			var command = new DeleteCareerPathCommand(id);
-			await _mediator.Send(command);
-			return NoContent();
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		// ───────── Track Management ─────────
@@ -92,25 +92,25 @@ namespace Skill_Matrix_2._0.Controllers
 		[HttpPost("{careerPathId}/tracks")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
 		[Consumes("application/json")]
-		public async Task<ActionResult<Guid>> CreateTrack(Guid careerPathId, [FromBody] CreateCareerPathTrackCommand command)
+		public async Task<ActionResult<BaseResponse<Guid>>> CreateTrack(Guid careerPathId, [FromBody] CreateCareerPathTrackCommand command)
 		{
 			if (careerPathId != command.CareerPathId)
 				return BadRequest("Route CareerPathId and Command CareerPathId must match.");
 
-			var id = await _mediator.Send(command);
-			return CreatedAtAction(nameof(GetTracks), new { careerPathId }, id);
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpPost("{careerPathId}/tracks/{trackId}/skills")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
 		[Consumes("application/json")]
-		public async Task<ActionResult<Guid>> AddSkillToTrack(Guid careerPathId, Guid trackId, [FromBody] AddSkillToTrackCommand command)
+		public async Task<ActionResult<BaseResponse<Guid>>> AddSkillToTrack(Guid careerPathId, Guid trackId, [FromBody] AddSkillToTrackCommand command)
 		{
 			if (careerPathId != command.CareerPathId || trackId != command.TrackId)
 				return BadRequest("Route IDs and Command IDs must match.");
 
-			var id = await _mediator.Send(command);
-			return Ok(id);
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		// ───────── Career Path Assignment ─────────
@@ -118,37 +118,37 @@ namespace Skill_Matrix_2._0.Controllers
 		[HttpPost("assign-learner")]
 		[Authorize(Roles = "Learner,Manager,Admin,SuperAdmin")]
 		[Consumes("application/json")]
-		public async Task<ActionResult<Guid>> AssignToLearner([FromBody] AssignCareerPathToLearnerCommand command)
+		public async Task<ActionResult<BaseResponse<Guid>>> AssignToLearner([FromBody] AssignCareerPathToLearnerCommand command)
 		{
-			var id = await _mediator.Send(command);
-			return Ok(id);
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpPost("assign-team-member")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
 		[Consumes("application/json")]
-		public async Task<ActionResult<Guid>> AssignToTeamMember([FromBody] AssignCareerPathToTeamMemberCommand command)
+		public async Task<ActionResult<BaseResponse<Guid>>> AssignToTeamMember([FromBody] AssignCareerPathToTeamMemberCommand command)
 		{
-			var id = await _mediator.Send(command);
-			return Ok(id);
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpPost("unassign-learner")]
 		[Authorize(Roles = "Learner,Manager,Admin,SuperAdmin")]
 		[Consumes("application/json")]
-		public async Task<IActionResult> UnassignFromLearner([FromBody] UnassignCareerPathFromLearnerCommand command)
+		public async Task<ActionResult<BaseResponse<string>>> UnassignFromLearner([FromBody] UnassignCareerPathFromLearnerCommand command)
 		{
-			await _mediator.Send(command);
-			return NoContent();
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpPost("unassign-team-member")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
 		[Consumes("application/json")]
-		public async Task<IActionResult> UnassignFromTeamMember([FromBody] UnassignCareerPathFromTeamMemberCommand command)
+		public async Task<ActionResult<BaseResponse<string>>> UnassignFromTeamMember([FromBody] UnassignCareerPathFromTeamMemberCommand command)
 		{
-			await _mediator.Send(command);
-			return NoContent();
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		// ───────── Assigned Career Path Queries ─────────

@@ -103,7 +103,7 @@ namespace Skill_Matrix_2._0.Controllers
 
 			var command = new Application.Features.Assessments.Commands.UpdateUserProfile.UpdateUserProfileCommand(userId, request);
 			var result = await _mediator.Send(command);
-			return Ok(BaseResponse<UserDTO>.SuccessResponse(result, "Profile updated successfully."));
+			return Ok(result);
 		}
 
 		[HttpGet("google-login")]

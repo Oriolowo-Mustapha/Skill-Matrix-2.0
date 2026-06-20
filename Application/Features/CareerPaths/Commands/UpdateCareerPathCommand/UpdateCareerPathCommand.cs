@@ -10,5 +10,5 @@ namespace Application.Features.CareerPaths.Commands.UpdateCareerPathCommand
         string Title,
         string Description,
         string IconURL,
-        List<Guid> SkillIds) : IRequest;
-}
+        List<Guid> SkillIds) : IRequest<BaseResponse<string>>;
+}

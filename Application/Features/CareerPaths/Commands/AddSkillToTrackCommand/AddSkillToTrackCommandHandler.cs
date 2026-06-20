@@ -1,3 +1,4 @@
+using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
 using Domain.Entities;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.CareerPaths.Commands.AddSkillToTrackCommand
 {
-    public class AddSkillToTrackCommandHandler : IRequestHandler<AddSkillToTrackCommand, Guid>
+    public class AddSkillToTrackCommandHandler : IRequestHandler<AddSkillToTrackCommand, BaseResponse<Guid>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -17,7 +18,7 @@ namespace Application.Features.CareerPaths.Commands.AddSkillToTrackCommand
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Guid> Handle(AddSkillToTrackCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<Guid>> Handle(AddSkillToTrackCommand request, CancellationToken cancellationToken)
         {
             // Validate track belongs to career path
             var trackExists = await _unitOfWork.CareerPathTracks.ExistsAsync(
@@ -49,7 +50,7 @@ namespace Application.Features.CareerPaths.Commands.AddSkillToTrackCommand
             await _unitOfWork.CareerPathSkills.AddAsync(careerPathSkill);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return careerPathSkill.Id;
+            return BaseResponse<Guid>.SuccessResponse(careerPathSkill.Id, "Skill successfully added to track.");
         }
     }
 }

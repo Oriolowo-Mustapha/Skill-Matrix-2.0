@@ -10,5 +10,5 @@ namespace Application.Features.Badges.Commands.UpdateBadge
         string Description,
         string IconUrl,
         string Criteria,
-        string ProficiencyLevel) : IRequest<Unit>; // Update operations typically return Unit or the updated entity/DTO
-}
+        string ProficiencyLevel) : IRequest<BaseResponse<string>>;
+}

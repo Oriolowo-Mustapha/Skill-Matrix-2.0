@@ -7,5 +7,5 @@ namespace Application.Features.CareerPaths.Commands.AssignCareerPathToTeamMember
     public record AssignCareerPathToTeamMemberCommand(
         Guid TeamMemberId,
         Guid CareerPathId,
-        Guid? TrackId = null) : IRequest<Guid>;
+        Guid? TrackId = null) : IRequest<BaseResponse<Guid>>;
 }

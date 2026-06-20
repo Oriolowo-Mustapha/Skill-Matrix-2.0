@@ -1,7 +1,8 @@
 using Application.DTOs;
-﻿using MediatR;
+using MediatR;
 
 namespace Application.Features.Assessments.Commands.DeleteSkill
 {
-	public record DeleteSkillCommand(Guid Id) : IRequest<BaseResponse<Unit>>;
+	public record DeleteSkillCommand(Guid Id) : IRequest<BaseResponse<string>>;
 }
+

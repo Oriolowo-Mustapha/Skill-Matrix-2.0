@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Features.Assessments.Commands.UpdateUserProfile
 {
-	public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand, UserDTO>
+	public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand, BaseResponse<UserDTO>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IPhotoService _photoService;
@@ -18,7 +18,7 @@ namespace Application.Features.Assessments.Commands.UpdateUserProfile
 			_photoService = photoService;
 		}
 
-		public async Task<UserDTO> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<UserDTO>> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
 		{
 			string? newProfilePicUrl = null;
 			if (request.Dto.ProfilePic != null)
@@ -40,7 +40,7 @@ namespace Application.Features.Assessments.Commands.UpdateUserProfile
 				await _unitOfWork.Learners.UpdateAsync(learner);
 				await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-				return learner.ToDto();
+				return BaseResponse<UserDTO>.SuccessResponse(learner.ToDto(), "Profile updated successfully.");
 			}
 
 			var teamMember = await _unitOfWork.TeamMembers.GetByIdAsync(request.userId);
@@ -57,7 +57,7 @@ namespace Application.Features.Assessments.Commands.UpdateUserProfile
 				await _unitOfWork.TeamMembers.UpdateAsync(teamMember);
 				await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-				return teamMember.ToDto();
+				return BaseResponse<UserDTO>.SuccessResponse(teamMember.ToDto(), "Profile updated successfully.");
 			}
 
 			var manager = await _unitOfWork.ManagerRepository.GetByIdAsync(request.userId);
@@ -74,7 +74,7 @@ namespace Application.Features.Assessments.Commands.UpdateUserProfile
 				await _unitOfWork.ManagerRepository.UpdateAsync(manager);
 				await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-				return manager.ToDto();
+				return BaseResponse<UserDTO>.SuccessResponse(manager.ToDto(), "Profile updated successfully.");
 			}
 
 			throw new NotFoundException("User", request.userId);

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Application.Features.Badges.Commands.UpdateBadge
 {
-	public class UpdateBadgeCommandHandler : IRequestHandler<UpdateBadgeCommand, Unit>
+	public class UpdateBadgeCommandHandler : IRequestHandler<UpdateBadgeCommand, BaseResponse<string>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 
@@ -15,7 +15,7 @@ namespace Application.Features.Badges.Commands.UpdateBadge
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<Unit> Handle(UpdateBadgeCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<string>> Handle(UpdateBadgeCommand request, CancellationToken cancellationToken)
 		{
 			var badge = await _unitOfWork.Badges.GetByIdAsync(request.Id);
 
@@ -33,7 +33,7 @@ namespace Application.Features.Badges.Commands.UpdateBadge
 			await _unitOfWork.Badges.UpdateAsync(badge);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			return Unit.Value;
+			return BaseResponse<string>.SuccessResponse(" ", "Badge updated successfully.");
 		}
 	}
 }

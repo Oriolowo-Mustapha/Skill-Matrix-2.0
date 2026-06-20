@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.CareerPaths.Commands.UnassignCareerPathFromLearnerCommand
 {
-    public class UnassignCareerPathFromLearnerCommandHandler : IRequestHandler<UnassignCareerPathFromLearnerCommand>
+    public class UnassignCareerPathFromLearnerCommandHandler : IRequestHandler<UnassignCareerPathFromLearnerCommand, BaseResponse<string>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -17,7 +17,7 @@ namespace Application.Features.CareerPaths.Commands.UnassignCareerPathFromLearne
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(UnassignCareerPathFromLearnerCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<string>> Handle(UnassignCareerPathFromLearnerCommand request, CancellationToken cancellationToken)
         {
             var assignedCareerPath = (await _unitOfWork.AssignedCareerPaths
                 .FindAsync(acp => acp.LearnerId == request.LearnerId && acp.CareerPathId == request.CareerPathId))
@@ -31,6 +31,8 @@ namespace Application.Features.CareerPaths.Commands.UnassignCareerPathFromLearne
 
             await _unitOfWork.AssignedCareerPaths.DeleteAsync(assignedCareerPath);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return BaseResponse<string>.SuccessResponse(" ", "Career path successfully unassigned from learner.");
         }
     }
 }

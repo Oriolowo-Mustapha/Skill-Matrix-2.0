@@ -6,5 +6,5 @@ namespace Application.Features.CareerPaths.Commands.UnassignCareerPathFromLearne
 {
     public record UnassignCareerPathFromLearnerCommand(
         Guid LearnerId,
-        Guid CareerPathId) : IRequest;
+        Guid CareerPathId) : IRequest<BaseResponse<string>>;
 }

@@ -4,5 +4,5 @@ using System;
 
 namespace Application.Features.Badges.Commands.UnassignBadgeFromLearner
 {
-    public record UnassignBadgeFromLearnerCommand(Guid BadgeId, Guid LearnerId) : IRequest<Unit>;
-}
+    public record UnassignBadgeFromLearnerCommand(Guid BadgeId, Guid LearnerId) : IRequest<BaseResponse<string>>;
+}

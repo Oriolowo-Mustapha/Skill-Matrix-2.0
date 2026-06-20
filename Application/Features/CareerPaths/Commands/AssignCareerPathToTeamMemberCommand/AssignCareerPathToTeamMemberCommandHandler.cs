@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.CareerPaths.Commands.AssignCareerPathToTeamMemberCommand
 {
-    public class AssignCareerPathToTeamMemberCommandHandler : IRequestHandler<AssignCareerPathToTeamMemberCommand, Guid>
+    public class AssignCareerPathToTeamMemberCommandHandler : IRequestHandler<AssignCareerPathToTeamMemberCommand, BaseResponse<Guid>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -21,7 +21,7 @@ namespace Application.Features.CareerPaths.Commands.AssignCareerPathToTeamMember
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Guid> Handle(AssignCareerPathToTeamMemberCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<Guid>> Handle(AssignCareerPathToTeamMemberCommand request, CancellationToken cancellationToken)
         {
             var careerPath = await _unitOfWork.CareerPaths.GetByIdAsync(request.CareerPathId);
 
@@ -99,7 +99,7 @@ namespace Application.Features.CareerPaths.Commands.AssignCareerPathToTeamMember
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return assignedCareerPath.Id;
+            return BaseResponse<Guid>.SuccessResponse(assignedCareerPath.Id, "Career path successfully assigned to team member.");
         }
     }
 }

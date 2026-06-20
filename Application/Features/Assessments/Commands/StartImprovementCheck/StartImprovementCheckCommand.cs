@@ -4,5 +4,6 @@ using System;
 
 namespace Application.Features.Assessments.Commands.StartImprovementCheck
 {
-	public record StartImprovementCheckCommand(Guid SkillId, string Concept, Guid UserId, string UserRole) : IRequest<StartAssessmentResponseDTO>;
+	public record StartImprovementCheckCommand(Guid SkillId, string Concept, Guid UserId, string UserRole) : IRequest<BaseResponse<StartAssessmentResponseDTO>>;
 }
+

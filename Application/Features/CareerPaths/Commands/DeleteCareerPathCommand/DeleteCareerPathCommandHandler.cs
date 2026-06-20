@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.CareerPaths.Commands.DeleteCareerPathCommand
 {
-    public class DeleteCareerPathCommandHandler : IRequestHandler<DeleteCareerPathCommand>
+    public class DeleteCareerPathCommandHandler : IRequestHandler<DeleteCareerPathCommand, BaseResponse<string>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -17,7 +17,7 @@ namespace Application.Features.CareerPaths.Commands.DeleteCareerPathCommand
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(DeleteCareerPathCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<string>> Handle(DeleteCareerPathCommand request, CancellationToken cancellationToken)
         {
             var careerPath = await _unitOfWork.CareerPaths
                 .GetByIdAsync(request.Id);
@@ -50,6 +50,8 @@ namespace Application.Features.CareerPaths.Commands.DeleteCareerPathCommand
             await _unitOfWork.CareerPaths.DeleteAsync(careerPath);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return BaseResponse<string>.SuccessResponse(" ", "Career path deleted successfully.");
         }
     }
 }

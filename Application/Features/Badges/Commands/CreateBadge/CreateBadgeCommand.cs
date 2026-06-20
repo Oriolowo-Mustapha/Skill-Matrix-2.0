@@ -1,5 +1,5 @@
 using Application.DTOs;
-﻿using MediatR;
+using MediatR;
 
 namespace Application.Features.Badges.Commands.CreateBadge
 {
@@ -8,5 +8,6 @@ namespace Application.Features.Badges.Commands.CreateBadge
         string Description,
         string IconUrl,
         string Criteria,
-        string ProficiencyLevel) : IRequest<Guid>;
+        string ProficiencyLevel) : IRequest<BaseResponse<Guid>>;
 }
+

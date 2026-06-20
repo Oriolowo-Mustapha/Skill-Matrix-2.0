@@ -1,3 +1,4 @@
+using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
 using Domain.Entities;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Skills.Commands.SelfAssignSkill
 {
-	public class SelfAssignSkillCommandHandler : IRequestHandler<SelfAssignSkillCommand, bool>
+	public class SelfAssignSkillCommandHandler : IRequestHandler<SelfAssignSkillCommand, BaseResponse<bool>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 
@@ -18,7 +19,7 @@ namespace Application.Features.Skills.Commands.SelfAssignSkill
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<bool> Handle(SelfAssignSkillCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<bool>> Handle(SelfAssignSkillCommand request, CancellationToken cancellationToken)
 		{
 			var masterSkill = await _unitOfWork.Skills.GetByIdAsync(request.SkillId);
 			if (masterSkill == null)
@@ -46,7 +47,7 @@ namespace Application.Features.Skills.Commands.SelfAssignSkill
 			await _unitOfWork.AssignedSkills.AddAsync(newAssignment);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			return true;
+			return BaseResponse<bool>.SuccessResponse(true, "Skill successfully added to your profile.");
 		}
 	}
 }

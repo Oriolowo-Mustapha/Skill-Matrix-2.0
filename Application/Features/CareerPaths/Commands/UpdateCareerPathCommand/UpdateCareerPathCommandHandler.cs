@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Application.Features.CareerPaths.Commands.UpdateCareerPathCommand
 {
-	public class UpdateCareerPathCommandHandler : IRequestHandler<UpdateCareerPathCommand>
+	public class UpdateCareerPathCommandHandler : IRequestHandler<UpdateCareerPathCommand, BaseResponse<string>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 
@@ -15,7 +15,7 @@ namespace Application.Features.CareerPaths.Commands.UpdateCareerPathCommand
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task Handle(UpdateCareerPathCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<string>> Handle(UpdateCareerPathCommand request, CancellationToken cancellationToken)
 		{
 			var careerPath = await _unitOfWork.CareerPaths.GetByIdAsync(request.Id);
 
@@ -56,6 +56,8 @@ namespace Application.Features.CareerPaths.Commands.UpdateCareerPathCommand
 
 			await _unitOfWork.CareerPaths.UpdateAsync(careerPath);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+			return BaseResponse<string>.SuccessResponse(" ", "Career path updated successfully.");
 		}
 	}
 }

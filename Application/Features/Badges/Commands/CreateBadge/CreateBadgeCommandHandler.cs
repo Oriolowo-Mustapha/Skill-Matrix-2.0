@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Features.Badges.Commands.CreateBadge
 {
-	public class CreateBadgeCommandHandler : IRequestHandler<CreateBadgeCommand, Guid>
+	public class CreateBadgeCommandHandler : IRequestHandler<CreateBadgeCommand, BaseResponse<Guid>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 
@@ -14,7 +14,7 @@ namespace Application.Features.Badges.Commands.CreateBadge
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<Guid> Handle(CreateBadgeCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<Guid>> Handle(CreateBadgeCommand request, CancellationToken cancellationToken)
 		{
 			var badge = new Badge
 			{
@@ -30,7 +30,7 @@ namespace Application.Features.Badges.Commands.CreateBadge
 			await _unitOfWork.Badges.AddAsync(badge);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			return badge.Id;
+			return BaseResponse<Guid>.SuccessResponse(badge.Id, "Badge created successfully.");
 		}
 	}
 }

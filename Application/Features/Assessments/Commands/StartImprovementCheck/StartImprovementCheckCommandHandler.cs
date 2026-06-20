@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Assessments.Commands.StartImprovementCheck
 {
-	public class StartImprovementCheckCommandHandler : IRequestHandler<StartImprovementCheckCommand, StartAssessmentResponseDTO>
+	public class StartImprovementCheckCommandHandler : IRequestHandler<StartImprovementCheckCommand, BaseResponse<StartAssessmentResponseDTO>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IAiService _aiService;
@@ -24,7 +24,7 @@ namespace Application.Features.Assessments.Commands.StartImprovementCheck
 			_aiService = aiService;
 		}
 
-		public async Task<StartAssessmentResponseDTO> Handle(StartImprovementCheckCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<StartAssessmentResponseDTO>> Handle(StartImprovementCheckCommand request, CancellationToken cancellationToken)
 		{
 			var assignedSkill = await _unitOfWork.AssignedSkills.GetByUserAndSkillId(request.UserId, request.SkillId);
 			if (assignedSkill == null)
@@ -127,7 +127,7 @@ namespace Application.Features.Assessments.Commands.StartImprovementCheck
 			await _unitOfWork.AssessmentBatches.AddAsync(batch);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			return batch.ToDTO();
+			return BaseResponse<StartAssessmentResponseDTO>.SuccessResponse(batch.ToDTO(), "Improvement check started successfully.");
 		}
 	}
 }

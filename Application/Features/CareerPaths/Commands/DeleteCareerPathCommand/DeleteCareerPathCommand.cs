@@ -4,5 +4,6 @@ using System;
 
 namespace Application.Features.CareerPaths.Commands.DeleteCareerPathCommand
 {
-    public record DeleteCareerPathCommand(Guid Id) : IRequest;
+    public record DeleteCareerPathCommand(Guid Id) : IRequest<BaseResponse<string>>;
 }
+

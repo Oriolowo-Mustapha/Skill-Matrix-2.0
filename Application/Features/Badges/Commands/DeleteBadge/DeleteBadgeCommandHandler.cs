@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Badges.Commands.DeleteBadge
 {
-    public class DeleteBadgeCommandHandler : IRequestHandler<DeleteBadgeCommand, Unit>
+    public class DeleteBadgeCommandHandler : IRequestHandler<DeleteBadgeCommand, BaseResponse<string>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -19,7 +19,7 @@ namespace Application.Features.Badges.Commands.DeleteBadge
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Unit> Handle(DeleteBadgeCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<string>> Handle(DeleteBadgeCommand request, CancellationToken cancellationToken)
         {
             var badge = await _unitOfWork.Badges.GetByIdAsync(request.Id);
 
@@ -31,7 +31,7 @@ namespace Application.Features.Badges.Commands.DeleteBadge
             await _unitOfWork.Badges.DeleteAsync(badge);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return BaseResponse<string>.SuccessResponse(" ", "Badge deleted successfully.");
         }
     }
 }

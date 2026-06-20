@@ -15,10 +15,10 @@ namespace Application.Extensions
 				IconURL = careerPath.IconURL,
 				DateAdded = careerPath.DateAdded,
 				Skills = careerPath.CareerPathSkills?
-					.Where(cps => cps.CareerPathTrackId == null)
+					.Where(cps => cps.CareerPathTrackId == null && cps.Skill != null)
 					.Select(cps => new SkillDTO
 					{
-						Id = cps.Skill.Id,
+						Id = cps.Skill!.Id,
 						Name = cps.Skill.Name,
 						Category = cps.Skill.Category
 					}).ToList() ?? new(),
@@ -37,9 +37,10 @@ namespace Application.Extensions
 				IconUrl = track.IconUrl,
 				CareerPathId = track.CareerPathId,
 				Skills = track.CareerPathSkills?
+					.Where(cps => cps.Skill != null)
 					.Select(cps => new SkillDTO
 					{
-						Id = cps.Skill.Id,
+						Id = cps.Skill!.Id,
 						Name = cps.Skill.Name,
 						Category = cps.Skill.Category
 					}).ToList() ?? new()

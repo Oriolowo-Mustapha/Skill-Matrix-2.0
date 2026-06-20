@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Application.Features.Assessments.Commands.StartAssessment
 {
-	public class StartAssessmentCommandHandler : IRequestHandler<StartAssessmentCommand, StartAssessmentResponseDTO>
+	public class StartAssessmentCommandHandler : IRequestHandler<StartAssessmentCommand, BaseResponse<StartAssessmentResponseDTO>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IAiService _aiService;
@@ -20,7 +20,7 @@ namespace Application.Features.Assessments.Commands.StartAssessment
 			_aiService = aiService;
 		}
 
-		public async Task<StartAssessmentResponseDTO> Handle(StartAssessmentCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<StartAssessmentResponseDTO>> Handle(StartAssessmentCommand request, CancellationToken cancellationToken)
 		{
 
 			var assignedSkill = await _unitOfWork.AssignedSkills.GetByUserAndSkillId(request.UserId, request.Dto.AssignedSkillId);
@@ -116,7 +116,7 @@ namespace Application.Features.Assessments.Commands.StartAssessment
 
 			var dto = batch.ToDTO();
 			dto.WarningMessage = warningMessage;
-			return dto;
+			return BaseResponse<StartAssessmentResponseDTO>.SuccessResponse(dto, "Assessment started successfully.");
 		}
 
 		private static int GetPassingThreshold(ProficiencyLevel level)

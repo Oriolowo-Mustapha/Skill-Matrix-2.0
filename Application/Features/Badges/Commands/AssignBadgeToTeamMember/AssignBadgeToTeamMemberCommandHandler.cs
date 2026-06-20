@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Badges.Commands.AssignBadgeToTeamMember
 {
-    public class AssignBadgeToTeamMemberCommandHandler : IRequestHandler<AssignBadgeToTeamMemberCommand, Guid>
+    public class AssignBadgeToTeamMemberCommandHandler : IRequestHandler<AssignBadgeToTeamMemberCommand, BaseResponse<Guid>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBadgeEligibilityChecker _eligibilityChecker;
@@ -22,7 +22,7 @@ namespace Application.Features.Badges.Commands.AssignBadgeToTeamMember
             _eligibilityChecker = eligibilityChecker;
         }
 
-        public async Task<Guid> Handle(AssignBadgeToTeamMemberCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<Guid>> Handle(AssignBadgeToTeamMemberCommand request, CancellationToken cancellationToken)
         {
             // 1. Retrieve Badge and TeamMember entities
             var badge = await _unitOfWork.Badges.GetByIdAsync(request.BadgeId);
@@ -65,7 +65,7 @@ namespace Application.Features.Badges.Commands.AssignBadgeToTeamMember
             await _unitOfWork.AssignedBadges.AddAsync(assignedBadge);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return assignedBadge.Id;
+            return BaseResponse<Guid>.SuccessResponse(assignedBadge.Id, "Badge successfully assigned to team member.");
         }
     }
 }

@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 {
-	public class SubmitImprovementCheckCommandHandler : IRequestHandler<SubmitImprovementCheckCommand, AssessmentResultDTO>
+	public class SubmitImprovementCheckCommandHandler : IRequestHandler<SubmitImprovementCheckCommand, BaseResponse<AssessmentResultDTO>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly ICodeExecutionService _codeExecutionService;
@@ -25,7 +25,7 @@ namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 			_codeExecutionService = codeExecutionService;
 		}
 
-		public async Task<AssessmentResultDTO> Handle(SubmitImprovementCheckCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<AssessmentResultDTO>> Handle(SubmitImprovementCheckCommand request, CancellationToken cancellationToken)
 		{
 			// Load batch along with assessments and options
 			var batch = await _unitOfWork.AssessmentBatches.GetBatchForGradingAsync(request.requestDto.AssessmentBatchId);
@@ -214,7 +214,7 @@ namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 				await _unitOfWork.SaveChangesAsync(cancellationToken);
 			}
 
-			return new AssessmentResultDTO
+			var responseDto = new AssessmentResultDTO
 			{
 				Id = result.Id,
 				SkillName = batch.AssignedSkill.Name + " - " + batch.ConceptFocus,
@@ -227,6 +227,8 @@ namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 				Passed = passed,
 				PassingScore = 100 // 100% is the passing mark for micro-assessments
 			};
+
+			return BaseResponse<AssessmentResultDTO>.SuccessResponse(responseDto, "Improvement check submitted and graded successfully.");
 		}
 	}
 }

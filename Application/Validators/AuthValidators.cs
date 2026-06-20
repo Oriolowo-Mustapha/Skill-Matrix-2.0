@@ -1,5 +1,6 @@
-﻿using Application.Interfaces.Repository;
+using Application.Interfaces.Repository;
 using FluentValidation;
+using Application.Extensions;
 
 namespace Application.DTOs.Validators
 {
@@ -38,6 +39,9 @@ namespace Application.DTOs.Validators
 				.Matches("[a-z]").WithMessage("Password must contain at least one lowercase letter.")
 				.Matches("[0-9]").WithMessage("Password must contain at least one number.")
 				.Matches("[^a-zA-Z0-9]").WithMessage("Password must contain at least one special character.");
+
+			RuleFor(x => x.ProfilePic)
+				.IsValidImage();
 		}
 	}
 
@@ -53,6 +57,9 @@ namespace Application.DTOs.Validators
 			RuleFor(x => x.Password)
 				.NotEmpty()
 				.MinimumLength(8);
+
+			RuleFor(x => x.ProfilePicUrl)
+				.IsValidImage();
 		}
 	}
 
@@ -64,6 +71,9 @@ namespace Application.DTOs.Validators
 			RuleFor(x => x.LastName).NotEmpty();
 			RuleFor(x => x.Email).NotEmpty().EmailAddress();
 			RuleFor(x => x.PasswordHash).NotEmpty().MinimumLength(8);
+
+			RuleFor(x => x.ProfilePic)
+				.IsValidImage();
 		}
 	}
 

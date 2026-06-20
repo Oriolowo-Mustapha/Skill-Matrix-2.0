@@ -1,5 +1,6 @@
 using FluentValidation;
 using Application.DTOs;
+using Application.Extensions;
 using Application.Features.Auth.Commands.RegisterOrganization;
 
 namespace Application.Validators
@@ -27,6 +28,9 @@ namespace Application.Validators
             RuleFor(x => x.Request.ManagerPassword)
                 .NotEmpty().WithMessage("Manager's password is required.")
                 .MinimumLength(8).WithMessage("Manager's password must be at least 8 characters long.");
+
+            RuleFor(x => x.Request.OrganizationProfilePicture)
+                .IsValidImage();
         }
     }
 }

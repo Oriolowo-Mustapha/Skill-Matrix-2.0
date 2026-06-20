@@ -27,9 +27,10 @@ builder.Services.AddDbContext<MatrixDbContext>(options =>
 
 builder.Services.AddManualValidators();
 
-builder.Services.AddFluentValidationAutoValidation();
-
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<Skill_Matrix_2_0.Filters.ValidationFilter>();
+});
 
 builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(typeof(StartAssessmentCommand).Assembly);
@@ -117,7 +118,7 @@ builder.Services.AddHangfire(config => config
     .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
 	.UseSimpleAssemblyNameTypeSerializer()
 	.UseRecommendedSerializerSettings()
-    .UsePostgreSqlStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
+    .UsePostgreSqlStorage(options => options.UseNpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))));
 
 builder.Services.AddHangfireServer();
 
@@ -134,7 +135,10 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseHangfireDashboard("/jobs");
+app.UseHangfireDashboard("/jobs", new DashboardOptions
+{
+	Authorization = new[] { new Skill_Matrix_2_0.Filters.HangfireDashboardAuthorizationFilter() }
+});
 
 RecurringJob.AddOrUpdate<IReminderService>(
 	"weekly-assessment-reminders",

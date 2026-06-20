@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Features.Badges.Commands.AssignBadgeToLearner
 {
-	public class AssignBadgeToLearnerCommandHandler : IRequestHandler<AssignBadgeToLearnerCommand, Guid>
+	public class AssignBadgeToLearnerCommandHandler : IRequestHandler<AssignBadgeToLearnerCommand, BaseResponse<Guid>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IBadgeEligibilityChecker _eligibilityChecker;
@@ -18,7 +18,7 @@ namespace Application.Features.Badges.Commands.AssignBadgeToLearner
 			_eligibilityChecker = eligibilityChecker;
 		}
 
-		public async Task<Guid> Handle(AssignBadgeToLearnerCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<Guid>> Handle(AssignBadgeToLearnerCommand request, CancellationToken cancellationToken)
 		{
 			var badge = await _unitOfWork.Badges.GetByIdAsync(request.BadgeId);
 			if (badge == null)
@@ -57,7 +57,7 @@ namespace Application.Features.Badges.Commands.AssignBadgeToLearner
 			await _unitOfWork.AssignedBadges.AddAsync(assignedBadge);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			return assignedBadge.Id;
+			return BaseResponse<Guid>.SuccessResponse(assignedBadge.Id, "Badge successfully assigned to learner.");
 		}
 	}
 }

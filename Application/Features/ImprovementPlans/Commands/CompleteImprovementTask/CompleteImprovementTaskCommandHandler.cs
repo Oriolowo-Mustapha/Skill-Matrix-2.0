@@ -1,3 +1,4 @@
+using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
 using Domain.Enum;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.ImprovementPlans.Commands.CompleteImprovementTask
 {
-	public class CompleteImprovementTaskCommandHandler : IRequestHandler<CompleteImprovementTaskCommand, bool>
+	public class CompleteImprovementTaskCommandHandler : IRequestHandler<CompleteImprovementTaskCommand, BaseResponse<string>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
 
@@ -18,7 +19,7 @@ namespace Application.Features.ImprovementPlans.Commands.CompleteImprovementTask
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<bool> Handle(CompleteImprovementTaskCommand request, CancellationToken cancellationToken)
+		public async Task<BaseResponse<string>> Handle(CompleteImprovementTaskCommand request, CancellationToken cancellationToken)
 		{
 			var tasks = await _unitOfWork.ImprovementTasks.FindAsync(
 				t => t.Id == request.TaskId,
@@ -44,7 +45,7 @@ namespace Application.Features.ImprovementPlans.Commands.CompleteImprovementTask
 
 			if (task.Status == "Completed")
 			{
-				return true; // Already completed
+				return BaseResponse<string>.SuccessResponse(" ", "Task is already completed.");
 			}
 
 			task.Status = "Completed";
@@ -53,7 +54,7 @@ namespace Application.Features.ImprovementPlans.Commands.CompleteImprovementTask
 			await _unitOfWork.ImprovementTasks.UpdateAsync(task);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			return true;
+			return BaseResponse<string>.SuccessResponse(" ", "Task marked as completed successfully.");
 		}
 	}
 }

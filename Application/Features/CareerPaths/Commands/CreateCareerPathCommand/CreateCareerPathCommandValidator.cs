@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repository;
+using Application.Interfaces.Repository;
+using Application.Extensions;
 using FluentValidation;
 
 namespace Application.Features.CareerPaths.Commands.CreateCareerPathCommand
@@ -22,23 +23,13 @@ namespace Application.Features.CareerPaths.Commands.CreateCareerPathCommand
 				.NotEmpty().WithMessage("{PropertyName} is Required.")
 				.NotNull()
 				.MaximumLength(500).WithMessage("{PropertyName} must not exceeds 500 characters.");
-			RuleFor(c => c.IconURL)
-				.MaximumLength(250).WithMessage("{PropertyName} must not exceeds 250 characters.")
-				.Must(BeAValidUrlOrEmpty);
+			RuleFor(c => c.Icon)
+				.IsValidImage();
 		}
 
 		private async Task<bool> BeUniqueCareerPathTitle(string title, CancellationToken cancellationToken)
 		{
-			return await _unitOfWork.CareerPaths.ExistsAsync(c => c.Title == title);
-		}
-
-		private bool BeAValidUrlOrEmpty(string? url)
-		{
-			if (string.IsNullOrWhiteSpace(url))
-			{
-				return true;
-			}
-			return Uri.TryCreate(url, UriKind.Absolute, out _);
+			return !await _unitOfWork.CareerPaths.ExistsAsync(c => c.Title == title);
 		}
 	}
 }

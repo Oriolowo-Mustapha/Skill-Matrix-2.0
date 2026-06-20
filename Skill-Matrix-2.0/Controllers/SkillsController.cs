@@ -101,7 +101,7 @@ namespace Skill_Matrix_2._0.Controllers
 
 			var command = new Application.Features.Skills.Commands.SelfAssignSkill.SelfAssignSkillCommand(userId, request.SkillId);
 			var response = await _mediator.Send(command);
-			return Ok(BaseResponse<bool>.SuccessResponse(response, "Skill successfully added to your profile."));
+			return Ok(response);
 		}
 	}
 }

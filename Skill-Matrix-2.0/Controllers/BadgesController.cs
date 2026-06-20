@@ -27,67 +27,67 @@ namespace Skill_Matrix_2._0.Controllers
 		[HttpPost]
 		[Authorize(Roles = "Admin,SuperAdmin")]
 		[Consumes("application/json")]
-		public async Task<ActionResult<Guid>> CreateBadge([FromBody] CreateBadgeCommand command)
+		public async Task<ActionResult<BaseResponse<Guid>>> CreateBadge([FromBody] CreateBadgeCommand command)
 		{
-			await _mediator.Send(command);
-			return NoContent();
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpPut("{id}")]
 		[Authorize(Roles = "Admin,SuperAdmin")]
 		[Consumes("application/json")]
-		public async Task<IActionResult> UpdateBadge(Guid id, [FromBody] UpdateBadgeCommand command)
+		public async Task<ActionResult<BaseResponse<string>>> UpdateBadge(Guid id, [FromBody] UpdateBadgeCommand command)
 		{
 			if (id != command.Id)
 				return BadRequest("Route ID and Command ID must match.");
 
-			await _mediator.Send(command);
-			return NoContent();
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpDelete("{id}")]
 		[Authorize(Roles = "Admin,SuperAdmin")]
-		public async Task<IActionResult> DeleteBadge(Guid id)
+		public async Task<ActionResult<BaseResponse<string>>> DeleteBadge(Guid id)
 		{
 			var command = new DeleteBadgeCommand(id);
-			await _mediator.Send(command);
-			return NoContent();
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpPost("assign-learner")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
 		[Consumes("application/json")]
-		public async Task<IActionResult> AssignToLearner([FromBody] AssignBadgeToLearnerCommand command)
+		public async Task<ActionResult<BaseResponse<Guid>>> AssignToLearner([FromBody] AssignBadgeToLearnerCommand command)
 		{
-			await _mediator.Send(command);
-			return NoContent();
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpPost("assign-team-member")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
 		[Consumes("application/json")]
-		public async Task<IActionResult> AssignToTeamMember([FromBody] AssignBadgeToTeamMemberCommand command)
+		public async Task<ActionResult<BaseResponse<Guid>>> AssignToTeamMember([FromBody] AssignBadgeToTeamMemberCommand command)
 		{
-			await _mediator.Send(command);
-			return NoContent();
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpPost("unassign-learner")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
 		[Consumes("application/json")]
-		public async Task<IActionResult> UnassignFromLearner([FromBody] UnassignBadgeFromLearnerCommand command)
+		public async Task<ActionResult<BaseResponse<string>>> UnassignFromLearner([FromBody] UnassignBadgeFromLearnerCommand command)
 		{
-			await _mediator.Send(command);
-			return NoContent();
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 
 		[HttpPost("unassign-team-member")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
 		[Consumes("application/json")]
-		public async Task<IActionResult> UnassignFromTeamMember([FromBody] UnassignBadgeFromTeamMemberCommand command)
+		public async Task<ActionResult<BaseResponse<string>>> UnassignFromTeamMember([FromBody] UnassignBadgeFromTeamMemberCommand command)
 		{
-			await _mediator.Send(command);
-			return NoContent();
+			var result = await _mediator.Send(command);
+			return Ok(result);
 		}
 	}
 }

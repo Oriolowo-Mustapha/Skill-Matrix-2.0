@@ -6,5 +6,5 @@ namespace Application.Features.CareerPaths.Commands.UnassignCareerPathFromTeamMe
 {
     public record UnassignCareerPathFromTeamMemberCommand(
         Guid TeamMemberId,
-        Guid CareerPathId) : IRequest;
+        Guid CareerPathId) : IRequest<BaseResponse<string>>;
 }

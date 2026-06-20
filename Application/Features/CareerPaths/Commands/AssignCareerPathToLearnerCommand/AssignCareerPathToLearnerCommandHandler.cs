@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.CareerPaths.Commands.AssignCareerPathToLearnerCommand
 {
-    public class AssignCareerPathToLearnerCommandHandler : IRequestHandler<AssignCareerPathToLearnerCommand, Guid>
+    public class AssignCareerPathToLearnerCommandHandler : IRequestHandler<AssignCareerPathToLearnerCommand, BaseResponse<Guid>>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -21,7 +21,7 @@ namespace Application.Features.CareerPaths.Commands.AssignCareerPathToLearnerCom
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Guid> Handle(AssignCareerPathToLearnerCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<Guid>> Handle(AssignCareerPathToLearnerCommand request, CancellationToken cancellationToken)
         {
             var careerPath = await _unitOfWork.CareerPaths.GetByIdAsync(request.CareerPathId);
 
@@ -99,7 +99,7 @@ namespace Application.Features.CareerPaths.Commands.AssignCareerPathToLearnerCom
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return assignedCareerPath.Id;
+            return BaseResponse<Guid>.SuccessResponse(assignedCareerPath.Id, "Career path successfully assigned to learner.");
         }
     }
 }

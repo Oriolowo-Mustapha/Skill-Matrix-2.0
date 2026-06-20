@@ -29,7 +29,7 @@ namespace Application.Features.CareerPaths.Queries.GetAllCareerPaths
 				);
 			}
 
-			return careerPaths.ToDtoList();
+			return careerPaths.OrderBy(cp => cp.Title).ToDtoList();
 		}
 	}
 }

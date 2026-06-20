@@ -40,7 +40,7 @@ namespace Skill_Matrix_2._0.Controllers
 		}
 
 		[HttpPost("tasks/{taskId}/complete")]
-		public async Task<ActionResult<bool>> CompleteTask(Guid taskId)
+		public async Task<ActionResult<BaseResponse<string>>> CompleteTask(Guid taskId)
 		{
 			var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
 			var userRole = User.FindFirstValue(ClaimTypes.Role);
