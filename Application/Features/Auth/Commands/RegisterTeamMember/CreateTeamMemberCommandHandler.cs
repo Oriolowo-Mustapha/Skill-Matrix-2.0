@@ -4,6 +4,7 @@ using Application.Interfaces.Repository;
 using Application.Interfaces.Service;
 using Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 
 namespace Application.Features.Auth.Commands.RegisterTeamMember
 {
@@ -12,12 +13,14 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IEmailService _emailService;
 		private readonly IPhotoService _photoService;
+		private readonly IConfiguration _configuration;
 
-		public CreateTeamMemberCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService, IPhotoService photoService)
+		public CreateTeamMemberCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService, IPhotoService photoService, IConfiguration configuration)
 		{
 			_unitOfWork = unitOfWork;
 			_emailService = emailService;
 			_photoService = photoService;
+			_configuration = configuration;
 		}
 		public async Task<BaseResponse<string>> Handle(CreateTeamMemberCommand request, CancellationToken cancellationToken)
 		{
@@ -53,7 +56,8 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 				throw new System.ApplicationException("Could not find the organization associated with the manager.");
 			}
 
-			var hashedPassword = HashPassword(request.request.Password);
+			var tempPassword = $"Tmp-{Guid.NewGuid().ToString("N")[..6]}!9a";
+			var hashedPassword = HashPassword(tempPassword);
 			var verificationToken = Guid.NewGuid().ToString();
 
             string? profilePicUrl = null;
@@ -92,17 +96,18 @@ namespace Application.Features.Auth.Commands.RegisterTeamMember
 				ManagerId = newTeamMember.ManagerId
 			};
 
-			var verificationLink = $"https://yourdomain.com/api/auth/verify-email?token={verificationToken}&email={newTeamMember.Email}";
+			var frontendUrl = (_configuration["AppUrls:FrontendUrl"] ?? "http://localhost:5173").TrimEnd('/');
+			var verificationLink = $"{frontendUrl}/verify-email?token={verificationToken}&email={Uri.EscapeDataString(newTeamMember.Email)}";
 			var subject = $"You're Invited to Skill Matrix 2.0 - Join {getOrganization.Name}!";
 			var body = $"""
 				Dear {newTeamMember.UserName},
 
 				You have been invited by {getManager.UserName} to join {getOrganization.Name} on Skill Matrix 2.0.
 
-				Here are your account credentials:
+				Here are your temporary login credentials:
 				- Username: {newTeamMember.UserName}
 				- Email: {newTeamMember.Email}
-				- Password: {request.request.Password}
+				- Temporary Password: {tempPassword}
 
 				To activate your account, please verify your email by clicking the link below:
 				{verificationLink}

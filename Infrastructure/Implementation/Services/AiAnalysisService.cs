@@ -31,41 +31,41 @@ namespace Infrastructure.Implementation.Services
 
 			var prompt = sb.ToString();
 
-			var apiKey = _configuration["Gemini:ApiKey"];
+			var apiKey = _configuration["OpenRouter:ApiKey"];
 			if (string.IsNullOrEmpty(apiKey))
 			{
 				// Fallback mock if no API key is provided
-				return $"[MOCK AI RESPONSE]\nBased on your goal to become a {targetCareerPath.Title}, you need to focus heavily on the areas where you scored poorly. We recommend dedicating Week 1 to reviewing foundational concepts, Week 2 to practical exercises, Week 3 to advanced topics, and Week 4 to project building. (Note: Provide a Gemini API Key in appsettings to get real AI plans).";
+				return $"[MOCK AI RESPONSE]\nBased on your goal to become a {targetCareerPath.Title}, you need to focus heavily on the areas where you scored poorly. We recommend dedicating Week 1 to reviewing foundational concepts, Week 2 to practical exercises, Week 3 to advanced topics, and Week 4 to project building. (Note: Provide an OpenRouter API Key in appsettings to get real AI plans).";
 			}
+
+			var model = _configuration["OpenRouter:Model"] ?? "meta-llama/llama-3-8b-instruct:free";
 
 			var requestPayload = new
 			{
-				contents = new[]
+				model = model,
+				messages = new[]
 				{
-					new
-					{
-						parts = new[]
-						{
-							new { text = prompt }
-						}
-					}
+					new { role = "user", content = prompt }
 				}
 			};
 
 			var jsonPayload = JsonSerializer.Serialize(requestPayload);
 			var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-			var response = await _httpClient.PostAsync($"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={apiKey}", content);
+			var request = new HttpRequestMessage(HttpMethod.Post, "https://openrouter.ai/api/v1/chat/completions");
+			request.Headers.Add("Authorization", $"Bearer {apiKey}");
+			request.Content = content;
+
+			var response = await _httpClient.SendAsync(request);
 
 			if (response.IsSuccessStatusCode)
 			{
 				var jsonResponse = await response.Content.ReadAsStringAsync();
 				using var document = JsonDocument.Parse(jsonResponse);
 				var text = document.RootElement
-					.GetProperty("candidates")[0]
+					.GetProperty("choices")[0]
+					.GetProperty("message")
 					.GetProperty("content")
-					.GetProperty("parts")[0]
-					.GetProperty("text")
 					.GetString();
 
 				return text ?? "Unable to generate plan.";

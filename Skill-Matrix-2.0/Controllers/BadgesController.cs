@@ -24,10 +24,38 @@ namespace Skill_Matrix_2._0.Controllers
 			_mediator = mediator;
 		}
 
+		[HttpGet]
+		public async Task<ActionResult<BaseResponse<List<BadgeDTO>>>> GetAll()
+		{
+			var result = await _mediator.Send(new Application.Features.Badges.Queries.GetAllBadges.GetAllBadgesQuery());
+			return Ok(BaseResponse<List<BadgeDTO>>.SuccessResponse(result, "Badges retrieved successfully."));
+		}
+
+		[HttpGet("{id}")]
+		public async Task<ActionResult<BaseResponse<BadgeDTO>>> GetById(Guid id)
+		{
+			var result = await _mediator.Send(new Application.Features.Badges.Queries.GetBadgeById.GetBadgeByIdQuery(id));
+			return Ok(BaseResponse<BadgeDTO>.SuccessResponse(result, "Badge retrieved successfully."));
+		}
+
+		[HttpGet("assigned/learner/{learnerId}")]
+		public async Task<ActionResult<BaseResponse<List<BadgeDTO>>>> GetAssignedByLearner(Guid learnerId)
+		{
+			var result = await _mediator.Send(new Application.Features.Badges.Queries.GetAssignedBadgesForLearner.GetAssignedBadgesForLearnerQuery(learnerId));
+			return Ok(BaseResponse<List<BadgeDTO>>.SuccessResponse(result, "Assigned badges retrieved successfully."));
+		}
+
+		[HttpGet("assigned/team-member/{teamMemberId}")]
+		public async Task<ActionResult<BaseResponse<List<BadgeDTO>>>> GetAssignedByTeamMember(Guid teamMemberId)
+		{
+			var result = await _mediator.Send(new Application.Features.Badges.Queries.GetAssignedBadgesForTeamMember.GetAssignedBadgesForTeamMemberQuery(teamMemberId));
+			return Ok(BaseResponse<List<BadgeDTO>>.SuccessResponse(result, "Assigned badges retrieved successfully."));
+		}
+
 		[HttpPost]
 		[Authorize(Roles = "Admin,SuperAdmin")]
-		[Consumes("application/json")]
-		public async Task<ActionResult<BaseResponse<Guid>>> CreateBadge([FromBody] CreateBadgeCommand command)
+		[Consumes("multipart/form-data")]
+		public async Task<ActionResult<BaseResponse<Guid>>> CreateBadge([FromForm] CreateBadgeCommand command)
 		{
 			var result = await _mediator.Send(command);
 			return Ok(result);
@@ -35,8 +63,8 @@ namespace Skill_Matrix_2._0.Controllers
 
 		[HttpPut("{id}")]
 		[Authorize(Roles = "Admin,SuperAdmin")]
-		[Consumes("application/json")]
-		public async Task<ActionResult<BaseResponse<string>>> UpdateBadge(Guid id, [FromBody] UpdateBadgeCommand command)
+		[Consumes("multipart/form-data")]
+		public async Task<ActionResult<BaseResponse<string>>> UpdateBadge(Guid id, [FromForm] UpdateBadgeCommand command)
 		{
 			if (id != command.Id)
 				return BadRequest("Route ID and Command ID must match.");

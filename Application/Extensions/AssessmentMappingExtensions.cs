@@ -12,6 +12,7 @@ namespace Application.Extensions
 			return new SkillDTO
 			{
 				Id = skill.Id,
+				SkillId = skill.SkillId,
 				Name = skill.Name,
 				Category = skill.Category,
 				ProficiencyLevel = skill.ProficiencyLevel.ToString(),
@@ -25,6 +26,7 @@ namespace Application.Extensions
 			return new SkillDTO
 			{
 				Id = skill.Id,
+				SkillId = skill.Id,
 				Name = skill.Name,
 				Category = skill.Category,
 			};
@@ -52,7 +54,11 @@ namespace Application.Extensions
 				Id = assessment.Id,
 				QuestionText = assessment.Questions,
 				QuestionType = assessment.QuestionType.ToString(),
-				Options = assessment.AssessmentOptions.Select(o => o.ToDTO()).ToList()
+				Options = assessment.AssessmentOptions.Select(o => o.ToDTO()).ToList(),
+				SampleInput = assessment.SampleInput,
+				ExpectedOutput = assessment.ExpectedOutput,
+				CodeTemplate = assessment.CodeTemplate,
+				Concept = assessment.Concept
 			};
 		}
 

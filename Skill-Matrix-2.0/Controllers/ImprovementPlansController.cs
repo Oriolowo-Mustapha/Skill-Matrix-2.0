@@ -22,11 +22,11 @@ namespace Skill_Matrix_2._0.Controllers
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<List<ImprovementPlanDTO>>> GetImprovementPlans()
+		public async Task<ActionResult<BaseResponse<List<ImprovementPlanDTO>>>> GetImprovementPlans()
 		{
 			var query = new GetImprovementPlansQuery();
 			var response = await _mediator.Send(query);
-			return Ok(response);
+			return Ok(BaseResponse<List<ImprovementPlanDTO>>.SuccessResponse(response, "Improvement plans retrieved successfully."));
 		}
 
 

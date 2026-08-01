@@ -1,6 +1,7 @@
 using Application.DTOs;
 using MediatR;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Features.CareerPaths.Commands.CreateCareerPathTrackCommand
 {
@@ -8,5 +9,5 @@ namespace Application.Features.CareerPaths.Commands.CreateCareerPathTrackCommand
         Guid CareerPathId,
         string Name,
         string Description,
-        string? IconUrl) : IRequest<BaseResponse<Guid>>;
+        IFormFile? Icon) : IRequest<BaseResponse<Guid>>;
 }

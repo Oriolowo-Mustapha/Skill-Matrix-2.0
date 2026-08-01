@@ -68,7 +68,7 @@ namespace Application.Features.Auth.Commands.Login
 							{
 								userDto = admin.ToDto();
 								passwordHash = admin.PasswordHash;
-								isEmailVerified = true; // Admins don't have this field, assume true
+								isEmailVerified = true; 
 								roles.Add(admin.Role);
 							}
 						}

@@ -19,8 +19,11 @@ namespace Application.Extensions
 					.Select(cps => new SkillDTO
 					{
 						Id = cps.Skill!.Id,
+						SkillId = cps.Skill!.Id,
 						Name = cps.Skill.Name,
-						Category = cps.Skill.Category
+						Category = cps.Skill.Category,
+						ProficiencyLevel = cps.TargetLevel.ToString(),
+						DateAssigned = DateTime.UtcNow
 					}).ToList() ?? new(),
 				Tracks = careerPath.Tracks?
 					.Select(t => t.ToDto()).ToList() ?? new()
@@ -41,8 +44,11 @@ namespace Application.Extensions
 					.Select(cps => new SkillDTO
 					{
 						Id = cps.Skill!.Id,
+						SkillId = cps.Skill!.Id,
 						Name = cps.Skill.Name,
-						Category = cps.Skill.Category
+						Category = cps.Skill.Category,
+						ProficiencyLevel = cps.TargetLevel.ToString(),
+						DateAssigned = DateTime.UtcNow
 					}).ToList() ?? new()
 			};
 		}

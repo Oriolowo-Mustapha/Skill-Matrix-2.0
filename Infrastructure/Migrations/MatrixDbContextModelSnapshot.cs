@@ -93,6 +93,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AssessmentBatchId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CodeTemplate")
+                        .HasColumnType("text");
+
                     b.Property<string>("Concept")
                         .IsRequired()
                         .HasColumnType("text");
@@ -112,6 +115,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Questions")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SampleInput")
                         .HasColumnType("text");
 
                     b.HasKey("Id");

@@ -60,3 +60,6 @@ __pycache__/
 # Others
 *.sqlite3
 *.log
+# Config files
+appsettings.json
+appsettings.*.json

@@ -5,6 +5,7 @@ using Application.Features.Assessments.Commands.UpdateSkill;
 using Application.Features.Assessments.Commands.TeamManagement;
 using Application.Features.Assessments.Queries.GetSkills;
 using Application.Features.Skills.Commands;
+using Application.Features.Skills.Queries.GetAssignedSkills;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -101,6 +102,21 @@ namespace Skill_Matrix_2._0.Controllers
 
 			var command = new Application.Features.Skills.Commands.SelfAssignSkill.SelfAssignSkillCommand(userId, request.SkillId);
 			var response = await _mediator.Send(command);
+			return Ok(response);
+		}
+
+		[HttpGet("assigned")]
+		[Authorize]
+		public async Task<ActionResult<BaseResponse<List<SkillDTO>>>> GetAssignedSkills()
+		{
+			var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId))
+			{
+				return Unauthorized("Invalid user token.");
+			}
+
+			var query = new GetAssignedSkillsQuery(userId);
+			var response = await _mediator.Send(query);
 			return Ok(response);
 		}
 	}

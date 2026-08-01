@@ -9,7 +9,6 @@ namespace Application.DTOs
 		public string Email { get; set; } = string.Empty;
 		public string UserName { get; set; } = string.Empty;
 		public IFormFile? ProfilePicUrl { get; set; }
-		public string Password { get; set; } = string.Empty;
 	}
 
 	public record TeamMemberDTO
@@ -22,5 +21,6 @@ namespace Application.DTOs
 		public string? ProfilePicUrl { get; set; }
 		public Guid OrganizationId { get; set; }
 		public Guid ManagerId { get; set; }
+		public List<Guid> AssignedCareerPathIds { get; set; } = new();
 	}
 }

@@ -1,6 +1,7 @@
 using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
+using Application.Interfaces.Service;
 using Domain.Entities;
 using MediatR;
 
@@ -9,10 +10,12 @@ namespace Application.Features.CareerPaths.Commands.UpdateCareerPathCommand
 	public class UpdateCareerPathCommandHandler : IRequestHandler<UpdateCareerPathCommand, BaseResponse<string>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IPhotoService _photoService;
 
-		public UpdateCareerPathCommandHandler(IUnitOfWork unitOfWork)
+		public UpdateCareerPathCommandHandler(IUnitOfWork unitOfWork, IPhotoService photoService)
 		{
 			_unitOfWork = unitOfWork;
+			_photoService = photoService;
 		}
 
 		public async Task<BaseResponse<string>> Handle(UpdateCareerPathCommand request, CancellationToken cancellationToken)
@@ -26,7 +29,11 @@ namespace Application.Features.CareerPaths.Commands.UpdateCareerPathCommand
 
 			careerPath.Title = request.Title;
 			careerPath.Description = request.Description;
-			careerPath.IconURL = request.IconURL;
+
+			if (request.Icon != null)
+			{
+				careerPath.IconURL = await _photoService.AddPhotoAsync(request.Icon);
+			}
 
 			// Manage Skill associations
 			var existingCareerPathSkills = careerPath.CareerPathSkills.ToList();

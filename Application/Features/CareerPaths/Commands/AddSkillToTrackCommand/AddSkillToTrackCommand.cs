@@ -1,4 +1,5 @@
 using Application.DTOs;
+using Domain.Enum;
 using MediatR;
 using System;
 
@@ -8,5 +9,5 @@ namespace Application.Features.CareerPaths.Commands.AddSkillToTrackCommand
         Guid CareerPathId,
         Guid TrackId,
         Guid SkillId,
-        Domain.Enum.ProficiencyLevel TargetLevel = Domain.Enum.ProficiencyLevel.Novice) : IRequest<BaseResponse<Guid>>;
+        ProficiencyLevel TargetLevel) : IRequest<BaseResponse<Guid>>;
 }

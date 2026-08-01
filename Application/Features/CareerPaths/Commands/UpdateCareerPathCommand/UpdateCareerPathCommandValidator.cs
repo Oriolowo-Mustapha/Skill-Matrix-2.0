@@ -1,5 +1,7 @@
 using Application.Interfaces.Repository;
+using Application.Extensions;
 using FluentValidation;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,9 +30,8 @@ namespace Application.Features.CareerPaths.Commands.UpdateCareerPathCommand
                 .NotNull()
                 .MaximumLength(500).WithMessage("{PropertyName} must not exceed 500 characters.");
 
-            RuleFor(c => c.IconURL)
-                .MaximumLength(250).WithMessage("{PropertyName} must not exceed 250 characters.")
-                .Must(BeAValidUrlOrEmpty).WithMessage("Invalid URL format.");
+            RuleFor(c => c.Icon)
+                .IsValidImage();
 
             RuleForEach(c => c.SkillIds)
                 .MustAsync(SkillMustExist).WithMessage("Skill with ID {PropertyValue} does not exist.");
@@ -40,15 +41,6 @@ namespace Application.Features.CareerPaths.Commands.UpdateCareerPathCommand
         {
             // Check if any other career path has this title
             return !await _unitOfWork.CareerPaths.ExistsAsync(cp => cp.Title == title && cp.Id != command.Id);
-        }
-
-        private bool BeAValidUrlOrEmpty(string? url)
-        {
-            if (string.IsNullOrWhiteSpace(url))
-            {
-                return true;
-            }
-            return Uri.TryCreate(url, UriKind.Absolute, out _);
         }
 
         private async Task<bool> SkillMustExist(Guid skillId, CancellationToken cancellationToken)

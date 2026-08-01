@@ -28,6 +28,14 @@ namespace Infrastructure.ExternalServices
                 return cachedToken!;
             }
 
+            if (string.IsNullOrWhiteSpace(_settings.ClientId) || 
+                string.IsNullOrWhiteSpace(_settings.ClientSecret) || 
+                _settings.ClientId == "YOUR_LIGHTCAST_CLIENT_ID" || 
+                _settings.ClientSecret == "YOUR_LIGHTCAST_CLIENT_SECRET")
+            {
+                throw new InvalidOperationException("Lightcast API credentials are missing or unconfigured in appsettings.json. Please set Lightcast:ClientId and Lightcast:ClientSecret.");
+            }
+
             var request = new HttpRequestMessage(HttpMethod.Post, "https://auth.emsicloud.com/connect/token");
             var content = new FormUrlEncodedContent(new[]
             {

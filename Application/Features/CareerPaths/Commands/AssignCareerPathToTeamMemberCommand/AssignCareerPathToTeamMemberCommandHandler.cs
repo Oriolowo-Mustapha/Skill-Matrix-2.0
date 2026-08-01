@@ -1,6 +1,7 @@
 using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
+using Application.Interfaces.Service;
 using Domain.Entities;
 using Domain.Enum;
 using MediatR;
@@ -15,30 +16,47 @@ namespace Application.Features.CareerPaths.Commands.AssignCareerPathToTeamMember
     public class AssignCareerPathToTeamMemberCommandHandler : IRequestHandler<AssignCareerPathToTeamMemberCommand, BaseResponse<Guid>>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailService _emailService;
 
-        public AssignCareerPathToTeamMemberCommandHandler(IUnitOfWork unitOfWork)
+        public AssignCareerPathToTeamMemberCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
+            _emailService = emailService;
         }
 
         public async Task<BaseResponse<Guid>> Handle(AssignCareerPathToTeamMemberCommand request, CancellationToken cancellationToken)
         {
-            var careerPath = await _unitOfWork.CareerPaths.GetByIdAsync(request.CareerPathId);
+            var teamMember = await _unitOfWork.TeamMembers.GetByIdAsync(request.TeamMemberId);
+            if (teamMember == null)
+            {
+                throw new NotFoundException($"TeamMember with ID {request.TeamMemberId} not found.");
+            }
 
+            var careerPath = await _unitOfWork.CareerPaths.GetByIdAsync(request.CareerPathId);
             if (careerPath == null)
             {
                 throw new NotFoundException($"CareerPath with ID {request.CareerPathId} not found.");
             }
 
+            string? trackName = null;
             // Validate TrackId if provided
             if (request.TrackId.HasValue)
             {
-                var trackExists = await _unitOfWork.CareerPathTracks.ExistsAsync(
-                    t => t.Id == request.TrackId.Value && t.CareerPathId == request.CareerPathId);
-                if (!trackExists)
+                var track = await _unitOfWork.CareerPathTracks.GetByIdAsync(request.TrackId.Value);
+                if (track == null || track.CareerPathId != request.CareerPathId)
                 {
                     throw new NotFoundException($"Track with ID {request.TrackId.Value} not found for CareerPath {request.CareerPathId}.");
                 }
+                trackName = track.Name;
+            }
+
+            var alreadyAssigned = await _unitOfWork.AssignedCareerPaths.ExistsAsync(
+                acp => acp.TeamMemberId == request.TeamMemberId && acp.CareerPathId == request.CareerPathId
+            );
+            
+            if (alreadyAssigned)
+            {
+                throw new ConflictException("This team member is already assigned to this career path.");
             }
 
             var assignedCareerPath = new AssignedCareerPath
@@ -98,6 +116,27 @@ namespace Application.Features.CareerPaths.Commands.AssignCareerPathToTeamMember
             }
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            // Send Email Notification
+            string trackDetail = trackName != null ? $" ({trackName} Track)" : "";
+            string subject = $"New Career Path Assigned: {careerPath.Title}";
+            string body = $@"Hello {teamMember.FirstName},
+
+You have been assigned to the '{careerPath.Title}' career path{trackDetail}.
+
+Log in to your Skill Matrix dashboard to view your path, see assigned skills, and check your learning progress.
+
+Best regards,
+Skill Matrix Team";
+
+            try
+            {
+                await _emailService.SendEmailAsync(teamMember.Email, subject, body);
+            }
+            catch
+            {
+                // Prevent email failures from rolling back database transactions
+            }
 
             return BaseResponse<Guid>.SuccessResponse(assignedCareerPath.Id, "Career path successfully assigned to team member.");
         }

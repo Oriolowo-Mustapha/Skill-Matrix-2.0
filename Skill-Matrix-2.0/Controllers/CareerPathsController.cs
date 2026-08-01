@@ -28,26 +28,33 @@ namespace Skill_Matrix_2._0.Controllers
 	public class CareerPathsController : ControllerBase
 	{
 		private readonly IMediator _mediator;
+		private readonly Application.Interfaces.Repository.IUnitOfWork _unitOfWork;
 
-		public CareerPathsController(IMediator mediator)
+		public CareerPathsController(IMediator mediator, Application.Interfaces.Repository.IUnitOfWork unitOfWork)
 		{
 			_mediator = mediator;
+			_unitOfWork = unitOfWork;
 		}
 
-		// ───────── Career Path CRUD ─────────
-
 		[HttpGet]
-		public async Task<ActionResult<List<CareerPathDTO>>> GetAll()
+		public async Task<ActionResult<BaseResponse<List<CareerPathDTO>>>> GetAll()
 		{
 			var result = await _mediator.Send(new GetAllCareerPathsQuery());
-			return Ok(result);
+			return Ok(BaseResponse<List<CareerPathDTO>>.SuccessResponse(result, "Career paths retrieved successfully."));
+		}
+
+		[HttpPost("ai-generate-catalog")]
+		public async Task<ActionResult<BaseResponse<Application.DTOs.Ai.CatalogGenerationResultDto>>> GenerateAiCatalog()
+		{
+			var result = await _mediator.Send(new Application.Features.CareerPaths.Commands.GenerateAiCatalog.GenerateAiCatalogCommand());
+			return Ok(BaseResponse<Application.DTOs.Ai.CatalogGenerationResultDto>.SuccessResponse(result, result.Message));
 		}
 
 		[HttpGet("{id}")]
-		public async Task<ActionResult<CareerPathDTO>> GetById(Guid id)
+		public async Task<ActionResult<BaseResponse<CareerPathDTO>>> GetById(Guid id)
 		{
 			var result = await _mediator.Send(new GetCareerPathByIdQuery(id));
-			return Ok(result);
+			return Ok(BaseResponse<CareerPathDTO>.SuccessResponse(result, "Career path retrieved successfully."));
 		}
 
 		[HttpPost]
@@ -61,8 +68,8 @@ namespace Skill_Matrix_2._0.Controllers
 
 		[HttpPut("{id}")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
-		[Consumes("application/json")]
-		public async Task<ActionResult<BaseResponse<string>>> UpdateCareerPath(Guid id, [FromBody] UpdateCareerPathCommand command)
+		[Consumes("multipart/form-data")]
+		public async Task<ActionResult<BaseResponse<string>>> UpdateCareerPath(Guid id, [FromForm] UpdateCareerPathCommand command)
 		{
 			if (id != command.Id)
 				return BadRequest("Route ID and Command ID must match.");
@@ -83,16 +90,16 @@ namespace Skill_Matrix_2._0.Controllers
 		// ───────── Track Management ─────────
 
 		[HttpGet("{careerPathId}/tracks")]
-		public async Task<ActionResult<List<CareerPathTrackDTO>>> GetTracks(Guid careerPathId)
+		public async Task<ActionResult<BaseResponse<List<CareerPathTrackDTO>>>> GetTracks(Guid careerPathId)
 		{
 			var result = await _mediator.Send(new GetTracksByCareerPathQuery(careerPathId));
-			return Ok(result);
+			return Ok(BaseResponse<List<CareerPathTrackDTO>>.SuccessResponse(result, "Tracks retrieved successfully."));
 		}
 
 		[HttpPost("{careerPathId}/tracks")]
 		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
-		[Consumes("application/json")]
-		public async Task<ActionResult<BaseResponse<Guid>>> CreateTrack(Guid careerPathId, [FromBody] CreateCareerPathTrackCommand command)
+		[Consumes("multipart/form-data")]
+		public async Task<ActionResult<BaseResponse<Guid>>> CreateTrack(Guid careerPathId, [FromForm] CreateCareerPathTrackCommand command)
 		{
 			if (careerPathId != command.CareerPathId)
 				return BadRequest("Route CareerPathId and Command CareerPathId must match.");
@@ -111,6 +118,35 @@ namespace Skill_Matrix_2._0.Controllers
 
 			var result = await _mediator.Send(command);
 			return Ok(result);
+		}
+
+		[HttpDelete("{careerPathId}/tracks/{trackId}")]
+		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
+		public async Task<ActionResult<BaseResponse<string>>> DeleteTrack(Guid careerPathId, Guid trackId)
+		{
+			var track = await _unitOfWork.CareerPathTracks.GetByIdAsync(trackId);
+			if (track == null || track.CareerPathId != careerPathId) return NotFound("Track not found.");
+			
+			await _unitOfWork.CareerPathTracks.DeleteAsync(track);
+			await _unitOfWork.SaveChangesAsync(default);
+			return Ok(BaseResponse<string>.SuccessResponse("Track deleted successfully.", "Track deleted successfully."));
+		}
+
+		[HttpDelete("{careerPathId}/tracks/{trackId}/skills/{skillId}")]
+		[Authorize(Roles = "Manager,Admin,SuperAdmin")]
+		public async Task<ActionResult<BaseResponse<string>>> RemoveSkillFromTrack(Guid careerPathId, Guid trackId, Guid skillId)
+		{
+			var careerPathSkills = await _unitOfWork.CareerPathSkills.FindAsync(cps => 
+				cps.CareerPathId == careerPathId && 
+				cps.CareerPathTrackId == trackId && 
+				cps.SkillId == skillId);
+			
+			var skillToRemove = careerPathSkills.FirstOrDefault();
+			if (skillToRemove == null) return NotFound("Skill not found in this track.");
+			
+			await _unitOfWork.CareerPathSkills.DeleteAsync(skillToRemove);
+			await _unitOfWork.SaveChangesAsync(default);
+			return Ok(BaseResponse<string>.SuccessResponse("Skill removed from track.", "Skill removed from track."));
 		}
 
 		// ───────── Career Path Assignment ─────────
@@ -154,17 +190,17 @@ namespace Skill_Matrix_2._0.Controllers
 		// ───────── Assigned Career Path Queries ─────────
 
 		[HttpGet("assigned/learner/{learnerId}")]
-		public async Task<ActionResult<List<AssignedCareerPathDTO>>> GetAssignedByLearner(Guid learnerId)
+		public async Task<ActionResult<BaseResponse<List<AssignedCareerPathDTO>>>> GetAssignedByLearner(Guid learnerId)
 		{
 			var result = await _mediator.Send(new GetAssignedCareerPathsByLearnerQuery(learnerId));
-			return Ok(result);
+			return Ok(BaseResponse<List<AssignedCareerPathDTO>>.SuccessResponse(result, "Assigned career paths retrieved successfully."));
 		}
 
 		[HttpGet("assigned/team-member/{teamMemberId}")]
-		public async Task<ActionResult<List<AssignedCareerPathDTO>>> GetAssignedByTeamMember(Guid teamMemberId)
+		public async Task<ActionResult<BaseResponse<List<AssignedCareerPathDTO>>>> GetAssignedByTeamMember(Guid teamMemberId)
 		{
 			var result = await _mediator.Send(new GetAssignedCareerPathsByTeamMemberQuery(teamMemberId));
-			return Ok(result);
+			return Ok(BaseResponse<List<AssignedCareerPathDTO>>.SuccessResponse(result, "Assigned career paths retrieved successfully."));
 		}
 	}
 }

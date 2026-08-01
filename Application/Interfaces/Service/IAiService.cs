@@ -8,5 +8,7 @@ namespace Application.Interfaces.Service
 		Task<ImprovementPlan> GenerateImprovementPlanAsync(AssessmentResult result, List<SkillGap> gaps);
 		Task<bool> ClassifySkillRequiresCodingAsync(string skillName);
 		Task<IEnumerable<Assessment>> GenerateTargetedQuestionsAsync(string skillName, string proficencyLevel, string concept, int count, bool requiresCoding);
+		Task<List<Application.DTOs.Ai.GeneratedTrackSkillDto>> GenerateSkillsForTrackAsync(string careerPathTitle, string trackName);
+		Task<List<Application.DTOs.Ai.AiCatalogPathDto>> GenerateGlobalCatalogAsync(List<string> existingSkillNames);
 	}
 }

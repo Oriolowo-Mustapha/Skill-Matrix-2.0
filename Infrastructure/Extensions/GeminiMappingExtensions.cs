@@ -1,6 +1,8 @@
 using Domain.Entities;
 using Domain.Enum;
 using Infrastructure.DTOs;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Infrastructure.Extensions
@@ -16,6 +18,8 @@ namespace Infrastructure.Extensions
 				CorrectAnswer = dto.CorrectAnswer,
 				QuestionType = isCoding ? QuestionType.Coding : QuestionType.MultipleChoice,
 				ExpectedOutput = dto.ExpectedOutput,
+				SampleInput = dto.SampleInput,
+				CodeTemplate = dto.CodeTemplate,
 				Concept = dto.Concept,
 				AssessmentOptions = isCoding ? new List<AssessmentOptions>() : dto.Options.Select(o => new AssessmentOptions { OptionText = o }).ToList()
 			};

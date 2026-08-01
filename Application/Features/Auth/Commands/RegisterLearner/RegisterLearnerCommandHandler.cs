@@ -5,6 +5,7 @@ using Application.Interfaces.Repository;
 using Application.Interfaces.Service;
 using Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 
 namespace Application.Features.Auth.Commands.RegisterLearner
 {
@@ -13,12 +14,14 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IEmailService _emailService;
 		private readonly IPhotoService _photoService;
+		private readonly IConfiguration _configuration;
 
-		public RegisterLearnerCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService, IPhotoService photoService)
+		public RegisterLearnerCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService, IPhotoService photoService, IConfiguration configuration)
 		{
 			_unitOfWork = unitOfWork;
 			_emailService = emailService;
 			_photoService = photoService;
+			_configuration = configuration;
 		}
 
 		public async Task<BaseResponse<string>> Handle(RegisterLearnerCommand request, CancellationToken cancellationToken)
@@ -70,7 +73,8 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 			await _unitOfWork.Learners.AddAsync(learner);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			var verificationLink = $"https://yourdomain.com/api/auth/verify-email?token={verificationToken}&email={learner.Email}";
+			var frontendUrl = (_configuration["AppUrls:FrontendUrl"] ?? "http://localhost:5173").TrimEnd('/');
+			var verificationLink = $"{frontendUrl}/verify-email?token={verificationToken}&email={Uri.EscapeDataString(learner.Email)}";
 			var subject = "Verify Your Email - Skill Matrix 2.0";
 			var body = $"""
 				Dear {learner.FirstName},

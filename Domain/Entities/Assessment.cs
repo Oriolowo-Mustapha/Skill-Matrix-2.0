@@ -12,6 +12,8 @@ namespace Domain.Entities
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 		public Domain.Enum.QuestionType QuestionType { get; set; } = Domain.Enum.QuestionType.MultipleChoice;
 		public string? ExpectedOutput { get; set; }
+		public string? SampleInput { get; set; }
+		public string? CodeTemplate { get; set; }
 		public string Concept { get; set; } = string.Empty;
 	}
 }

@@ -1,5 +1,7 @@
 using Application.Interfaces.Repository;
+using Application.Extensions;
 using FluentValidation;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,6 +28,9 @@ namespace Application.Features.CareerPaths.Commands.CreateCareerPathTrackCommand
 
             RuleFor(c => c.Description)
                 .MaximumLength(500).WithMessage("{PropertyName} must not exceed 500 characters.");
+
+            RuleFor(c => c.Icon)
+                .IsValidImage();
         }
 
         private async Task<bool> CareerPathMustExist(Guid careerPathId, CancellationToken cancellationToken)

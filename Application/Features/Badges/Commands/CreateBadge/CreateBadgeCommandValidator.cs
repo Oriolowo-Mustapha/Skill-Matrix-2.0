@@ -1,6 +1,10 @@
 using Application.Interfaces.Repository;
+using Application.Extensions;
 using Domain.Enum;
 using FluentValidation;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Features.Badges.Commands.CreateBadge
 {
@@ -23,9 +27,8 @@ namespace Application.Features.Badges.Commands.CreateBadge
 				.NotNull()
 				.MaximumLength(250).WithMessage("{PropertyName} must not exceed 250 characters.");
 
-			RuleFor(p => p.IconUrl)
-				.MaximumLength(250).WithMessage("{PropertyName} must not exceed 250 characters.")
-				.Must(BeAValidUrlOrEmpty).WithMessage("{PropertyName} must be a valid URL if provided.");
+			RuleFor(p => p.Icon)
+				.IsValidImage();
 
 			RuleFor(p => p.Criteria)
 				.NotEmpty().WithMessage("{PropertyName} is required.")
@@ -41,15 +44,6 @@ namespace Application.Features.Badges.Commands.CreateBadge
 		private async Task<bool> BeUniqueBadgeName(string name, CancellationToken cancellationToken)
 		{
 			return !await _unitOfWork.Badges.ExistsAsync(b => b.Name == name);
-		}
-
-		private bool BeAValidUrlOrEmpty(string? url)
-		{
-			if (string.IsNullOrWhiteSpace(url))
-			{
-				return true;
-			}
-			return Uri.TryCreate(url, UriKind.Absolute, out _);
 		}
 
 		private bool BeValidProficiencyLevel(string proficiencyLevel)

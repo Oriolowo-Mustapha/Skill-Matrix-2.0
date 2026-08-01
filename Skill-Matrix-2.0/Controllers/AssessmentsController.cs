@@ -1,5 +1,6 @@
 using Application.DTOs;
 using Application.Features.Assessments.Commands.StartAssessment;
+using Application.Features.Assessments.Commands.StartTrackBaseline;
 using Application.Features.Assessments.Commands.SubmitAssessment;
 using Application.Features.Assessments.Queries.GetAssessmentResult;
 using MediatR;
@@ -33,6 +34,25 @@ namespace Skill_Matrix_2_0.Controllers
 			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
 
 			var command = new StartAssessmentCommand(assesmentDto, userId, userRole);
+			var response = await _mediator.Send(command);
+			return Ok(response);
+		}
+
+		[HttpPost("track-baseline/start")]
+		[Consumes("application/json")]
+		public async Task<IActionResult> StartTrackBaseline([FromBody] StartTrackBaselineRequestDTO dto)
+		{
+			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
+				?? throw new UnauthorizedAccessException("User ID claim not found.");
+			var userId = Guid.Parse(userIdClaim);
+			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
+
+			var command = new StartTrackBaselineCommand 
+			{ 
+				Dto = dto, 
+				UserId = userId, 
+				UserRole = userRole 
+			};
 			var response = await _mediator.Send(command);
 			return Ok(response);
 		}
@@ -78,8 +98,21 @@ namespace Skill_Matrix_2_0.Controllers
 			return Ok(response);
 		}
 
+		[HttpGet("history")]
+		public async Task<IActionResult> GetAssessmentHistory()
+		{
+			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
+				?? throw new UnauthorizedAccessException("User ID claim not found.");
+			var userId = Guid.Parse(userIdClaim);
+			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
+
+			var query = new Application.Features.Assessments.Queries.GetAssessmentHistory.GetAssessmentHistoryQuery(userId, userRole);
+			var response = await _mediator.Send(query);
+			return Ok(response);
+		}
+
 		[HttpGet("results/{id}")]
-		public async Task<IActionResult> GetAssessmentResult(Guid id)
+		public async Task<ActionResult<BaseResponse<AssessmentResultDTO>>> GetAssessmentResult(Guid id)
 		{
 			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
 				?? throw new UnauthorizedAccessException("User ID claim not found.");
@@ -87,15 +120,15 @@ namespace Skill_Matrix_2_0.Controllers
 
 			var query = new GetAssessmentResultQuery(id, userId);
 			var response = await _mediator.Send(query);
-			return Ok(response);
+			return Ok(BaseResponse<AssessmentResultDTO>.SuccessResponse(response, "Assessment result retrieved successfully."));
 		}
 
 		[HttpPost("run-code")]
 		[Consumes("application/json")]
-		public async Task<ActionResult<Application.DTOs.Assessments.CodeExecutionResponseDTO>> RunCode([FromBody] Application.DTOs.Assessments.CodeExecutionRequestDTO request)
+		public async Task<ActionResult<BaseResponse<Application.DTOs.Assessments.CodeExecutionResponseDTO>>> RunCode([FromBody] Application.DTOs.Assessments.CodeExecutionRequestDTO request)
 		{
 			var response = await _codeExecutionService.ExecuteCodeAsync(request);
-			return Ok(response);
+			return Ok(BaseResponse<Application.DTOs.Assessments.CodeExecutionResponseDTO>.SuccessResponse(response, "Code executed successfully."));
 		}
 	}
 }

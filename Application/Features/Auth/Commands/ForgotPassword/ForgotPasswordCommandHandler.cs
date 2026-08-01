@@ -2,6 +2,7 @@ using Application.DTOs;
 using Application.Interfaces.Repository;
 using Application.Interfaces.Service;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 
 namespace Application.Features.Auth.Commands.ForgotPassword
 {
@@ -9,11 +10,13 @@ namespace Application.Features.Auth.Commands.ForgotPassword
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IEmailService _emailService;
+		private readonly IConfiguration _configuration;
 
-		public ForgotPasswordCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService)
+		public ForgotPasswordCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService, IConfiguration configuration)
 		{
 			_unitOfWork = unitOfWork;
 			_emailService = emailService;
+			_configuration = configuration;
 		}
 
 		public async Task<BaseResponse<bool>> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
@@ -74,7 +77,8 @@ namespace Application.Features.Auth.Commands.ForgotPassword
 
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			var resetLink = $"https://yourdomain.com/reset-password?token={resetToken}&email={userEmail}";
+			var frontendUrl = (_configuration["AppUrls:FrontendUrl"] ?? "http://localhost:5173").TrimEnd('/');
+			var resetLink = $"{frontendUrl}/reset-password?token={resetToken}&email={userEmail}";
 			var subject = "Reset Your Password - Skill Matrix 2.0";
 			var body = $"""
 				Dear {userName},

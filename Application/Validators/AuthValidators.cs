@@ -54,10 +54,6 @@ namespace Application.DTOs.Validators
 			RuleFor(x => x.UserName).NotEmpty();
 			RuleFor(x => x.Email).NotEmpty().EmailAddress();
 
-			RuleFor(x => x.Password)
-				.NotEmpty()
-				.MinimumLength(8);
-
 			RuleFor(x => x.ProfilePicUrl)
 				.IsValidImage();
 		}

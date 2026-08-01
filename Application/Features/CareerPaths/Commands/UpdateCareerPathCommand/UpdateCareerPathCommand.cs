@@ -2,6 +2,7 @@ using Application.DTOs;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Features.CareerPaths.Commands.UpdateCareerPathCommand
 {
@@ -9,6 +10,6 @@ namespace Application.Features.CareerPaths.Commands.UpdateCareerPathCommand
         Guid Id,
         string Title,
         string Description,
-        string IconURL,
+        IFormFile? Icon,
         List<Guid> SkillIds) : IRequest<BaseResponse<string>>;
 }

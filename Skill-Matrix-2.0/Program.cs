@@ -27,6 +27,17 @@ builder.Services.AddDbContext<MatrixDbContext>(options =>
 
 builder.Services.AddManualValidators();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // Often needed with cookies/auth
+    });
+});
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<Skill_Matrix_2_0.Filters.ValidationFilter>();
@@ -67,7 +78,7 @@ builder.Services.AddScoped<IBadgeEligibilityChecker, BadgeEligibilityChecker>();
 builder.Services.Configure<Infrastructure.ExternalServices.EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddHttpClient<IEmailService, Infrastructure.ExternalServices.BrevoEmailService>();
 
-builder.Services.AddHttpClient<IAiService, GeminiAiService>();
+builder.Services.AddHttpClient<IAiService, OpenRouterAiService>();
 builder.Services.AddHttpClient<IAiAnalysisService, AiAnalysisService>();
 
 builder.Services.AddHttpClient<ICodeExecutionService, CodeExecutionService>();
@@ -130,7 +141,11 @@ if (app.Environment.IsDevelopment())
 	app.MapScalarApiReference();
 }
 
+app.UseMiddleware<Skill_Matrix_2_0.Middlewares.ExceptionMiddleware>();
+
 app.UseHttpsRedirection();
+
+app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
 app.UseAuthorization();

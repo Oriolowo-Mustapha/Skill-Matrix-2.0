@@ -4,6 +4,7 @@ using Application.Interfaces.Repository;
 using Application.Interfaces.Service;
 using Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 
 namespace Application.Features.Auth.Commands.RegisterOrganization
 {
@@ -12,12 +13,14 @@ namespace Application.Features.Auth.Commands.RegisterOrganization
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IEmailService _emailService;
 		private readonly IPhotoService _photoService;
+		private readonly IConfiguration _configuration;
 
-		public RegisterOrganizationCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService, IPhotoService photoService)
+		public RegisterOrganizationCommandHandler(IUnitOfWork unitOfWork, IEmailService emailService, IPhotoService photoService, IConfiguration configuration)
 		{
 			_unitOfWork = unitOfWork;
 			_emailService = emailService;
 			_photoService = photoService;
+			_configuration = configuration;
 		}
 
 		public async Task<BaseResponse<string>> Handle(RegisterOrganizationCommand command, CancellationToken cancellationToken)
@@ -84,7 +87,8 @@ namespace Application.Features.Auth.Commands.RegisterOrganization
 
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			var verificationLink = $"https://yourdomain.com/api/auth/verify-email?token={verificationToken}&email={newManager.Email}";
+			var frontendUrl = (_configuration["AppUrls:FrontendUrl"] ?? "http://localhost:5173").TrimEnd('/');
+			var verificationLink = $"{frontendUrl}/verify-email?token={verificationToken}&email={Uri.EscapeDataString(newManager.Email)}";
 			var subject = $"Welcome to Skill Matrix 2.0 - {newOrganization.Name}!";
 			var body = $"""
 				Dear {newManager.UserName},

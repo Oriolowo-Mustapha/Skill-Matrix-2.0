@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+using Application.DTOs;
 using FluentValidation;
 
 namespace Application.Validators
@@ -35,8 +35,9 @@ namespace Application.Validators
 			RuleFor(x => x.AssessmentQuestionId)
 				.GreaterThan(0).WithMessage("Assessment Question ID must be valid.");
 
-			RuleFor(x => x.SelectedOptionId)
-				.GreaterThan(0).WithMessage("You must select a valid option.");
+			RuleFor(x => x)
+				.Must(x => (x.SelectedOptionId.HasValue && x.SelectedOptionId > 0) || !string.IsNullOrWhiteSpace(x.SubmittedCode))
+				.WithMessage("Each answer must contain either a valid selected option or submitted code.");
 		}
 	}
 }

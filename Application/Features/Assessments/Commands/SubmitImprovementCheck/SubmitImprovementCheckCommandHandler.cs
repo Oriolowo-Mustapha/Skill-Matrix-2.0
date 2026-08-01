@@ -96,7 +96,7 @@ namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 
 				if (isAnswered)
 				{
-					int selectedOptionId = answerDto!.SelectedOptionId;
+					int selectedOptionId = answerDto?.SelectedOptionId ?? 0;
 
 					// Grade based on question type
 					if (question.QuestionType == QuestionType.Coding)
