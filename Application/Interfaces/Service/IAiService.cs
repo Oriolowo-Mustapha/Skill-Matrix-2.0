@@ -10,5 +10,6 @@ namespace Application.Interfaces.Service
 		Task<IEnumerable<Assessment>> GenerateTargetedQuestionsAsync(string skillName, string proficencyLevel, string concept, int count, bool requiresCoding);
 		Task<List<Application.DTOs.Ai.GeneratedTrackSkillDto>> GenerateSkillsForTrackAsync(string careerPathTitle, string trackName);
 		Task<List<Application.DTOs.Ai.AiCatalogPathDto>> GenerateGlobalCatalogAsync(List<string> existingSkillNames);
+		Task<List<Application.DTOs.Ai.AiSkillCatalogItemDto>> GenerateSkillCatalogAsync();
 	}
 }

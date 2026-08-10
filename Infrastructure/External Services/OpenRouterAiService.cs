@@ -374,30 +374,54 @@ namespace Infrastructure.ExternalServices
 				We have the following list of available skills in our system database:
 				[{skillsListStr}]
 
-				Your task is to analyze these skills and organize them into a comprehensive, professional set of Career Paths and Tracks.
+				Your task is to analyze these skills and organize them into a comprehensive, professional set of Stack-Specialized Career Paths and Tracks.
 				
 				Rules:
-				1. Create 3 to 6 Industry Career Paths (e.g., 'Software Engineering', 'Data & Analytics', 'Cloud & Infrastructure', 'Product & Agile Leadership').
-				2. Under each Career Path, create 2 to 4 Tracks (e.g., under 'Software Engineering', create 'Frontend Web Developer', 'Backend .NET Developer', 'Full-Stack Developer').
-				3. Under each Track, select the most relevant skills from the provided list.
-				4. For each selected skill, assign a targetLevel integer between 0 and 4:
+				1. Create 4 to 6 Industry Career Paths:
+				   - 'Software Engineering & Application Development'
+				   - 'Frontend Web Development'
+				   - 'Cloud Infrastructure & DevOps'
+				   - 'Data Engineering & Artificial Intelligence'
+				   - 'Mobile Application Development'
+				   - 'Cybersecurity & Infrastructure'
+
+				2. CRITICAL STACK-SPECIALIZATION RULE: Under each Career Path, DO NOT create generic single tracks. You MUST create stack-specific tracks based on tech ecosystems:
+				   - Under 'Software Engineering': create separate specialized tracks such as '.NET & C# Enterprise Developer', 'Node.js & MERN Stack Developer', 'Python & Django/FastAPI Developer', 'Java & Spring Boot Developer'.
+				   - Under 'Frontend Web Development': create specialized tracks like 'React & Next.js Modern Web Developer', 'Angular Enterprise Web Developer', 'Vue.js Web Developer'.
+				   - Under 'Mobile Application Development': create specialized tracks like 'Flutter & Dart Mobile Developer', 'React Native Mobile Developer', 'Native iOS & Android Engineer'.
+				   - Under 'Cloud Infrastructure & DevOps': create specialized tracks like 'AWS Cloud Solutions Engineer', 'Azure Enterprise Cloud Engineer', 'DevOps & SRE Engineer'.
+				   - Under 'Data Engineering & Artificial Intelligence': create specialized tracks like 'Python Data Science & ML Engineer', 'Big Data & Data Pipeline Engineer'.
+
+				3. Under each specialized track, populate it with relevant skills from the provided database list!
+				4. For shared foundational skills (e.g. Git, REST API Design, Docker, Microservices, SQL), map them across multiple stack tracks where appropriate.
+				5. For each selected skill in a track, assign a targetLevel integer between 0 and 4:
 				   0 = Novice, 1 = Beginner, 2 = Intermediate, 3 = Proficient, 4 = Expert.
-				5. Strictly prioritize using skill names from the provided database list!
+				6. Strictly prioritize using skill names from the provided database list!
 
 				CRITICAL INSTRUCTION: Return ONLY a valid JSON array. Do NOT wrap in markdown code fences (like ```json). No conversational filler.
 
 				Target JSON Format:
 				[
 				  {{
-					""title"": ""Software Engineering"",
-					""description"": ""Master modern web development, backend APIs, and software architecture."",
+					""title"": ""Software Engineering & Application Development"",
+					""description"": ""Specialized engineering pathways focused on modern backend stacks, APIs, and software architecture."",
 					""tracks"": [
 					  {{
-						""name"": ""Frontend Web Developer"",
-						""description"": ""Build responsive, dynamic single-page web applications."",
+						""name"": "".NET & C# Enterprise Developer"",
+						""description"": ""Build scalable backend microservices, web APIs, and enterprise systems using C# and ASP.NET Core."",
 						""skills"": [
-						  {{ ""skillName"": ""React.js"", ""targetLevel"": 3 }},
-						  {{ ""skillName"": ""JavaScript"", ""targetLevel"": 4 }}
+						  {{ ""skillName"": ""C#"", ""targetLevel"": 4 }},
+						  {{ ""skillName"": ""ASP.NET Core"", ""targetLevel"": 3 }},
+						  {{ ""skillName"": ""SQL Server"", ""targetLevel"": 3 }}
+						]
+					  }},
+					  {{
+						""name"": ""Node.js & MERN Stack Developer"",
+						""description"": ""Build full-stack JavaScript/TypeScript web applications and asynchronous RESTful services."",
+						""skills"": [
+						  {{ ""skillName"": ""JavaScript"", ""targetLevel"": 4 }},
+						  {{ ""skillName"": ""Express.js"", ""targetLevel"": 3 }},
+						  {{ ""skillName"": ""MongoDB"", ""targetLevel"": 3 }}
 						]
 					  }}
 					]
@@ -424,6 +448,58 @@ namespace Infrastructure.ExternalServices
 			}
 		}
 
+		public async Task<List<Application.DTOs.Ai.AiSkillCatalogItemDto>> GenerateSkillCatalogAsync()
+		{
+			var prompt = @"You are a comprehensive technology skills expert. Generate a complete catalog of technology skills organized by categories.
+
+For EACH of the following categories, generate at least 15 specific skills (including languages, frameworks, tools, libraries, platforms, and methodologies):
+
+1. **Programming Languages** - All major languages (C#, Python, JavaScript, TypeScript, Java, C++, Go, Rust, PHP, Ruby, Swift, Kotlin, Dart, R, Scala, Elixir, Haskell, Perl, Lua, MATLAB, etc.)
+2. **Frontend** - All major frontend frameworks, libraries, and tools (React, Angular, Vue.js, Next.js, Svelte, Nuxt.js, Blazor WebAssembly, jQuery, Tailwind CSS, Bootstrap, SASS, Webpack, Vite, Storybook, etc.)
+3. **Backend** - All major backend frameworks (ASP.NET Core, Node.js, Express.js, Django, Flask, FastAPI, Spring Boot, Ruby on Rails, Laravel, NestJS, Koa.js, Gin, Fiber, Phoenix, etc.)
+4. **Databases** - All major databases (PostgreSQL, MySQL, SQL Server, MongoDB, Redis, Elasticsearch, DynamoDB, Cassandra, Firebase, SQLite, Oracle, CouchDB, Neo4j, InfluxDB, etc.)
+5. **Cloud** - All major cloud platforms and services (AWS, Azure, GCP, Heroku, DigitalOcean, Vercel, Netlify, Cloudflare, AWS Lambda, Azure Functions, S3, EC2, etc.)
+6. **DevOps** - All major DevOps tools and practices (Docker, Kubernetes, Jenkins, GitHub Actions, GitLab CI, Terraform, Ansible, Helm, Prometheus, Grafana, Nginx, Apache, Linux Administration, etc.)
+7. **AI/ML** - All major AI/ML frameworks and tools (TensorFlow, PyTorch, scikit-learn, Keras, OpenCV, Hugging Face, LangChain, GPT API, NLTK, SpaCy, MLflow, etc.)
+8. **Cybersecurity** - All major security skills (Penetration Testing, OWASP, Network Security, Ethical Hacking, Encryption, Identity Management, SOC Analysis, Vulnerability Assessment, Compliance, etc.)
+9. **Mobile** - All major mobile development technologies (React Native, Flutter, Swift/iOS, Kotlin/Android, Xamarin, MAUI, Ionic, Expo, etc.)
+10. **Data Science** - All major data science tools (Pandas, NumPy, Matplotlib, Jupyter, Tableau, Power BI, Apache Spark, Hadoop, Airflow, dbt, Snowflake, etc.)
+11. **Game Development** - All major game development tools (Unity, Unreal Engine, Godot, Phaser, Three.js, WebGL, Blender, etc.)
+12. **Blockchain** - All major blockchain technologies (Solidity, Ethereum, Web3.js, Hyperledger, Smart Contracts, DeFi, NFT Development, etc.)
+13. **Networking** - All major networking skills (TCP/IP, DNS, HTTP/HTTPS, Load Balancing, VPN, Firewall Configuration, Wireshark, SDN, etc.)
+14. **Testing** - All major testing frameworks and tools (Jest, Selenium, Cypress, Playwright, xUnit, NUnit, JUnit, Mocha, Postman, k6, JMeter, etc.)
+15. **Software Architecture** - All major architecture skills (Microservices, REST API Design, GraphQL, Event-Driven Architecture, Domain-Driven Design, CQRS, Design Patterns, System Design, Clean Architecture, etc.)
+
+Return a JSON array of objects. Each object must have exactly two fields:
+- ""name"": The skill name (clean, concise, no parenthetical suffixes)
+- ""category"": The exact category name from the list above
+
+Return ONLY the raw JSON array, no markdown formatting, no explanation. Example:
+[
+  {""name"": ""C#"", ""category"": ""Programming Languages""},
+  {""name"": ""React"", ""category"": ""Frontend""}
+]";
+
+			var jsonResponse = await CallOpenRouterApi(prompt);
+			try
+			{
+				string cleanJson = jsonResponse;
+				if (cleanJson.Contains("```json"))
+				{
+					cleanJson = cleanJson.Replace("```json", "");
+					cleanJson = cleanJson.Replace("```", "");
+				}
+				cleanJson = cleanJson.Trim();
+
+				var skills = JsonSerializer.Deserialize<List<Application.DTOs.Ai.AiSkillCatalogItemDto>>(cleanJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+				return skills ?? new List<Application.DTOs.Ai.AiSkillCatalogItemDto>();
+			}
+			catch (JsonException)
+			{
+				throw new Exception("Failed to parse AI skill catalog response. Raw response: " + jsonResponse);
+			}
+		}
+
 		private async Task<string> CallOpenRouterApi(string prompt)
 		{
 			var url = "https://openrouter.ai/api/v1/chat/completions";
@@ -441,8 +517,6 @@ namespace Infrastructure.ExternalServices
 			
 			var request = new HttpRequestMessage(HttpMethod.Post, url);
 			request.Headers.Add("Authorization", $"Bearer {_apiKey}");
-			// request.Headers.Add("HTTP-Referer", "<YOUR_SITE_URL>"); // Optional
-			// request.Headers.Add("X-Title", "<YOUR_SITE_NAME>"); // Optional
 			
 			request.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 

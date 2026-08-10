@@ -101,6 +101,26 @@ namespace Skill_Matrix_2._0.Controllers
 			return Ok(BaseResponse<TeamMemberProfileDTO>.SuccessResponse(profile, "Profile retrieved successfully."));
 		}
 
+		[HttpGet("members/{id}/overview")]
+		public async Task<ActionResult<BaseResponse<TeamMemberDetailedOverviewDTO>>> GetTeamMemberOverview(Guid id)
+		{
+			var managerIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			if (string.IsNullOrEmpty(managerIdString) || !Guid.TryParse(managerIdString, out Guid managerId))
+			{
+				return Unauthorized("Invalid user token.");
+			}
+
+			var query = new Application.Features.Teams.Queries.GetTeamMemberOverview.GetTeamMemberOverviewQuery(managerId, id);
+			var response = await _mediator.Send(query);
+
+			if (!response.Success)
+			{
+				return NotFound(response);
+			}
+
+			return Ok(response);
+		}
+
 		[HttpDelete("members/{id}")]
 		public async Task<ActionResult<BaseResponse<string>>> DeleteTeamMember(Guid id)
 		{

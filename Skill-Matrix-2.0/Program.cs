@@ -78,8 +78,12 @@ builder.Services.AddScoped<IBadgeEligibilityChecker, BadgeEligibilityChecker>();
 builder.Services.Configure<Infrastructure.ExternalServices.EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddHttpClient<IEmailService, Infrastructure.ExternalServices.BrevoEmailService>();
 
-builder.Services.AddHttpClient<IAiService, OpenRouterAiService>();
+builder.Services.AddHttpClient<IAiService, OpenRouterAiService>(client =>
+{
+    client.Timeout = TimeSpan.FromMinutes(5);
+});
 builder.Services.AddHttpClient<IAiAnalysisService, AiAnalysisService>();
+builder.Services.AddSingleton<Application.Interfaces.Service.ICatalogJobService, Infrastructure.Implementation.Services.CatalogJobService>();
 
 builder.Services.AddHttpClient<ICodeExecutionService, CodeExecutionService>();
 builder.Services.AddScoped<IReminderService, ReminderService>();
@@ -88,8 +92,8 @@ builder.Services.Configure<Infrastructure.ExternalServices.Cloudinary.Cloudinary
 builder.Services.AddScoped<IPhotoService, Infrastructure.ExternalServices.Cloudinary.CloudinaryPhotoService>();
 
 builder.Services.AddMemoryCache();
-builder.Services.Configure<Infrastructure.ExternalServices.LightcastSettings>(builder.Configuration.GetSection("Lightcast"));
-builder.Services.AddHttpClient<ILightcastService, Infrastructure.ExternalServices.LightcastService>();
+builder.Services.AddHostedService<Skill_Matrix_2_0.BackgroundServices.SkillCatalogSeedService>();
+builder.Services.AddHostedService<Skill_Matrix_2_0.BackgroundServices.CareerPathSeedService>();
 
 builder.Services.AddOpenApi(options =>
 {

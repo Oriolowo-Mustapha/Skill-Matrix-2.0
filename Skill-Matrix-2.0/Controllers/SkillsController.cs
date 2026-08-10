@@ -4,7 +4,6 @@ using Application.Features.Assessments.Commands.DeleteSkill;
 using Application.Features.Assessments.Commands.UpdateSkill;
 using Application.Features.Assessments.Commands.TeamManagement;
 using Application.Features.Assessments.Queries.GetSkills;
-using Application.Features.Skills.Commands;
 using Application.Features.Skills.Queries.GetAssignedSkills;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -63,17 +62,8 @@ namespace Skill_Matrix_2._0.Controllers
 			return Ok(response);
 		}
 
-		[HttpPost("sync-lightcast")]
-		[Authorize(Roles = "Admin, SuperAdmin")]
-		public async Task<ActionResult<BaseResponse<string>>> SyncLightcastSkills([FromQuery] int limit = 500, [FromQuery] string version = "latest")
-		{
-			var command = new SyncLightcastSkillsCommand { Limit = limit, TaxonomyVersion = version };
-			var response = await _mediator.Send(command);
-			return Ok(response);
-		}
-
 		[HttpPost("assign")]
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Manager,Admin,SuperAdmin,Organization")]
 		[Consumes("application/json")]
         public async Task<IActionResult> AssignSkill([FromBody] AssignSkillRequestDTO request)
 		{
@@ -83,14 +73,14 @@ namespace Skill_Matrix_2._0.Controllers
 				return Unauthorized("Invalid user token.");
 			}
 
-			var finalCommand = new AssignSkillCommand(managerId, request.TeamMemberId, request.SkillId);
+			var finalCommand = new Application.Features.Assessments.Commands.TeamManagement.AssignSkillCommand(managerId, request.TeamMemberId, request.SkillId);
 			
 			var response = await _mediator.Send(finalCommand);
 			return Ok(response);
 		}
 
 		[HttpPost("self-assign")]
-		[Authorize(Roles = "Learner")]
+		[Authorize(Roles = "Learner,TeamMember,Team_Members,Manager,Admin,SuperAdmin,Organization")]
 		[Consumes("application/json")]
 		public async Task<IActionResult> SelfAssignSkill([FromBody] SelfAssignSkillRequestDTO request)
 		{

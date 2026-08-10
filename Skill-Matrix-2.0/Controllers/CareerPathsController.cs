@@ -13,9 +13,11 @@ using Application.Features.CareerPaths.Queries.GetCareerPathById;
 using Application.Features.CareerPaths.Queries.GetAssignedCareerPathsByLearner;
 using Application.Features.CareerPaths.Queries.GetAssignedCareerPathsByTeamMember;
 using Application.Features.CareerPaths.Queries.GetTracksByCareerPath;
+using Application.Interfaces.Service;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,11 +31,19 @@ namespace Skill_Matrix_2._0.Controllers
 	{
 		private readonly IMediator _mediator;
 		private readonly Application.Interfaces.Repository.IUnitOfWork _unitOfWork;
+		private readonly ICatalogJobService _catalogJobService;
+		private readonly IServiceScopeFactory _scopeFactory;
 
-		public CareerPathsController(IMediator mediator, Application.Interfaces.Repository.IUnitOfWork unitOfWork)
+		public CareerPathsController(
+			IMediator mediator, 
+			Application.Interfaces.Repository.IUnitOfWork unitOfWork,
+			ICatalogJobService catalogJobService,
+			IServiceScopeFactory scopeFactory)
 		{
 			_mediator = mediator;
 			_unitOfWork = unitOfWork;
+			_catalogJobService = catalogJobService;
+			_scopeFactory = scopeFactory;
 		}
 
 		[HttpGet]
@@ -44,10 +54,34 @@ namespace Skill_Matrix_2._0.Controllers
 		}
 
 		[HttpPost("ai-generate-catalog")]
-		public async Task<ActionResult<BaseResponse<Application.DTOs.Ai.CatalogGenerationResultDto>>> GenerateAiCatalog()
+		public ActionResult<BaseResponse<CatalogJobStatus>> GenerateAiCatalog()
 		{
-			var result = await _mediator.Send(new Application.Features.CareerPaths.Commands.GenerateAiCatalog.GenerateAiCatalogCommand());
-			return Ok(BaseResponse<Application.DTOs.Ai.CatalogGenerationResultDto>.SuccessResponse(result, result.Message));
+			var job = _catalogJobService.CreateJob();
+
+			_ = Task.Run(async () =>
+			{
+				using var scope = _scopeFactory.CreateScope();
+				var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+				try
+				{
+					var result = await mediator.Send(new Application.Features.CareerPaths.Commands.GenerateAiCatalog.GenerateAiCatalogCommand());
+					_catalogJobService.UpdateJob(job.JobId, "Completed", result.Message, result);
+				}
+				catch (Exception ex)
+				{
+					_catalogJobService.UpdateJob(job.JobId, "Failed", $"AI Catalog generation failed: {ex.Message}");
+				}
+			});
+
+			return Accepted(BaseResponse<CatalogJobStatus>.SuccessResponse(job, "AI Catalog generation task queued in background."));
+		}
+
+		[HttpGet("ai-catalog-status/{jobId}")]
+		public ActionResult<BaseResponse<CatalogJobStatus>> GetAiCatalogStatus(string jobId)
+		{
+			var job = _catalogJobService.GetJob(jobId);
+			if (job == null) return NotFound(BaseResponse<string>.FailureResponse("Job not found."));
+			return Ok(BaseResponse<CatalogJobStatus>.SuccessResponse(job, job.Message));
 		}
 
 		[HttpGet("{id}")]
