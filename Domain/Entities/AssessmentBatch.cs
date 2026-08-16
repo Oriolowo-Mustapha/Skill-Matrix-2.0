@@ -16,7 +16,9 @@ namespace Domain.Entities
 		public List<Assessment> Assessments { get; set; } = new List<Assessment>();
 		public AssessmentResult AssessmentResult { get; set; } = null!;
 		public DateTime? StartedAt { get; set; }
+		public DateTime? ExpiresAt { get; set; }
 		public int? TimeLimitMinutes { get; set; }
+		public int LastActiveQuestionIndex { get; set; } = 0;
 		public string BatchType { get; set; } = "Initial"; // "Initial", "ImprovementCheck"
 		public string? ConceptFocus { get; set; }
 	}

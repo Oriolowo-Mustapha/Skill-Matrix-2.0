@@ -110,6 +110,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ExpectedOutput")
                         .HasColumnType("text");
 
+                    b.Property<string>("FunctionName")
+                        .HasColumnType("text");
+
                     b.Property<int>("QuestionType")
                         .HasColumnType("integer");
 
@@ -118,6 +121,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("SampleInput")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TestCases")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -147,6 +153,12 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("LastActiveQuestionIndex")
+                        .HasColumnType("integer");
 
                     b.Property<Guid?>("LearnerID")
                         .HasColumnType("uuid");
@@ -371,6 +383,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("SkillId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("TargetProficiencyLevel")
+                        .HasColumnType("integer");
+
                     b.Property<Guid?>("TeamMemberId")
                         .HasColumnType("uuid");
 
@@ -507,7 +522,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("AssessmentResultId")
+                    b.Property<Guid?>("AssessmentResultId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AssignedSkillId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("DateGenerated")
@@ -524,10 +542,15 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("IsAiGenerated")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("IsStarterPlan")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AssessmentResultId")
                         .IsUnique();
+
+                    b.HasIndex("AssignedSkillId");
 
                     b.ToTable("ImprovementPlans");
                 });
@@ -957,10 +980,13 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("IsCorrect")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("IsFlagged")
+                        .HasColumnType("boolean");
+
                     b.Property<Guid?>("LearnerId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("SelectedOptionId")
+                    b.Property<int?>("SelectedOptionId")
                         .HasColumnType("integer");
 
                     b.Property<string>("SubmittedCode")
@@ -972,9 +998,10 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.HasIndex("AssessmentBatchId");
+                    b.HasKey("Id");
 
                     b.HasIndex("AssessmentQuestionId");
 
@@ -983,6 +1010,9 @@ namespace Infrastructure.Migrations
                     b.HasIndex("SelectedOptionId");
 
                     b.HasIndex("TeamMemberId");
+
+                    b.HasIndex("AssessmentBatchId", "AssessmentQuestionId")
+                        .IsUnique();
 
                     b.ToTable("UserResponses");
                 });
@@ -1197,11 +1227,15 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Entities.AssessmentResult", "AssessmentResult")
                         .WithOne("ImprovementPlan")
-                        .HasForeignKey("Domain.Entities.ImprovementPlan", "AssessmentResultId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Domain.Entities.ImprovementPlan", "AssessmentResultId");
+
+                    b.HasOne("Domain.Entities.AssignedSkill", "AssignedSkill")
+                        .WithMany()
+                        .HasForeignKey("AssignedSkillId");
 
                     b.Navigation("AssessmentResult");
+
+                    b.Navigation("AssignedSkill");
                 });
 
             modelBuilder.Entity("Domain.Entities.ImprovementTask", b =>
@@ -1318,8 +1352,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.AssessmentOptions", "SelectedOption")
                         .WithMany("UserResponses")
                         .HasForeignKey("SelectedOptionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Domain.Entities.TeamMember", "TeamMember")
                         .WithMany("UserResponses")

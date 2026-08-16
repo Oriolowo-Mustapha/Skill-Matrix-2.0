@@ -41,7 +41,16 @@ namespace Skill_Matrix_2_0.BackgroundServices
 
 				if (!skills.Any())
 				{
-					_logger.LogInformation("CareerPathSeedService: No skills found in database. Career path seeding skipped.");
+					_logger.LogInformation("CareerPathSeedService: No skills found in database. Triggering skill catalog generation first...");
+					var skillResult = await mediator.Send(new Application.Features.Skills.Commands.GenerateAiSkillCatalogCommand(), stoppingToken);
+					_logger.LogInformation("CareerPathSeedService: Skill catalog generation completed: {Message}", skillResult?.Message);
+
+					skills = (await unitOfWork.Skills.GetAllAsync()).ToList();
+				}
+
+				if (!skills.Any())
+				{
+					_logger.LogWarning("CareerPathSeedService: Skill catalog generation did not populate skills. Skipping career path seeding.");
 					return;
 				}
 

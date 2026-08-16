@@ -9,6 +9,8 @@ namespace Infrastructure.DTOs
 		public string? ExpectedOutput { get; set; }
 		public string? SampleInput { get; set; }
 		public string? CodeTemplate { get; set; }
+		public string? FunctionName { get; set; }
+		public List<Application.DTOs.Assessments.TestCaseItem>? TestCases { get; set; } = new List<Application.DTOs.Assessments.TestCaseItem>();
 		public string Concept { get; set; } = string.Empty;
 	}
 }

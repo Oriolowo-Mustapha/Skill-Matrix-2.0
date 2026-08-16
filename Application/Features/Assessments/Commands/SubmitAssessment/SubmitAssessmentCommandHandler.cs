@@ -41,13 +41,41 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				throw new AssessmentAlreadyCompletedException();
 			}
 
-			// Timer enforcement with 1-minute grace period
+			// Timer deadline check (log warning if submitted past deadline, but gracefully grade submitted answers)
 			if (batch.StartedAt.HasValue && batch.TimeLimitMinutes.HasValue)
 			{
-				var deadline = batch.StartedAt.Value.AddMinutes(batch.TimeLimitMinutes.Value).AddMinutes(1);
+				var deadline = batch.StartedAt.Value.AddMinutes(batch.TimeLimitMinutes.Value).AddMinutes(2);
 				if (DateTime.UtcNow > deadline)
 				{
-					throw new BadRequestException("Assessment time limit exceeded. Your submission was not accepted in time.");
+					System.Diagnostics.Debug.WriteLine($"[SubmitAssessment] Batch {batch.Id} submitted after timer deadline. Gracefully processing submitted answers.");
+				}
+			}
+
+			// Load existing incrementally saved user responses from DB
+			var existingDbResponses = (await _unitOfWork.UserResponses.FindAsync(ur => ur.AssessmentBatchId == batch.Id)).ToList();
+			var inputAnswers = request.requestDto?.UserAnswers ?? new List<UserAnswerDTO>();
+
+			// Merge input answers with existing DB responses (input answers take precedence if provided)
+			var effectiveAnswers = new List<UserAnswerDTO>();
+			foreach (var q in batch.Assessments)
+			{
+				var fromInput = inputAnswers.FirstOrDefault(a => a.AssessmentQuestionId == q.Id);
+				if (fromInput != null && (fromInput.SelectedOptionId.HasValue || !string.IsNullOrWhiteSpace(fromInput.SubmittedCode)))
+				{
+					effectiveAnswers.Add(fromInput);
+				}
+				else
+				{
+					var fromDb = existingDbResponses.FirstOrDefault(r => r.AssessmentQuestionId == q.Id);
+					if (fromDb != null)
+					{
+						effectiveAnswers.Add(new UserAnswerDTO
+						{
+							AssessmentQuestionId = fromDb.AssessmentQuestionId,
+							SelectedOptionId = fromDb.SelectedOptionId,
+							SubmittedCode = fromDb.SubmittedCode
+						});
+					}
 				}
 			}
 
@@ -55,7 +83,7 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 			var codingTasks = new List<(Assessment Question, UserAnswerDTO Answer, Task<CodeExecutionResponseDTO> Task)>();
 			foreach (var question in batch.Assessments.Where(q => q.QuestionType == QuestionType.Coding))
 			{
-				var answerDto = request.requestDto.UserAnswers.FirstOrDefault(a => a.AssessmentQuestionId == question.Id);
+				var answerDto = effectiveAnswers.FirstOrDefault(a => a.AssessmentQuestionId == question.Id);
 				if (answerDto != null && !string.IsNullOrWhiteSpace(answerDto.SubmittedCode))
 				{
 					var lang = string.IsNullOrWhiteSpace(question.CorrectAnswer) ? "csharp" : question.CorrectAnswer.Trim();
@@ -83,22 +111,24 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 			int correctAnswers = 0;
 			int unansweredCount = 0;
 			int totalQuestions = batch.Assessments.Count;
-			var userResponses = new List<UserResponse>();
 			var conceptScores = new Dictionary<string, (int Correct, int Total)>(StringComparer.OrdinalIgnoreCase);
 
 			foreach (var question in batch.Assessments)
 			{
-				var answerDto = request.requestDto.UserAnswers.FirstOrDefault(a => a.AssessmentQuestionId == question.Id);
+				var answerDto = effectiveAnswers.FirstOrDefault(a => a.AssessmentQuestionId == question.Id);
 				bool isCorrect = false;
 				bool isAnswered = answerDto != null;
 
 				if (isAnswered)
 				{
-					int selectedOptionId = answerDto?.SelectedOptionId ?? 0;
+					int? selectedOptionId = (answerDto?.SelectedOptionId.HasValue == true && answerDto.SelectedOptionId.Value > 0) 
+						? answerDto.SelectedOptionId.Value 
+						: null;
 
 					// Grade based on question type
 					if (question.QuestionType == QuestionType.Coding)
 					{
+						selectedOptionId = null;
 						if (codingResults.TryGetValue(question.Id, out var executionResult))
 						{
 							isCorrect = executionResult.IsSuccess;
@@ -110,29 +140,44 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 					}
 					else
 					{
-						var selectedOption = question.AssessmentOptions.FirstOrDefault(o => o.Id == selectedOptionId);
-						if (selectedOption != null && selectedOption.OptionText == question.CorrectAnswer)
+						if (selectedOptionId.HasValue)
 						{
-							isCorrect = true;
+							var selectedOption = question.AssessmentOptions.FirstOrDefault(o => o.Id == selectedOptionId.Value);
+							if (selectedOption != null && selectedOption.OptionText == question.CorrectAnswer)
+							{
+								isCorrect = true;
+							}
 						}
 					}
 
-					var response = new UserResponse
+					var existingResponse = existingDbResponses.FirstOrDefault(r => r.AssessmentQuestionId == question.Id);
+					if (existingResponse != null)
 					{
-						AssessmentBatchId = batch.Id,
-						AssessmentQuestionId = question.Id,
-						SelectedOptionId = selectedOptionId,
-						Timestamp = DateTime.UtcNow,
-						IsCorrect = isCorrect,
-						SubmittedCode = answerDto?.SubmittedCode
-					};
-
-					if (request.UserRole == Roles.Learner.ToString())
-						response.LearnerId = request.UserId;
+						existingResponse.SelectedOptionId = selectedOptionId;
+						existingResponse.SubmittedCode = answerDto?.SubmittedCode;
+						existingResponse.IsCorrect = isCorrect;
+						existingResponse.UpdatedAt = DateTime.UtcNow;
+						await _unitOfWork.UserResponses.UpdateAsync(existingResponse);
+					}
 					else
-						response.TeamMemberId = request.UserId;
+					{
+						var newResp = new UserResponse
+						{
+							AssessmentBatchId = batch.Id,
+							AssessmentQuestionId = question.Id,
+							SelectedOptionId = selectedOptionId,
+							Timestamp = DateTime.UtcNow,
+							UpdatedAt = DateTime.UtcNow,
+							IsCorrect = isCorrect,
+							SubmittedCode = answerDto?.SubmittedCode
+						};
+						if (request.UserRole == Roles.Learner.ToString())
+							newResp.LearnerId = request.UserId;
+						else
+							newResp.TeamMemberId = request.UserId;
 
-					userResponses.Add(response);
+						await _unitOfWork.UserResponses.AddAsync(newResp);
+					}
 				}
 				else
 				{
@@ -168,6 +213,7 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				Score = score,
 				ProficiencyLevel = batch.AssignedSkill.ProficiencyLevel,
 				DateCreated = DateTime.UtcNow,
+				DateModified = DateTime.UtcNow,
 				Skill = batch.AssignedSkill
 			};
 
@@ -178,7 +224,6 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 
 			batch.AssessmentStatus = AssessmentStatus.Completed;
 
-			await _unitOfWork.UserResponses.AddRangeAsync(userResponses);
 			await _unitOfWork.AssessmentResults.AddAsync(result);
 			await _unitOfWork.AssessmentBatches.UpdateAsync(batch);
 

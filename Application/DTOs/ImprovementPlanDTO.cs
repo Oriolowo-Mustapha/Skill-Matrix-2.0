@@ -1,12 +1,13 @@
-﻿namespace Application.DTOs
+namespace Application.DTOs
 {
 	public record ImprovementPlanDTO
 	{
 		public Guid Id { get; set; }
-		public Guid AssessmentResultId { get; set; }
+		public Guid? AssessmentResultId { get; set; }
 		public string GeneratedSummary { get; set; } = string.Empty;
 		public string FocusAreas { get; set; } = string.Empty;
 		public DateTime DateGenerated { get; set; }
+		public bool IsStarterPlan { get; set; }
 		public List<RecommendedResourceDTO> RecommendedResources { get; set; } = new List<RecommendedResourceDTO>();
 	}
 

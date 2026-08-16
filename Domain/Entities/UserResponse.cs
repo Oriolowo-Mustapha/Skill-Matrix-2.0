@@ -12,12 +12,14 @@ namespace Domain.Entities
 		public int AssessmentQuestionId { get; set; }
 		public Assessment AssessmentQuestion { get; set; } = null!;
 
-		public int SelectedOptionId { get; set; }
-		public AssessmentOptions SelectedOption { get; set; } = null!;
+		public int? SelectedOptionId { get; set; }
+		public AssessmentOptions? SelectedOption { get; set; }
 
 		public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+		public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
 		public bool IsCorrect { get; set; }
+		public bool IsFlagged { get; set; } = false;
 
 		public string? SubmittedCode { get; set; }
 	}

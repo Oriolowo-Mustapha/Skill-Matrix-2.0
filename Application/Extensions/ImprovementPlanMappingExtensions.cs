@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+using Application.DTOs;
 using Domain.Entities;
 
 namespace Application.Extensions
@@ -25,12 +25,16 @@ namespace Application.Extensions
 			return new ImprovementPlanDTO
 			{
 				Id = plan.Id,
+				AssessmentResultId = plan.AssessmentResultId,
 				GeneratedSummary = plan.GeneratedSummary,
 				FocusAreas = plan.FocusArea,
 				DateGenerated = plan.DateGenerated,
+				IsStarterPlan = plan.IsStarterPlan,
 				RecommendedResources = plan.RecommendedResources.Select(p => p.ToDto()).ToList()
 			};
 		}
+
+		public static ImprovementPlanDTO ToDTO(this ImprovementPlan plan) => plan.ToDto();
 		public static RecommendedResourceDTO ToDto(this RecommendedResource resource)
 		{
 			return new RecommendedResourceDTO

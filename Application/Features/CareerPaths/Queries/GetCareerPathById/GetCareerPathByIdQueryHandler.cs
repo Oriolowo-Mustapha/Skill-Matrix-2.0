@@ -34,7 +34,18 @@ namespace Application.Features.CareerPaths.Queries.GetCareerPathById
 				cps => cps.Skill
 			);
 
-			return careerPath.ToDto();
+			var dto = careerPath.ToDto();
+
+			if (request.TrackId.HasValue && dto.Tracks != null)
+			{
+				var matchingTrack = dto.Tracks.FirstOrDefault(t => t.Id == request.TrackId.Value);
+				if (matchingTrack != null)
+				{
+					dto.Tracks = new List<CareerPathTrackDTO> { matchingTrack };
+				}
+			}
+
+			return dto;
 		}
 	}
 }

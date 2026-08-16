@@ -177,7 +177,7 @@ namespace Application.Features.Auth.Commands.Login
 				audience: configuration["Jwt:Audience"],
 				claims: claims,
 				expires: DateTime.UtcNow.AddMinutes(
-					int.Parse(configuration["Jwt:ExpiryMinutes"] ?? "60")
+					int.Parse(configuration["Jwt:ExpiryMinutes"] ?? "7200")
 				),
 				signingCredentials: creds
 			);

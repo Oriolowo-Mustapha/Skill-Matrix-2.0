@@ -16,6 +16,7 @@ namespace Application.Extensions
 				Name = skill.Name,
 				Category = skill.Category,
 				ProficiencyLevel = skill.ProficiencyLevel.ToString(),
+				TargetProficiencyLevel = skill.TargetProficiencyLevel.ToString(),
 				IsFullyMastered = skill.IsFullyMastered,
 				DateAssigned = skill.DateAssigned
 			};
@@ -49,6 +50,17 @@ namespace Application.Extensions
 
 		public static AssessmentQuestionDTO ToDTO(this Assessment assessment)
 		{
+			List<Application.DTOs.Assessments.TestCaseItem>? testCases = null;
+			if (!string.IsNullOrEmpty(assessment.TestCases))
+			{
+				try
+				{
+					var jsonOptions = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+					testCases = System.Text.Json.JsonSerializer.Deserialize<List<Application.DTOs.Assessments.TestCaseItem>>(assessment.TestCases, jsonOptions);
+				}
+				catch { /* fallback */ }
+			}
+
 			return new AssessmentQuestionDTO
 			{
 				Id = assessment.Id,
@@ -58,6 +70,8 @@ namespace Application.Extensions
 				SampleInput = assessment.SampleInput,
 				ExpectedOutput = assessment.ExpectedOutput,
 				CodeTemplate = assessment.CodeTemplate,
+				FunctionName = assessment.FunctionName ?? "Solve",
+				TestCases = testCases ?? new List<Application.DTOs.Assessments.TestCaseItem>(),
 				Concept = assessment.Concept
 			};
 		}
@@ -68,6 +82,7 @@ namespace Application.Extensions
 			{
 				AssessmentBatchId = batch.Id,
 				TimeLimitMinutes = batch.TimeLimitMinutes ?? 30,
+				StartedAt = batch.StartedAt,
 				Questions = batch.Assessments.Select(a => a.ToDTO()).ToList()
 			};
 		}

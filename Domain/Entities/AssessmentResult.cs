@@ -1,4 +1,4 @@
-﻿using Domain.Enum;
+using Domain.Enum;
 
 namespace Domain.Entities
 {
@@ -20,8 +20,8 @@ namespace Domain.Entities
 		public int NoOfWrongAnswers { get; set; }
 		public int NoOfUnansweredQuestions { get; set; }
 		public int TotalQuestions { get; set; }
-		public DateTime DateCreated { get; set; } = DateTime.Now;
-		public DateTime DateModified { get; set; } = DateTime.Now;
+		public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+		public DateTime DateModified { get; set; } = DateTime.UtcNow;
 
 	}
 }

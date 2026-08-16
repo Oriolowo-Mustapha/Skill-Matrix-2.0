@@ -93,7 +93,9 @@ builder.Services.AddScoped<IPhotoService, Infrastructure.ExternalServices.Cloudi
 
 builder.Services.AddMemoryCache();
 builder.Services.AddHostedService<Skill_Matrix_2_0.BackgroundServices.SkillCatalogSeedService>();
-builder.Services.AddHostedService<Skill_Matrix_2_0.BackgroundServices.CareerPathSeedService>();
+// CareerPathSeedService is intentionally removed from startup background services; 
+// career path seeding is now event-driven via SkillsAddedNotification when new skills are added.
+// builder.Services.AddHostedService<Skill_Matrix_2_0.BackgroundServices.CareerPathSeedService>();
 
 builder.Services.AddOpenApi(options =>
 {

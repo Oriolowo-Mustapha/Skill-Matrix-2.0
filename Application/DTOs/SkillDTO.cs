@@ -7,6 +7,7 @@ namespace Application.DTOs
 		public string Name { get; set; } = string.Empty;
 		public string Category { get; set; } = string.Empty;
 		public string ProficiencyLevel { get; set; } = string.Empty;
+		public string? TargetProficiencyLevel { get; set; }
 		public bool IsFullyMastered { get; set; }
 		public DateTime DateAssigned { get; set; }
 	}

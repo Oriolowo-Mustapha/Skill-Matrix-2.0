@@ -24,64 +24,92 @@ namespace Infrastructure.ExternalServices
 
 		public async Task<IEnumerable<Assessment>> GenerateAssessmentQuestionsAsync(string skillName, string proficencyLevel, int mcqCount, int codingCount, bool requiresCoding)
 		{
+			var package = await GenerateAssessmentPackageAsync(skillName, proficencyLevel, mcqCount, codingCount, requiresCoding);
+			return package.Questions;
+		}
+
+		public async Task<Application.DTOs.Ai.AssessmentPackageResult> GenerateAssessmentPackageAsync(string skillName, string proficencyLevel, int mcqCount, int codingCount, bool requiresCoding)
+		{
 			string prompt;
+			int fallbackMinutes = requiresCoding
+				? (mcqCount * 2) + (codingCount * 12)
+				: (mcqCount * 2) + (codingCount * 3);
 
 			if (requiresCoding && codingCount > 0)
 			{
 				prompt = $@"
-				You are an expert technical interviewer and coding instructor.
-				Generate exactly {mcqCount + codingCount} assessment questions for the skill '{skillName}' at the '{proficencyLevel}' proficiency level.
+				You are an expert technical interviewer, assessor, and curriculum architect.
+				Generate a complete assessment package for the skill '{skillName}' at the '{proficencyLevel}' proficiency level.
+				Generate exactly {mcqCount + codingCount} assessment questions.
+
+				- You MUST determine and provide a realistic 'timeLimitMinutes' integer for a candidate to complete this entire assessment (e.g., 40 to 75 minutes based on algorithm difficulty).
 
 				The FIRST {mcqCount} questions MUST be multiple-choice theory questions. Each must have exactly 4 options and one correct answer.
 				The LAST {codingCount} questions MUST be practical coding challenges. For coding challenges:
-				- The 'questionText' should describe a CodeSignal-style coding problem (e.g. 'Write a program that takes an integer N and prints the sum of even numbers from 1 to N').
+				- The 'questionText' should describe a LeetCode/CodeSignal-style coding problem (e.g. 'Write a function Solve(int n) that returns the sum of even numbers from 1 to n').
 				- The 'correctAnswer' must be set to 'CODE_CHALLENGE'.
 				- The 'options' array must be empty [].
-				- The 'sampleInput' must state the sample test input passed to the program (e.g. 'Input N = 10').
-				- The 'expectedOutput' must contain the exact expected console output (e.g. '30').
-				- The 'codeTemplate' must contain starter code with a valid entry point (e.g. for C#, 'using System; public class Program {{ public static void Main() {{ Console.WriteLine(30); }} }}').
+				- The 'functionName' must specify the exact entry function name (e.g. 'Solve').
+				- The 'codeTemplate' MUST contain a starter code class with an EMPTY/STUB method body where the candidate will write their logic (e.g. for C#: 'using System;\n\npublic class Solution {{\n    public static int Solve(int n) {{\n        // Write your solution here\n        return 0;\n    }}\n}}'). DO NOT provide a completed working solution in the codeTemplate!
+				- The 'testCases' array MUST contain exactly 5 test cases testing various scenarios (e.g., standard inputs, zero/null cases, edge cases).
+				  * The first 2 test cases MUST have 'isHidden': false (visible to candidate as sample cases).
+				  * The remaining 3 test cases MUST have 'isHidden': true (hidden evaluation test cases).
+				  * 'input' must be the exact input value(s) passed to the function (e.g. '10').
+				  * 'expectedOutput' must be the exact return value converted to string (e.g. '30').
 				- The 'questionType' must be 'Coding'.
 				- The 'concept' must be a short name of the specific programming subtopic/concept being tested.
 
 				For multiple-choice questions:
 				- The 'questionType' must be 'MultipleChoice'.
-				- The 'sampleInput' must be null.
-				- The 'expectedOutput' must be null.
+				- The 'testCases' must be null or empty [].
 				- The 'codeTemplate' must be null.
+				- The 'functionName' must be null.
 				- The 'concept' must be a short name of the specific programming subtopic/concept being tested.
 
-				CRITICAL INSTRUCTION: Return ONLY a valid JSON array. No markdown formatting (like ```json), no explanations.
+				CRITICAL INSTRUCTION: Return ONLY a valid JSON object. No markdown formatting (like ```json), no explanations.
 
 				Target JSON Format:
-				[
-				  {{
-					""questionText"": ""The actual question text"",
-					""options"": [""Option A"", ""Option B"", ""Option C"", ""Option D""],
-					""correctAnswer"": ""The exact text of the correct option"",
-					""questionType"": ""MultipleChoice"",
-					""sampleInput"": null,
-					""expectedOutput"": null,
-					""codeTemplate"": null,
-					""concept"": ""LINQ""
-				  }},
-				  {{
-					""questionText"": ""Write a program that prints Hello World"",
-					""options"": [],
-					""correctAnswer"": ""CODE_CHALLENGE"",
-					""questionType"": ""Coding"",
-					""sampleInput"": ""Standard Execution"",
-					""expectedOutput"": ""Hello World"",
-					""codeTemplate"": ""using System; public class Program {{ public static void Main() {{ Console.WriteLine(""""Hello World""""); }} }}"",
-					""concept"": ""Console I/O""
-				  }}
-				]";
+				{{
+				  ""timeLimitMinutes"": 60,
+				  ""questions"": [
+					{{
+					  ""questionText"": ""The actual MCQ question text"",
+					  ""options"": [""Option A"", ""Option B"", ""Option C"", ""Option D""],
+					  ""correctAnswer"": ""The exact text of the correct option"",
+					  ""questionType"": ""MultipleChoice"",
+					  ""testCases"": [],
+					  ""codeTemplate"": null,
+					  ""functionName"": null,
+					  ""concept"": ""LINQ""
+					}},
+					{{
+					  ""questionText"": ""Write a function Solve(int n) that returns the sum of even numbers from 1 to n"",
+					  ""options"": [],
+					  ""correctAnswer"": ""CODE_CHALLENGE"",
+					  ""questionType"": ""Coding"",
+					  ""functionName"": ""Solve"",
+					  ""codeTemplate"": ""using System;\n\npublic class Solution {{\n    public static int Solve(int n) {{\n        // Write your solution here\n        return 0;\n    }}\n}}"",
+					  ""testCases"": [
+						{{ ""input"": ""10"", ""expectedOutput"": ""30"", ""isHidden"": false }},
+						{{ ""input"": ""4"", ""expectedOutput"": ""6"", ""isHidden"": false }},
+						{{ ""input"": ""1"", ""expectedOutput"": ""0"", ""isHidden"": true }},
+						{{ ""input"": ""100"", ""expectedOutput"": ""2550"", ""isHidden"": true }},
+						{{ ""input"": ""0"", ""expectedOutput"": ""0"", ""isHidden"": true }}
+					  ],
+					  ""concept"": ""Loops & Conditionals""
+					}}
+				  ]
+				}}";
 			}
 			else
 			{
 				int totalCount = mcqCount + codingCount;
 				prompt = $@"
-				You are an expert interviewer and assessor.
-				Generate exactly {totalCount} assessment questions for the skill '{skillName}' at the '{proficencyLevel}' proficiency level.
+				You are an expert interviewer, assessor, and skill evaluator.
+				Generate a complete assessment package for the skill '{skillName}' at the '{proficencyLevel}' proficiency level.
+				Generate exactly {totalCount} assessment questions.
+
+				- You MUST determine and provide a realistic 'timeLimitMinutes' integer for a candidate to complete this entire assessment (e.g. 25 to 45 minutes).
 
 				The FIRST {mcqCount} questions must be knowledge-based multiple-choice questions.
 				The LAST {codingCount} questions must be scenario-based multiple-choice questions that test real-world decision making and practical application.
@@ -93,31 +121,62 @@ namespace Infrastructure.ExternalServices
 				- The 'expectedOutput' must be null.
 				- The 'concept' must be a short name of the specific subtopic/concept being tested (e.g. 'Data Visualization', 'Data Cleaning', 'SQL Joins' for Data Analyst; or 'Conflict Resolution', 'Delegation', 'Active Listening' for Leadership).
 
-				CRITICAL INSTRUCTION: Return ONLY a valid JSON array. No markdown formatting (like ```json), no explanations.
+				CRITICAL INSTRUCTION: Return ONLY a valid JSON object. No markdown formatting (like ```json), no explanations.
 
 				Target JSON Format:
-				[
-				  {{
-					""questionText"": ""The actual question text"",
-					""options"": [""Option A"", ""Option B"", ""Option C"", ""Option D""],
-					""correctAnswer"": ""The exact text of the correct option"",
-					""questionType"": ""MultipleChoice"",
-					""expectedOutput"": null,
-					""concept"": ""Conflict Resolution""
-				  }}
-				]";
+				{{
+				  ""timeLimitMinutes"": 35,
+				  ""questions"": [
+					{{
+					  ""questionText"": ""The actual question text"",
+					  ""options"": [""Option A"", ""Option B"", ""Option C"", ""Option D""],
+					  ""correctAnswer"": ""The exact text of the correct option"",
+					  ""questionType"": ""MultipleChoice"",
+					  ""expectedOutput"": null,
+					  ""concept"": ""Conflict Resolution""
+					}}
+				  ]
+				}}";
 			}
 
 			var jsonResponse = await CallOpenRouterApi(prompt);
 
 			try
 			{
-				var dtos = JsonSerializer.Deserialize<List<GeminiQuestionDto>>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+				string cleanJson = jsonResponse;
+				if (cleanJson.Contains("```json"))
+				{
+					cleanJson = cleanJson.Replace("```json", "").Replace("```", "");
+				}
+				cleanJson = cleanJson.Trim();
+
+				// Try parsing as package object with timeLimitMinutes
+				if (cleanJson.StartsWith("{"))
+				{
+					var packageDto = JsonSerializer.Deserialize<GeminiAssessmentPackageDto>(cleanJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+					if (packageDto?.Questions != null && packageDto.Questions.Any())
+					{
+						int calculatedTime = packageDto.TimeLimitMinutes > 0 ? packageDto.TimeLimitMinutes : fallbackMinutes;
+						return new Application.DTOs.Ai.AssessmentPackageResult
+						{
+							TimeLimitMinutes = calculatedTime,
+							Questions = packageDto.Questions.Select(d => d.ToEntity()).ToList()
+						};
+					}
+				}
+
+				// Fallback: try parsing as raw question array
+				var dtos = JsonSerializer.Deserialize<List<GeminiQuestionDto>>(cleanJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 				if (dtos == null)
 				{
 					throw new Exception("Failed to deserialize AI response into questions.");
 				}
-				return dtos.Select(d => d.ToEntity());
+
+				return new Application.DTOs.Ai.AssessmentPackageResult
+				{
+					TimeLimitMinutes = fallbackMinutes,
+					Questions = dtos.Select(d => d.ToEntity()).ToList()
+				};
 			}
 			catch (JsonException)
 			{
@@ -208,6 +267,60 @@ namespace Infrastructure.ExternalServices
 			catch (JsonException)
 			{
 				throw new Exception("Failed to parse AI response. Raw response: " + jsonResponse);
+			}
+		}
+
+		public async Task<ImprovementPlan> GenerateStarterPlanAsync(string skillName, string category)
+		{
+			var prompt = $@"
+				You are an expert tech mentor and curriculum designer.
+				A user is starting as a COMPLETE BEGINNER in the skill '{skillName}' (Category: '{category}').
+				
+				Generate a structured, beginner-friendly Starter Learning Roadmap.
+				- Provide a 2-sentence welcoming summary explaining why this skill is valuable and how to approach learning it.
+				- List 3-4 core foundational focus areas (e.g., 'Syntax & Environment Setup', 'Basic Data Types & Variables', 'Control Flow').
+				- Provide 3 to 5 actionable, hands-on beginner tasks in the 'tasks' array (e.g., 'Install the required SDK/IDE', 'Build a simple Hello World project').
+				- For each task, map it to a recommended high-quality learning resource (Official Docs, Microsoft Learn, MDN, Python Docs, freeCodeCamp, or W3Schools) in the 'resources' array.
+				- IMPORTANT: Ensure 'resourceTitle' in each task EXACTLY matches the 'title' of its corresponding item in the 'resources' array.
+				- Provide valid, real URLs for resources (e.g. 'https://learn.microsoft.com', 'https://developer.mozilla.org', 'https://docs.python.org/3/').
+				
+				CRITICAL: Return ONLY valid JSON. Do NOT include markdown code fences (like ```json) or conversational explanations.
+				
+				Target JSON Format:
+				{{
+				  ""summary"": ""Welcome to learning {skillName}! This starter plan will build your foundational knowledge from the ground up."",
+				  ""focusAreas"": ""• Environment & Tools Setup\n• Language Syntax Basics\n• First Projects"",
+				  ""tasks"": [
+					{{ ""concept"": ""Environment Setup"", ""description"": ""Install necessary runtime and configure text editor"", ""resourceTitle"": ""Official Quickstart Guide"" }}
+				  ],
+				  ""resources"": [ 
+					{{ ""title"": ""Official Quickstart Guide"", ""url"": ""https://learn.microsoft.com"", ""type"": ""Article"", ""concept"": ""Environment Setup"" }} 
+				  ]
+				}}";
+
+			var jsonResponse = await CallOpenRouterApi(prompt);
+			try
+			{
+				string cleanJson = jsonResponse;
+				if (cleanJson.Contains("```json"))
+				{
+					cleanJson = cleanJson.Replace("```json", "").Replace("```", "");
+				}
+				cleanJson = cleanJson.Trim();
+
+				var dto = JsonSerializer.Deserialize<GeminiPlanDto>(cleanJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+				if (dto == null)
+				{
+					throw new Exception("Failed to deserialize AI response into starter plan.");
+				}
+				var plan = dto.ToEntity();
+				plan.IsStarterPlan = true;
+				plan.IsAiGenerated = true;
+				return plan;
+			}
+			catch (JsonException)
+			{
+				throw new Exception("Failed to parse AI response for starter plan. Raw response: " + jsonResponse);
 			}
 		}
 
@@ -502,35 +615,75 @@ Return ONLY the raw JSON array, no markdown formatting, no explanation. Example:
 
 		private async Task<string> CallOpenRouterApi(string prompt)
 		{
+			const int maxRetries = 3;
 			var url = "https://openrouter.ai/api/v1/chat/completions";
 
-			var payload = new
+			var jsonPayload = JsonSerializer.Serialize(new
 			{
 				model = _model,
 				messages = new[]
 				{
 					new { role = "user", content = prompt }
 				}
-			};
+			});
 
-			var jsonPayload = JsonSerializer.Serialize(payload);
-			
-			var request = new HttpRequestMessage(HttpMethod.Post, url);
-			request.Headers.Add("Authorization", $"Bearer {_apiKey}");
-			
-			request.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+			for (int attempt = 0; attempt <= maxRetries; attempt++)
+			{
+				// HttpRequestMessage cannot be reused after SendAsync, so rebuild each attempt
+				var request = new HttpRequestMessage(HttpMethod.Post, url);
+				request.Headers.Add("Authorization", $"Bearer {_apiKey}");
+				request.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-			var response = await _httpClient.SendAsync(request);
-			response.EnsureSuccessStatusCode();
+				var response = await _httpClient.SendAsync(request);
 
-			var responseString = await response.Content.ReadAsStringAsync();
-			using var doc = JsonDocument.Parse(responseString);
+				if (response.IsSuccessStatusCode)
+				{
+					var responseString = await response.Content.ReadAsStringAsync();
+					using var doc = JsonDocument.Parse(responseString);
 
-			return doc.RootElement
-				.GetProperty("choices")[0]
-				.GetProperty("message")
-				.GetProperty("content")
-				.GetString() ?? throw new Exception("AI response text was null.");
+					if (doc.RootElement.TryGetProperty("error", out var errorEl))
+					{
+						var errorMsg = errorEl.TryGetProperty("message", out var m) ? m.GetString() : errorEl.ToString();
+						throw new Exception($"OpenRouter API Error: {errorMsg}");
+					}
+
+					if (doc.RootElement.TryGetProperty("choices", out var choicesEl) && choicesEl.GetArrayLength() > 0)
+					{
+						var firstChoice = choicesEl[0];
+						if (firstChoice.TryGetProperty("message", out var messageEl) &&
+						    messageEl.TryGetProperty("content", out var contentEl))
+						{
+							var content = contentEl.GetString();
+							if (!string.IsNullOrWhiteSpace(content))
+							{
+								return content;
+							}
+						}
+					}
+
+					throw new Exception($"OpenRouter returned unexpected response structure: {responseString}");
+				}
+
+				// Retry on transient rate-limit or service-unavailable errors
+				var statusCode = (int)response.StatusCode;
+				if ((statusCode == 429 || statusCode == 503) && attempt < maxRetries)
+				{
+					var retryAfterSeconds = response.Headers.RetryAfter?.Delta?.TotalSeconds
+						?? Math.Pow(2, attempt) * 2; // fallback: 2s, 4s, 8s
+
+					System.Diagnostics.Debug.WriteLine(
+						$"[OpenRouterAiService] HTTP {statusCode} rate-limited. " +
+						$"Retrying in {retryAfterSeconds}s (attempt {attempt + 1}/{maxRetries})...");
+
+					await Task.Delay(TimeSpan.FromSeconds(retryAfterSeconds));
+					continue;
+				}
+
+				var errorBody = await response.Content.ReadAsStringAsync();
+				throw new HttpRequestException($"OpenRouter HTTP {(int)response.StatusCode} ({response.ReasonPhrase}): {errorBody}");
+			}
+
+			throw new HttpRequestException("OpenRouter API call failed after all retry attempts.");
 		}
 	}
 }

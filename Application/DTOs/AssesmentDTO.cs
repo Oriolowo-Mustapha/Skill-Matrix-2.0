@@ -3,6 +3,12 @@ namespace Application.DTOs
 	public record AssesmentDTO
 	{
 		public Guid AssignedSkillId { get; set; }
+		public string? ClaimedLevel { get; set; } // e.g., "Beginner", "Intermediate", "Proficient"
+	}
+
+	public record GenerateStarterPlanRequestDTO
+	{
+		public Guid AssignedSkillId { get; set; }
 	}
 
 	public record AssignSkillRequestDTO
@@ -15,6 +21,7 @@ namespace Application.DTOs
 	{
 		public int AssessmentBatchId { get; set; }
 		public int TimeLimitMinutes { get; set; }
+		public DateTime? StartedAt { get; set; }
 		public List<AssessmentQuestionDTO> Questions { get; set; } = new List<AssessmentQuestionDTO>();
 		public string? WarningMessage { get; set; }
 	}
@@ -28,6 +35,8 @@ namespace Application.DTOs
 		public string? SampleInput { get; set; }
 		public string? ExpectedOutput { get; set; }
 		public string? CodeTemplate { get; set; }
+		public string? FunctionName { get; set; }
+		public List<Assessments.TestCaseItem>? TestCases { get; set; } = new List<Assessments.TestCaseItem>();
 		public string Concept { get; set; } = string.Empty;
 	}
 

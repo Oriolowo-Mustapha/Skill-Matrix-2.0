@@ -38,6 +38,20 @@ namespace Skill_Matrix_2_0.Controllers
 			return Ok(response);
 		}
 
+		[HttpPost("generate-starter-plan")]
+		[Consumes("application/json")]
+		public async Task<IActionResult> GenerateStarterPlan([FromBody] GenerateStarterPlanRequestDTO dto)
+		{
+			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
+				?? throw new UnauthorizedAccessException("User ID claim not found.");
+			var userId = Guid.Parse(userIdClaim);
+			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
+
+			var command = new Application.Features.Assessments.Commands.GenerateStarterPlan.GenerateStarterPlanCommand(dto, userId, userRole);
+			var response = await _mediator.Send(command);
+			return Ok(response);
+		}
+
 		[HttpPost("track-baseline/start")]
 		[Consumes("application/json")]
 		public async Task<IActionResult> StartTrackBaseline([FromBody] StartTrackBaselineRequestDTO dto)
@@ -121,6 +135,33 @@ namespace Skill_Matrix_2_0.Controllers
 			var query = new GetAssessmentResultQuery(id, userId);
 			var response = await _mediator.Send(query);
 			return Ok(BaseResponse<AssessmentResultDTO>.SuccessResponse(response, "Assessment result retrieved successfully."));
+		}
+
+		[HttpGet("batches/{batchId}/state")]
+		public async Task<IActionResult> GetAttemptState(int batchId)
+		{
+			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
+				?? throw new UnauthorizedAccessException("User ID claim not found.");
+			var userId = Guid.Parse(userIdClaim);
+			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
+
+			var query = new Application.Features.Assessments.Queries.GetAssessmentAttemptState.GetAssessmentAttemptStateQuery(batchId, userId, userRole);
+			var response = await _mediator.Send(query);
+			return Ok(response);
+		}
+
+		[HttpPut("batches/{batchId}/responses/{questionId}")]
+		[Consumes("application/json")]
+		public async Task<IActionResult> SaveQuestionResponse(int batchId, int questionId, [FromBody] Application.DTOs.SaveQuestionResponseDTO dto)
+		{
+			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
+				?? throw new UnauthorizedAccessException("User ID claim not found.");
+			var userId = Guid.Parse(userIdClaim);
+			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
+
+			var command = new Application.Features.Assessments.Commands.SaveQuestionResponse.SaveQuestionResponseCommand(batchId, questionId, dto, userId, userRole);
+			var response = await _mediator.Send(command);
+			return Ok(response);
 		}
 
 		[HttpPost("run-code")]

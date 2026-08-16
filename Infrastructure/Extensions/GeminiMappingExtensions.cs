@@ -12,14 +12,22 @@ namespace Infrastructure.Extensions
 		public static Assessment ToEntity(this GeminiQuestionDto dto)
 		{
 			var isCoding = dto.QuestionType.Equals("Coding", StringComparison.OrdinalIgnoreCase);
+			string? testCasesJson = null;
+			if (dto.TestCases != null && dto.TestCases.Any())
+			{
+				testCasesJson = System.Text.Json.JsonSerializer.Serialize(dto.TestCases);
+			}
+
 			return new Assessment
 			{
 				Questions = dto.QuestionText,
 				CorrectAnswer = dto.CorrectAnswer,
 				QuestionType = isCoding ? QuestionType.Coding : QuestionType.MultipleChoice,
-				ExpectedOutput = dto.ExpectedOutput,
-				SampleInput = dto.SampleInput,
+				ExpectedOutput = dto.ExpectedOutput ?? dto.TestCases?.FirstOrDefault(tc => !tc.IsHidden)?.ExpectedOutput,
+				SampleInput = dto.SampleInput ?? dto.TestCases?.FirstOrDefault(tc => !tc.IsHidden)?.Input,
 				CodeTemplate = dto.CodeTemplate,
+				FunctionName = dto.FunctionName ?? "Solve",
+				TestCases = testCasesJson,
 				Concept = dto.Concept,
 				AssessmentOptions = isCoding ? new List<AssessmentOptions>() : dto.Options.Select(o => new AssessmentOptions { OptionText = o }).ToList()
 			};

@@ -163,7 +163,12 @@ namespace Infrastructure.Context
 				.HasOne(ur => ur.SelectedOption)
 				.WithMany(ur => ur.UserResponses)
 				.HasForeignKey(ur => ur.SelectedOptionId)
+				.IsRequired(false)
 				.OnDelete(DeleteBehavior.NoAction);
+
+			modelBuilder.Entity<UserResponse>()
+				.HasIndex(ur => new { ur.AssessmentBatchId, ur.AssessmentQuestionId })
+				.IsUnique();
 
 			modelBuilder.Entity<AssessmentResult>()
 				.HasOne(ar => ar.Learner)
@@ -190,7 +195,14 @@ namespace Infrastructure.Context
 			modelBuilder.Entity<ImprovementPlan>()
 				.HasOne(ip => ip.AssessmentResult)
 				.WithOne(ar => ar.ImprovementPlan)
-				.HasForeignKey<ImprovementPlan>(ip => ip.AssessmentResultId);
+				.HasForeignKey<ImprovementPlan>(ip => ip.AssessmentResultId)
+				.IsRequired(false);
+
+			modelBuilder.Entity<ImprovementPlan>()
+				.HasOne(ip => ip.AssignedSkill)
+				.WithMany()
+				.HasForeignKey(ip => ip.AssignedSkillId)
+				.IsRequired(false);
 
 			modelBuilder.Entity<RecommendedResource>()
 				.HasOne(ip => ip.ImprovementPlan)

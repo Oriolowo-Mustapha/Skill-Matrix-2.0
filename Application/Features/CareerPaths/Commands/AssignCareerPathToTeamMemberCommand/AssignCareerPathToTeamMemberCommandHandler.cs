@@ -95,16 +95,17 @@ namespace Application.Features.CareerPaths.Commands.AssignCareerPathToTeamMember
                         SkillId = pathSkill.SkillId,
                         Name = pathSkill.Skill.Name,
                         Category = pathSkill.Skill.Category,
-                        ProficiencyLevel = pathSkill.TargetLevel,
+                        ProficiencyLevel = ProficiencyLevel.Novice,
+                        TargetProficiencyLevel = pathSkill.TargetLevel,
                         DateAssigned = DateTime.UtcNow
                     };
                     newAssignedSkills.Add(newAssigned);
                 }
                 else
                 {
-                    if (pathSkill.TargetLevel > existingSkill.ProficiencyLevel)
+                    if (pathSkill.TargetLevel > existingSkill.TargetProficiencyLevel)
                     {
-                        existingSkill.ProficiencyLevel = pathSkill.TargetLevel;
+                        existingSkill.TargetProficiencyLevel = pathSkill.TargetLevel;
                         await _unitOfWork.AssignedSkills.UpdateAsync(existingSkill);
                     }
                 }

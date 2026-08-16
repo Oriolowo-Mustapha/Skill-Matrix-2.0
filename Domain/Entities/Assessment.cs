@@ -14,6 +14,8 @@ namespace Domain.Entities
 		public string? ExpectedOutput { get; set; }
 		public string? SampleInput { get; set; }
 		public string? CodeTemplate { get; set; }
+		public string? TestCases { get; set; }
+		public string? FunctionName { get; set; }
 		public string Concept { get; set; } = string.Empty;
 	}
 }

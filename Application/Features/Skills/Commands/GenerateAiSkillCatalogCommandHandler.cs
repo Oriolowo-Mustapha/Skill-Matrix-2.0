@@ -16,15 +16,18 @@ namespace Application.Features.Skills.Commands
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAiService _aiService;
+        private readonly IMediator _mediator;
         private readonly ILogger<GenerateAiSkillCatalogCommandHandler> _logger;
 
         public GenerateAiSkillCatalogCommandHandler(
             IUnitOfWork unitOfWork, 
             IAiService aiService,
+            IMediator mediator,
             ILogger<GenerateAiSkillCatalogCommandHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _aiService = aiService;
+            _mediator = mediator;
             _logger = logger;
         }
 
@@ -48,6 +51,7 @@ namespace Application.Features.Skills.Commands
                 var existingSkills = (await _unitOfWork.Skills.GetAllAsync()).ToList();
                 int addedCount = 0;
                 int skippedCount = 0;
+                var addedSkillNames = new List<string>();
 
                 foreach (var aiSkill in aiSkills)
                 {
@@ -72,6 +76,7 @@ namespace Application.Features.Skills.Commands
 
                         await _unitOfWork.Skills.AddAsync(newSkill);
                         existingSkills.Add(newSkill);
+                        addedSkillNames.Add(cleanName);
                         addedCount++;
                     }
                     else
@@ -83,6 +88,9 @@ namespace Application.Features.Skills.Commands
                 if (addedCount > 0)
                 {
                     await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+                    // Publish batch notification so career paths generate automatically for new skills
+                    await _mediator.Publish(new Notifications.SkillsAddedNotification(addedSkillNames, "AI-Generated"), cancellationToken);
                 }
 
                 _logger.LogInformation("AI skill catalog generation complete. Added: {Added}, Skipped: {Skipped}", addedCount, skippedCount);

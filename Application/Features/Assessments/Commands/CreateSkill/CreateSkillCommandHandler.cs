@@ -9,10 +9,12 @@ namespace Application.Features.Assessments.Commands.CreateSkill
 	public class CreateSkillCommandHandler : IRequestHandler<CreateSkillCommand, BaseResponse<string>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IMediator _mediator;
 
-		public CreateSkillCommandHandler(IUnitOfWork unitOfWork)
+		public CreateSkillCommandHandler(IUnitOfWork unitOfWork, IMediator mediator)
 		{
 			_unitOfWork = unitOfWork;
+			_mediator = mediator;
 		}
 
 		public async Task<BaseResponse<string>> Handle(CreateSkillCommand request, CancellationToken cancellationToken)
@@ -35,6 +37,9 @@ namespace Application.Features.Assessments.Commands.CreateSkill
 
 			await _unitOfWork.Skills.AddAsync(newSkill);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+			// Publish notification so Career Paths can sync incrementally
+			await _mediator.Publish(new Application.Features.Skills.Notifications.SkillsAddedNotification(newSkill.Name, "Admin"), cancellationToken);
 
 			return BaseResponse<string>.SuccessResponse(newSkill.Name, $"{newSkill.Name} has been created successfully.");
 		}

@@ -67,7 +67,21 @@ namespace Application.Features.Assessments.Commands.StartAssessment
 				timeLimitMinutes = (mcqCount * 2) + (codingCount * 3); // 35 minutes
 			}
 
-			var questions = await _aiService.GenerateAssessmentQuestionsAsync(
+			// Apply ClaimedLevel if provided by the user in the Experience Gate placement path
+			if (!string.IsNullOrWhiteSpace(request.Dto.ClaimedLevel))
+			{
+				var claimedStr = request.Dto.ClaimedLevel.Trim();
+				if (claimedStr.Equals("Beginner", StringComparison.OrdinalIgnoreCase)) claimedStr = "Begineer";
+
+				if (Enum.TryParse<ProficiencyLevel>(claimedStr, true, out var parsedLevel))
+				{
+					assignedSkill.ProficiencyLevel = parsedLevel;
+					await _unitOfWork.AssignedSkills.UpdateAsync(assignedSkill);
+					await _unitOfWork.SaveChangesAsync(cancellationToken);
+				}
+			}
+
+			var package = await _aiService.GenerateAssessmentPackageAsync(
 				assignedSkill.Name,
 				assignedSkill.ProficiencyLevel.ToString(),
 				mcqCount,
@@ -75,14 +89,20 @@ namespace Application.Features.Assessments.Commands.StartAssessment
 				skill.RequiresCoding
 			);
 
+			var startedAt = DateTime.UtcNow;
+			int effectiveTimeLimit = package.TimeLimitMinutes > 0 ? package.TimeLimitMinutes : timeLimitMinutes;
+			var expiresAt = startedAt.AddMinutes(effectiveTimeLimit);
+
 			var batch = new AssessmentBatch
 			{
 				SkillId = assignedSkill.Id,
 				AssessmentStatus = AssessmentStatus.InProgress,
-				DateCreated = DateTime.UtcNow,
-				StartedAt = DateTime.UtcNow,
-				TimeLimitMinutes = timeLimitMinutes,
-				Assessments = questions.ToList()
+				DateCreated = startedAt,
+				StartedAt = startedAt,
+				ExpiresAt = expiresAt,
+				TimeLimitMinutes = effectiveTimeLimit,
+				LastActiveQuestionIndex = 0,
+				Assessments = package.Questions
 			};
 
 			if (request.UserRole == Roles.Learner.ToString())

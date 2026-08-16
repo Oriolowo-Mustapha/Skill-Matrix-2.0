@@ -110,13 +110,18 @@ namespace Application.Features.Assessments.Commands.StartTrackBaseline
                     skill.RequiresCoding
                 );
 
+                var startedAt = DateTime.UtcNow;
+                var expiresAt = startedAt.AddMinutes(timeLimitMinutes);
+
                 var batch = new AssessmentBatch
                 {
                     SkillId = assignedSkill.Id,
                     AssessmentStatus = AssessmentStatus.InProgress,
-                    DateCreated = DateTime.UtcNow,
-                    StartedAt = DateTime.UtcNow,
+                    DateCreated = startedAt,
+                    StartedAt = startedAt,
+                    ExpiresAt = expiresAt,
                     TimeLimitMinutes = timeLimitMinutes,
+                    LastActiveQuestionIndex = 0,
                     BatchType = "Baseline",
                     Assessments = questions.ToList()
                 };

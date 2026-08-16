@@ -44,13 +44,13 @@ namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 				throw new BadRequestException("This batch is not an Improvement Check batch.");
 			}
 
-			// Timer enforcement (with 1-minute grace period)
+			// Timer deadline check (log warning if submitted past deadline, but gracefully grade submitted answers)
 			if (batch.StartedAt.HasValue && batch.TimeLimitMinutes.HasValue)
 			{
-				var deadline = batch.StartedAt.Value.AddMinutes(batch.TimeLimitMinutes.Value).AddMinutes(1);
+				var deadline = batch.StartedAt.Value.AddMinutes(batch.TimeLimitMinutes.Value).AddMinutes(2);
 				if (DateTime.UtcNow > deadline)
 				{
-					throw new BadRequestException("Assessment time limit exceeded. Your submission was not accepted in time.");
+					System.Diagnostics.Debug.WriteLine($"[SubmitImprovementCheck] Batch {batch.Id} submitted after timer deadline. Gracefully processing submitted answers.");
 				}
 			}
 
@@ -96,11 +96,14 @@ namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 
 				if (isAnswered)
 				{
-					int selectedOptionId = answerDto?.SelectedOptionId ?? 0;
+					int? selectedOptionId = (answerDto?.SelectedOptionId.HasValue == true && answerDto.SelectedOptionId.Value > 0) 
+						? answerDto.SelectedOptionId.Value 
+						: null;
 
 					// Grade based on question type
 					if (question.QuestionType == QuestionType.Coding)
 					{
+						selectedOptionId = null;
 						if (codingResults.TryGetValue(question.Id, out var executionResult))
 						{
 							isCorrect = executionResult.IsSuccess;
@@ -112,10 +115,13 @@ namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 					}
 					else
 					{
-						var selectedOption = question.AssessmentOptions.FirstOrDefault(o => o.Id == selectedOptionId);
-						if (selectedOption != null && selectedOption.OptionText == question.CorrectAnswer)
+						if (selectedOptionId.HasValue)
 						{
-							isCorrect = true;
+							var selectedOption = question.AssessmentOptions.FirstOrDefault(o => o.Id == selectedOptionId.Value);
+							if (selectedOption != null && selectedOption.OptionText == question.CorrectAnswer)
+							{
+								isCorrect = true;
+							}
 						}
 					}
 
@@ -159,6 +165,7 @@ namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 				Score = score,
 				ProficiencyLevel = batch.AssignedSkill.ProficiencyLevel,
 				DateCreated = DateTime.UtcNow,
+				DateModified = DateTime.UtcNow,
 				Skill = batch.AssignedSkill
 			};
 

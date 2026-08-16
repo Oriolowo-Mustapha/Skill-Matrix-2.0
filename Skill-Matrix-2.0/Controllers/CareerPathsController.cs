@@ -85,9 +85,9 @@ namespace Skill_Matrix_2._0.Controllers
 		}
 
 		[HttpGet("{id}")]
-		public async Task<ActionResult<BaseResponse<CareerPathDTO>>> GetById(Guid id)
+		public async Task<ActionResult<BaseResponse<CareerPathDTO>>> GetById(Guid id, [FromQuery] Guid? trackId = null)
 		{
-			var result = await _mediator.Send(new GetCareerPathByIdQuery(id));
+			var result = await _mediator.Send(new GetCareerPathByIdQuery(id, trackId));
 			return Ok(BaseResponse<CareerPathDTO>.SuccessResponse(result, "Career path retrieved successfully."));
 		}
 
