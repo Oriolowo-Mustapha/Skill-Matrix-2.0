@@ -1,0 +1,69 @@
+- generic [ref=f4e219]:
+  - complementary [ref=f4e220]:
+    - generic [ref=f4e221]: SkillMatrix
+    - navigation [ref=f4e228]:
+      - button "Organization Analytics" [ref=f4e229]
+      - button "Team Directory" [ref=f4e233]
+      - button "Career Path Architect" [active] [ref=f4e237]
+    - generic [ref=f4e241]:
+      - generic [ref=f4e242]:
+        - generic [ref=f4e243]: O
+        - generic [ref=f4e245]:
+          - generic [ref=f4e246]: Oriolowo Mustapha
+          - generic [ref=f4e247]: Manager
+      - button "Sign Out" [ref=f4e248] [cursor=pointer]
+  - generic [ref=f4e251]:
+    - banner [ref=f4e252]:
+      - generic [ref=f4e253]:
+        - heading "Career Path Architect" [level=1] [ref=f4e287]
+        - generic [ref=f4e255]: Friday, August 28, 2026
+      - button "Switch to light mode" [ref=f4e256] [cursor=pointer]
+    - generic [ref=f4e288]:
+      - generic [ref=f4e290]:
+        - heading "Career Path Architect" [level=2] [ref=f4e291]
+        - paragraph [ref=f4e292]: Design organizational paths, tracks, and map required skills.
+      - generic [ref=f4e293]:
+        - generic [ref=f4e294]:
+          - generic [ref=f4e295]:
+            - heading "Available Paths" [level=3] [ref=f4e296]
+            - button "+ New Path" [ref=f4e297] [cursor=pointer]
+          - generic [ref=f4e298]:
+            - generic [ref=f4e299] [cursor=pointer]:
+              - heading [level=4] [ref=f4e300]:
+                - text: Cloud Infrastructure & DevOps
+                - button "Delete path" [ref=f4e301]
+              - paragraph [ref=f4e304]: Automating, deploying, and managing scalable cloud-native infrastructures.
+              - generic [ref=f4e305]: 3 Tracks Defined
+            - generic [ref=f4e306] [cursor=pointer]:
+              - heading [level=4] [ref=f4e307]:
+                - text: Cybersecurity & Infrastructure
+                - button "Delete path" [ref=f4e308]
+              - paragraph [ref=f4e311]: Securing digital assets and managing enterprise network infrastructure.
+              - generic [ref=f4e312]: 5 Tracks Defined
+            - generic [ref=f4e313] [cursor=pointer]:
+              - heading [level=4] [ref=f4e314]:
+                - text: Data Engineering & Artificial Intelligence
+                - button "Delete path" [ref=f4e315]
+              - paragraph [ref=f4e318]: Transforming raw data into actionable intelligence through ML and Big Data pipelines.
+              - generic [ref=f4e319]: 2 Tracks Defined
+            - generic [ref=f4e320] [cursor=pointer]:
+              - heading [level=4] [ref=f4e321]:
+                - text: Frontend Web Development
+                - button "Delete path" [ref=f4e322]
+              - paragraph [ref=f4e325]: High-performance user interface development across various JavaScript frameworks.
+              - generic [ref=f4e326]: 5 Tracks Defined
+            - generic [ref=f4e327] [cursor=pointer]:
+              - heading [level=4] [ref=f4e328]:
+                - text: Mobile Application Development
+                - button "Delete path" [ref=f4e329]
+              - paragraph [ref=f4e332]: Creating high-performance native and cross-platform mobile experiences.
+              - generic [ref=f4e333]: 4 Tracks Defined
+            - generic [ref=f4e334] [cursor=pointer]:
+              - heading [level=4] [ref=f4e335]:
+                - text: Software Engineering & Application Development
+                - button "Delete path" [ref=f4e336]
+              - paragraph [ref=f4e339]: Specialized engineering pathways focused on modern backend stacks, APIs, and enterprise software architecture.
+              - generic [ref=f4e340]: 6 Tracks Defined
+        - generic [ref=f4e342]:
+          - heading "Select a Career Path" [level=3] [ref=f4e345]
+          - paragraph [ref=f4e346]: Choose a path from the left to view and edit its tracks.

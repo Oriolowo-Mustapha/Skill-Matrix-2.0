@@ -4,7 +4,7 @@
 	{
 		public IDictionary<string, string[]> Errors { get; }
 
-		public ValidationException() : base("One Or More Validations Failure Has Occured")
+		public ValidationException() : base("One or more validation errors occurred. Please review the highlighted fields.")
 		{
 			Errors = new Dictionary<string, string[]>();
 		}

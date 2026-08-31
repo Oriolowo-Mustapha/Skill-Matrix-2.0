@@ -20,8 +20,11 @@ namespace Domain.Entities
 		public int NoOfWrongAnswers { get; set; }
 		public int NoOfUnansweredQuestions { get; set; }
 		public int TotalQuestions { get; set; }
+		public int McqScore { get; set; }
+		public int CodingScore { get; set; }
+		public string? VerificationStatus { get; set; }
+		public string? PlacedProficiencyLevel { get; set; }
 		public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 		public DateTime DateModified { get; set; } = DateTime.UtcNow;
-
 	}
 }

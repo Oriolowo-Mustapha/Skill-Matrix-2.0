@@ -1,0 +1,18 @@
+{
+  "entries": [
+    {
+      "id": "20260818-225034-772000-90d5",
+      "type": "fact",
+      "agent": "opencode",
+      "ts": "2026-08-18T22:50:34.795Z",
+      "tags": [
+        "skill-matrix",
+        "backend",
+        "frontend",
+        "messages",
+        "completed"
+      ]
+    }
+  ],
+  "version": 1
+}

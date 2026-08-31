@@ -1,0 +1,147 @@
+- generic [ref=f4e761]:
+  - complementary [ref=f4e762]:
+    - generic [ref=f4e763]: SkillMatrix
+    - navigation [ref=f4e770]:
+      - button "Overview" [ref=f4e771] [cursor=pointer]
+      - button "My Skills" [active] [ref=f4e775] [cursor=pointer]
+      - button "Career Paths" [ref=f4e779] [cursor=pointer]
+      - button "Assessment Arena & History" [ref=f4e783] [cursor=pointer]
+      - button "Improvement Plans" [ref=f4e787] [cursor=pointer]
+      - button "Achievements & Leaderboard" [ref=f4e791] [cursor=pointer]
+    - generic [ref=f4e795]:
+      - generic [ref=f4e796]:
+        - generic [ref=f4e797]: O
+        - generic [ref=f4e799]:
+          - generic [ref=f4e800]: Oriolowo Mustapha
+          - generic [ref=f4e801]: Team_Members
+      - button "Sign Out" [ref=f4e802] [cursor=pointer]
+  - generic [ref=f4e805]:
+    - banner [ref=f4e806]:
+      - generic [ref=f4e807]:
+        - heading "My Skills" [level=1] [ref=f4e916]
+        - generic [ref=f4e809]: Friday, August 28, 2026
+      - button "Switch to light mode" [ref=f4e810] [cursor=pointer]
+    - generic [ref=f4e917]:
+      - generic [ref=f4e918]:
+        - textbox "Search skills" [ref=f4e922]:
+          - /placeholder: Search skills by name or category...
+        - generic [ref=f4e923]:
+          - button "My Arsenal" [ref=f4e924] [cursor=pointer]
+          - button "Skill Catalog" [ref=f4e925] [cursor=pointer]
+      - generic [ref=f4e927]:
+        - button "All" [ref=f4e928] [cursor=pointer]
+        - button "Frontend" [ref=f4e929] [cursor=pointer]
+        - button "Mobile" [ref=f4e930] [cursor=pointer]
+        - button "Testing" [ref=f4e931] [cursor=pointer]
+        - button "DevOps" [ref=f4e932] [cursor=pointer]
+        - button "Software Architecture" [ref=f4e933] [cursor=pointer]
+        - button "Cloud" [ref=f4e934] [cursor=pointer]
+        - button "Backend" [ref=f4e935] [cursor=pointer]
+        - button "Networking" [ref=f4e936] [cursor=pointer]
+        - button "Data Science" [ref=f4e937] [cursor=pointer]
+        - button "AI/ML" [ref=f4e938] [cursor=pointer]
+        - button "Game Development" [ref=f4e939] [cursor=pointer]
+        - button "Programming Languages" [ref=f4e940] [cursor=pointer]
+        - button "Databases" [ref=f4e941] [cursor=pointer]
+        - button "Blockchain" [ref=f4e942] [cursor=pointer]
+        - button "Cybersecurity" [ref=f4e943] [cursor=pointer]
+        - button "AI Catalog Generated" [ref=f4e944] [cursor=pointer]
+      - generic [ref=f4e945]:
+        - generic [ref=f4e946]:
+          - generic [ref=f4e947]:
+            - heading "Your Arsenal" [level=4] [ref=f4e948]
+            - generic [ref=f4e949]: "9"
+          - generic [ref=f4e950]:
+            - button "Layered Architecture — Novice" [ref=f4e951] [cursor=pointer]:
+              - generic [ref=f4e952]: 10%
+              - generic [ref=f4e957]:
+                - generic [ref=f4e958]: Layered Architecture
+                - generic [ref=f4e959]: Software Architecture
+              - generic [ref=f4e960]:
+                - generic [ref=f4e961]:
+                  - generic [ref=f4e962]: ◇
+                  - text: Novice
+                - generic [ref=f4e964]: Claimed · Novice
+            - button "SQL Server — Novice" [ref=f4e965] [cursor=pointer]:
+              - generic [ref=f4e966]: 10%
+              - generic [ref=f4e971]:
+                - generic [ref=f4e972]: SQL Server
+                - generic [ref=f4e973]: Databases
+              - generic [ref=f4e974]:
+                - generic [ref=f4e975]:
+                  - generic [ref=f4e976]: ◇
+                  - text: Novice
+                - generic [ref=f4e978]: Claimed · Novice
+            - button "ASP.NET Core — Novice" [ref=f4e979] [cursor=pointer]:
+              - generic [ref=f4e980]: 10%
+              - generic [ref=f4e985]:
+                - generic [ref=f4e986]: ASP.NET Core
+                - generic [ref=f4e987]: Backend
+              - generic [ref=f4e988]:
+                - generic [ref=f4e989]:
+                  - generic [ref=f4e990]: ◇
+                  - text: Novice
+                - generic [ref=f4e992]: Claimed · Novice
+            - button "Microservices — Novice" [ref=f4e993] [cursor=pointer]:
+              - generic [ref=f4e994]: 10%
+              - generic [ref=f4e999]:
+                - generic [ref=f4e1000]: Microservices
+                - generic [ref=f4e1001]: Software Architecture
+              - generic [ref=f4e1002]:
+                - generic [ref=f4e1003]:
+                  - generic [ref=f4e1004]: ◇
+                  - text: Novice
+                - generic [ref=f4e1006]: Claimed · Novice
+            - button "Domain-Driven Design — Novice" [ref=f4e1007] [cursor=pointer]:
+              - generic [ref=f4e1008]: 10%
+              - generic [ref=f4e1013]:
+                - generic [ref=f4e1014]: Domain-Driven Design
+                - generic [ref=f4e1015]: Software Architecture
+              - generic [ref=f4e1016]:
+                - generic [ref=f4e1017]:
+                  - generic [ref=f4e1018]: ◇
+                  - text: Novice
+                - generic [ref=f4e1020]: Claimed · Novice
+            - button "Design Patterns — Novice" [ref=f4e1021] [cursor=pointer]:
+              - generic [ref=f4e1022]: 10%
+              - generic [ref=f4e1027]:
+                - generic [ref=f4e1028]: Design Patterns
+                - generic [ref=f4e1029]: Software Architecture
+              - generic [ref=f4e1030]:
+                - generic [ref=f4e1031]:
+                  - generic [ref=f4e1032]: ◇
+                  - text: Novice
+                - generic [ref=f4e1034]: Claimed · Novice
+            - button "PostgreSQL — Novice" [ref=f4e1035] [cursor=pointer]:
+              - generic [ref=f4e1036]: 10%
+              - generic [ref=f4e1041]:
+                - generic [ref=f4e1042]: PostgreSQL
+                - generic [ref=f4e1043]: Databases
+              - generic [ref=f4e1044]:
+                - generic [ref=f4e1045]:
+                  - generic [ref=f4e1046]: ◇
+                  - text: Novice
+                - generic [ref=f4e1048]: Claimed · Novice
+            - button "Entity Framework — Novice" [ref=f4e1049] [cursor=pointer]:
+              - generic [ref=f4e1050]: 10%
+              - generic [ref=f4e1055]:
+                - generic [ref=f4e1056]: Entity Framework
+                - generic [ref=f4e1057]: AI Catalog Generated
+              - generic [ref=f4e1058]:
+                - generic [ref=f4e1059]:
+                  - generic [ref=f4e1060]: ◇
+                  - text: Novice
+                - generic [ref=f4e1062]: Claimed · Novice
+            - button "C# — Intermediate" [ref=f4e1063] [cursor=pointer]:
+              - generic [ref=f4e1064]: 50%
+              - generic [ref=f4e1069]:
+                - generic [ref=f4e1070]: C#
+                - generic [ref=f4e1071]: Programming Languages
+              - generic [ref=f4e1072]:
+                - generic [ref=f4e1073]:
+                  - generic [ref=f4e1074]: ★
+                  - text: Intermediate
+                - generic [ref=f4e1076]: Claimed · Intermediate
+        - generic [ref=f4e1078]:
+          - heading "Select a Skill" [level=3] [ref=f4e1082]
+          - paragraph [ref=f4e1083]: Choose any skill from the list to inspect its details, view your proficiency tier, or trigger an assessment.

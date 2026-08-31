@@ -80,7 +80,7 @@ namespace Application.Features.Assessments.Commands.TeamManagement
 			return new BaseResponse<bool>
 			{
 				Data = true,
-				Message = "Skill Assigned Successfully", 
+				Message = "Skill assigned successfully.",
 				Success = true,
 			};
 		}

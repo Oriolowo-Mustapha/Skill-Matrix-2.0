@@ -22,5 +22,7 @@ namespace Domain.Entities
 		public bool IsFlagged { get; set; } = false;
 
 		public string? SubmittedCode { get; set; }
+		public string? ConsoleOutput { get; set; }
+		public string? ExecutionResultsJson { get; set; }
 	}
 }

@@ -1,0 +1,166 @@
+- generic [ref=f4e2]:
+  - navigation [ref=f4e5]:
+    - generic [ref=f4e6]:
+      - generic [ref=f4e7]: SkillMatrix
+      - list [ref=f4e14]:
+        - listitem [ref=f4e15]:
+          - link "Features" [ref=f4e16] [cursor=pointer]:
+            - /url: "#features"
+        - listitem [ref=f4e17]:
+          - link "Skill Tracks" [ref=f4e18] [cursor=pointer]:
+            - /url: "#matrix-showcase"
+      - generic [ref=f4e19]:
+        - button "Switch to dark mode" [ref=f4e20] [cursor=pointer]
+        - button "Login" [ref=f4e23] [cursor=pointer]
+        - button "Get Started" [ref=f4e24] [cursor=pointer]
+  - main [ref=f4e25]:
+    - generic [ref=f4e26]:
+      - generic [ref=f4e27]:
+        - generic [ref=f4e28]: AI-Powered Learning Platform
+        - heading "Know Exactly Where You Stand" [level=1] [ref=f4e29]
+        - paragraph [ref=f4e30]: SkillMatrix uses intelligent assessments to pinpoint your technical strengths and weaknesses, then builds a personalized roadmap to get you to the next level — whether you're a solo developer or managing a team of fifty.
+        - generic [ref=f4e31]:
+          - button "Start Free Assessment" [ref=f4e32] [cursor=pointer]
+          - link "Try Live Demo" [ref=f4e33] [cursor=pointer]:
+            - /url: "#simulator"
+        - generic [ref=f4e34]:
+          - generic [ref=f4e35]:
+            - generic [ref=f4e36]: 120+
+            - generic [ref=f4e37]: Skill Tracks Available
+          - generic [ref=f4e38]:
+            - generic [ref=f4e39]: 15K+
+            - generic [ref=f4e40]: Assessments Completed
+          - generic [ref=f4e41]:
+            - generic [ref=f4e42]: 98%
+            - generic [ref=f4e43]: User Satisfaction
+      - generic [ref=f4e44]:
+        - generic [ref=f4e45]:
+          - generic [ref=f4e46]: AI Assessment Engine
+          - generic [ref=f4e47]: Ready
+        - generic [ref=f4e50]:
+          - heading "Test Your Competencies Now" [level=3] [ref=f4e51]
+          - paragraph [ref=f4e52]: Take a quick mock evaluation covering Clean architecture principles, API logic, and reactive interfaces.
+          - button "Begin Mock Test" [ref=f4e53] [cursor=pointer]
+    - generic [ref=f4e54]:
+      - generic [ref=f4e55]:
+        - generic [ref=f4e56]: Why SkillMatrix
+        - heading "Built for Engineers Who Take Growth Seriously" [level=2] [ref=f4e57]
+        - paragraph [ref=f4e58]: Stop guessing where your gaps are. SkillMatrix gives you data-backed insights, structured learning plans, and the tools managers need to upskill their teams.
+      - generic [ref=f4e59]:
+        - generic [ref=f4e60]:
+          - heading "Adaptive AI Assessments" [level=3] [ref=f4e64]
+          - paragraph [ref=f4e65]: Questions that adapt to your level in real time. Whether you're a junior developer or a senior architect, every test is uniquely generated to challenge you where it matters most.
+        - generic [ref=f4e66]:
+          - heading "Personalized Roadmaps" [level=3] [ref=f4e71]
+          - paragraph [ref=f4e72]: After each assessment, receive a step-by-step improvement plan with focus topics, curated resources, and milestone checkpoints — so you always know what to study next.
+        - generic [ref=f4e73]:
+          - heading "Progress Analytics" [level=3] [ref=f4e77]
+          - paragraph [ref=f4e78]: Track scores over time, earn achievement badges, and visualize your growth curve. Managers get a bird's-eye view of team-wide proficiency and can spot skill gaps instantly.
+        - generic [ref=f4e79]:
+          - heading "Team Management" [level=3] [ref=f4e86]
+          - paragraph [ref=f4e87]: Organizations can onboard teams, assign specific skill assessments, and track every member's improvement journey from a single management dashboard.
+        - generic [ref=f4e88]:
+          - heading "Live Code Evaluation" [level=3] [ref=f4e92]
+          - paragraph [ref=f4e93]: Go beyond multiple choice. SkillMatrix supports sandbox code execution during assessments — write real code, run it, and get evaluated on actual output correctness.
+        - generic [ref=f4e94]:
+          - heading "Career Path Guidance" [level=3] [ref=f4e98]
+          - paragraph [ref=f4e99]: Map your current skill levels to industry career paths. See exactly which competencies you need to unlock to move from mid-level to senior, or from backend to full-stack.
+    - generic [ref=f4e100]:
+      - generic [ref=f4e101]:
+        - generic [ref=f4e102]: How It Works
+        - heading "Three Steps to Measurable Growth" [level=2] [ref=f4e103]
+        - paragraph [ref=f4e104]: Getting started takes less than two minutes. No credit card, no setup complexity — just sign up and take your first assessment.
+      - generic [ref=f4e105]:
+        - generic [ref=f4e106]:
+          - generic [ref=f4e107]: "01"
+          - heading "Pick Your Track" [level=3] [ref=f4e109]
+          - paragraph [ref=f4e110]: Choose from 120+ technology tracks spanning software engineering, cloud infrastructure, data science, AI systems, and more.
+        - generic [ref=f4e111]:
+          - generic [ref=f4e112]: "02"
+          - heading "Take the Assessment" [level=3] [ref=f4e114]
+          - paragraph [ref=f4e115]: Answer AI-generated questions that adapt in real time. Each test evaluates theory, practical application, and code execution skills.
+        - generic [ref=f4e116]:
+          - generic [ref=f4e117]: "03"
+          - heading "Follow Your Roadmap" [level=3] [ref=f4e119]
+          - paragraph [ref=f4e120]: Receive a detailed improvement plan with focus areas, learning resources, and milestone tasks. Retake assessments to measure real progress.
+    - generic [ref=f4e121]:
+      - generic [ref=f4e122]:
+        - generic [ref=f4e123]: Interactive Path Preview
+        - heading "Explore Tech Stack Focus Nodes" [level=2] [ref=f4e124]
+        - paragraph [ref=f4e125]: Select specific technology tracks below to view how competencies are grouped, evaluated, and unlocked based on assessment results.
+      - generic [ref=f4e126]:
+        - generic [ref=f4e127]:
+          - 'button "Software Engineering Target Difficulty: Advanced / Intermediate" [ref=f4e128] [cursor=pointer]':
+            - generic [ref=f4e129]: Software Engineering
+            - generic [ref=f4e130]: "Target Difficulty: Advanced / Intermediate"
+          - 'button "Cloud & DevOps Target Difficulty: Intermediate" [ref=f4e131] [cursor=pointer]':
+            - generic [ref=f4e132]: Cloud & DevOps
+            - generic [ref=f4e133]: "Target Difficulty: Intermediate"
+          - 'button "Data & AI Systems Target Difficulty: Advanced" [ref=f4e134] [cursor=pointer]':
+            - generic [ref=f4e135]: Data & AI Systems
+            - generic [ref=f4e136]: "Target Difficulty: Advanced"
+        - generic [ref=f4e137]:
+          - generic [ref=f4e138]:
+            - generic [ref=f4e139]:
+              - generic [ref=f4e140]: Advanced / Intermediate TRACK
+              - heading "Software Engineering" [level=3] [ref=f4e141]
+            - paragraph [ref=f4e142]: Design patterns, database optimization, decoupling strategies, and concurrent programming models.
+          - generic [ref=f4e143]:
+            - generic [ref=f4e144]:
+              - generic [ref=f4e145]:
+                - generic [ref=f4e146]: Design Patterns
+                - generic [ref=f4e147]: Ready
+              - paragraph [ref=f4e148]: Creational, structural, and behavioral software construction paradigms.
+            - generic [ref=f4e149]:
+              - generic [ref=f4e150]:
+                - generic [ref=f4e151]: Database Optimization
+                - generic [ref=f4e152]: Ready
+              - paragraph [ref=f4e153]: Indexing, query plans, caching strategies, and connection pooling models.
+            - generic [ref=f4e154]:
+              - generic [ref=f4e155]:
+                - generic [ref=f4e156]: Dependency Decoupling
+                - generic [ref=f4e157]: Ready
+              - paragraph [ref=f4e158]: Decoupling components and managing service lifecycles across subsystems.
+            - generic [ref=f4e159]:
+              - generic [ref=f4e160]:
+                - generic [ref=f4e161]: Concurrency Control
+                - generic [ref=f4e162]: Locked
+              - paragraph [ref=f4e163]: Asynchronous workflows, race condition prevention, and locks.
+    - generic [ref=f4e164]:
+      - heading "Your Skills Deserve More Than a Self-Assessment" [level=2] [ref=f4e165]
+      - paragraph [ref=f4e166]: Join thousands of developers and engineering teams using SkillMatrix to measure, track, and accelerate technical growth with precision.
+      - generic [ref=f4e167]:
+        - button "Create Free Account" [ref=f4e168] [cursor=pointer]
+        - button "Sign In" [active] [ref=f4e169] [cursor=pointer]
+  - contentinfo [ref=f4e170]:
+    - generic [ref=f4e171]:
+      - generic [ref=f4e172]: © 2026 SkillMatrix. All rights reserved.
+      - list [ref=f4e173]:
+        - listitem [ref=f4e174]:
+          - link "Features" [ref=f4e175] [cursor=pointer]:
+            - /url: "#features"
+        - listitem [ref=f4e176]:
+          - link "Skill Tracks" [ref=f4e177] [cursor=pointer]:
+            - /url: "#matrix-showcase"
+  - generic [ref=f4e179]:
+    - button "×" [ref=f4e180] [cursor=pointer]
+    - generic [ref=f4e181]:
+      - button "Sign In" [ref=f4e182] [cursor=pointer]
+      - button "Sign Up" [ref=f4e183] [cursor=pointer]
+    - heading "Welcome Back" [level=3] [ref=f4e184]
+    - paragraph [ref=f4e185]: Sign in with your email or username to access your dashboard.
+    - generic [ref=f4e186]:
+      - generic [ref=f4e187]:
+        - generic [ref=f4e188]: Email or Username
+        - textbox "name@example.com or johndoe" [ref=f4e190]
+      - generic [ref=f4e191]:
+        - generic [ref=f4e192]: Password
+        - generic [ref=f4e193]:
+          - textbox "••••••••" [ref=f4e194]
+          - button "Show password" [ref=f4e195] [cursor=pointer]
+      - generic [ref=f4e199] [cursor=pointer]:
+        - checkbox "Remember me" [checked] [ref=f4e200]
+        - text: Remember me
+      - button "Sign In" [ref=f4e201] [cursor=pointer]
+    - generic [ref=f4e202]: OR
+    - button "Continue with Google" [ref=f4e206] [cursor=pointer]

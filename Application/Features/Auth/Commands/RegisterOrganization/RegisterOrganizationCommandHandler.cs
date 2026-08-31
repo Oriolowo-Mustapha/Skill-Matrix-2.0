@@ -108,7 +108,7 @@ namespace Application.Features.Auth.Commands.RegisterOrganization
 
 			await _emailService.SendEmailAsync(newManager.Email, subject, body);
 
-			return BaseResponse<string>.SuccessResponse(" ", "Registration Successful. You can now check your email to verify.");
+			return BaseResponse<string>.SuccessResponse(" ", "Registration successful. Please check your email to verify your account.");
 		}
 
 		private string HashPassword(string password)

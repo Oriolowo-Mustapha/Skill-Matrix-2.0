@@ -9,6 +9,10 @@ namespace Application.Extensions
 	{
 		public static SkillDTO ToDTO(this AssignedSkill skill)
 		{
+			string lifecycle = skill.IsFullyMastered 
+				? "Mastered" 
+				: (skill.IsBaselineAssessed ? "Assessed" : "Unassessed");
+
 			return new SkillDTO
 			{
 				Id = skill.Id,
@@ -18,6 +22,9 @@ namespace Application.Extensions
 				ProficiencyLevel = skill.ProficiencyLevel.ToString(),
 				TargetProficiencyLevel = skill.TargetProficiencyLevel.ToString(),
 				IsFullyMastered = skill.IsFullyMastered,
+				IsBaselineAssessed = skill.IsBaselineAssessed,
+				BaselineAssessedAt = skill.BaselineAssessedAt,
+				AssessmentLifecycleStatus = lifecycle,
 				DateAssigned = skill.DateAssigned
 			};
 		}

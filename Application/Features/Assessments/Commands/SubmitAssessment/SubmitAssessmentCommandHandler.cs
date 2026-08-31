@@ -111,6 +111,11 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 			int correctAnswers = 0;
 			int unansweredCount = 0;
 			int totalQuestions = batch.Assessments.Count;
+			int totalMcqs = 0;
+			int correctMcqs = 0;
+			int totalCodingQuestions = 0;
+			int totalTestCases = 0;
+			int totalPassedTestCases = 0;
 			var conceptScores = new Dictionary<string, (int Correct, int Total)>(StringComparer.OrdinalIgnoreCase);
 
 			foreach (var question in batch.Assessments)
@@ -118,6 +123,15 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				var answerDto = effectiveAnswers.FirstOrDefault(a => a.AssessmentQuestionId == question.Id);
 				bool isCorrect = false;
 				bool isAnswered = answerDto != null;
+
+				if (question.QuestionType == QuestionType.Coding)
+				{
+					totalCodingQuestions++;
+				}
+				else
+				{
+					totalMcqs++;
+				}
 
 				if (isAnswered)
 				{
@@ -131,10 +145,22 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 						selectedOptionId = null;
 						if (codingResults.TryGetValue(question.Id, out var executionResult))
 						{
-							isCorrect = executionResult.IsSuccess;
+							if (executionResult.TotalCount > 0)
+							{
+								totalTestCases += executionResult.TotalCount;
+								totalPassedTestCases += executionResult.PassedCount;
+								isCorrect = executionResult.IsSuccess || (executionResult.PassedCount == executionResult.TotalCount);
+							}
+							else
+							{
+								totalTestCases += 1;
+								totalPassedTestCases += executionResult.IsSuccess ? 1 : 0;
+								isCorrect = executionResult.IsSuccess;
+							}
 						}
 						else
 						{
+							totalTestCases += 1;
 							isCorrect = false;
 						}
 					}
@@ -143,10 +169,22 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 						if (selectedOptionId.HasValue)
 						{
 							var selectedOption = question.AssessmentOptions.FirstOrDefault(o => o.Id == selectedOptionId.Value);
-							if (selectedOption != null && selectedOption.OptionText == question.CorrectAnswer)
+							if (selectedOption != null && string.Equals(selectedOption.OptionText?.Trim(), question.CorrectAnswer?.Trim(), StringComparison.OrdinalIgnoreCase))
 							{
 								isCorrect = true;
+								correctMcqs++;
 							}
+						}
+					}
+
+					string? consoleOutput = null;
+					string? executionResultsJson = null;
+					if (question.QuestionType == QuestionType.Coding && codingResults.TryGetValue(question.Id, out var execRes))
+					{
+						consoleOutput = execRes?.ConsoleOutput;
+						if (execRes?.TestResults != null && execRes.TestResults.Any())
+						{
+							executionResultsJson = System.Text.Json.JsonSerializer.Serialize(execRes.TestResults);
 						}
 					}
 
@@ -156,6 +194,8 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 						existingResponse.SelectedOptionId = selectedOptionId;
 						existingResponse.SubmittedCode = answerDto?.SubmittedCode;
 						existingResponse.IsCorrect = isCorrect;
+						existingResponse.ConsoleOutput = consoleOutput;
+						existingResponse.ExecutionResultsJson = executionResultsJson;
 						existingResponse.UpdatedAt = DateTime.UtcNow;
 						await _unitOfWork.UserResponses.UpdateAsync(existingResponse);
 					}
@@ -169,7 +209,9 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 							Timestamp = DateTime.UtcNow,
 							UpdatedAt = DateTime.UtcNow,
 							IsCorrect = isCorrect,
-							SubmittedCode = answerDto?.SubmittedCode
+							SubmittedCode = answerDto?.SubmittedCode,
+							ConsoleOutput = consoleOutput,
+							ExecutionResultsJson = executionResultsJson
 						};
 						if (request.UserRole == Roles.Learner.ToString())
 							newResp.LearnerId = request.UserId;
@@ -182,11 +224,15 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				else
 				{
 					unansweredCount++;
+					if (question.QuestionType == QuestionType.Coding)
+					{
+						totalTestCases += 1;
+					}
 				}
 
 				if (isCorrect) correctAnswers++;
 
-				// Concept/Subtopic Aggregation (Edge Case: handle missing/empty concepts)
+				// Concept/Subtopic Aggregation
 				string concept = string.IsNullOrWhiteSpace(question.Concept) ? "General Theory" : question.Concept.Trim();
 				if (!conceptScores.ContainsKey(concept))
 				{
@@ -196,11 +242,69 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				conceptScores[concept] = (current.Correct + (isCorrect ? 1 : 0), current.Total + 1);
 			}
 
-			int score = totalQuestions > 0 ? (int)((double)correctAnswers / totalQuestions * 100) : 0;
+			// Applied Weighted Scoring Engine
+			int mcqScore = totalMcqs > 0 ? (int)Math.Round(((double)correctMcqs / totalMcqs) * 100) : 0;
+			int codingScore = totalTestCases > 0 ? (int)Math.Round(((double)totalPassedTestCases / totalTestCases) * 100) : 0;
 
-			// Determine passing threshold based on proficiency level
+			int compositeScore;
+			if (totalMcqs > 0 && totalCodingQuestions > 0)
+			{
+				// 30% conceptual MCQ + 70% applied coding
+				compositeScore = (int)Math.Round((mcqScore * 0.30) + (codingScore * 0.70));
+			}
+			else if (totalCodingQuestions > 0)
+			{
+				compositeScore = codingScore;
+			}
+			else if (totalMcqs > 0)
+			{
+				compositeScore = mcqScore;
+			}
+			else
+			{
+				compositeScore = totalQuestions > 0 ? (int)Math.Round(((double)correctAnswers / totalQuestions) * 100) : 0;
+			}
+
+			// Scaled Cut-Score Bar based on claimed level
 			int passingScore = GetPassingThreshold(batch.AssignedSkill.ProficiencyLevel);
-			bool passed = score >= passingScore;
+			bool passed = compositeScore >= passingScore;
+
+			// Banded Verification Status
+			string verificationStatus;
+			string verificationMessage;
+			ProficiencyLevel placedLevel = batch.AssignedSkill.ProficiencyLevel;
+
+			if (compositeScore >= 85)
+			{
+				verificationStatus = "StronglyVerified";
+				verificationMessage = $"Strongly verified proficiency at the {batch.AssignedSkill.ProficiencyLevel} level.";
+			}
+			else if (passed)
+			{
+				verificationStatus = "PartiallyVerified";
+				verificationMessage = $"Verified baseline proficiency at the {batch.AssignedSkill.ProficiencyLevel} level with identified growth areas.";
+			}
+			else
+			{
+				verificationStatus = "Unverified";
+				verificationMessage = $"Assessment score ({compositeScore}%) did not meet the {passingScore}% threshold for {batch.AssignedSkill.ProficiencyLevel}. Placement has been recalibrated.";
+				
+				// Recalibrate placement to 1 tier lower (bounded at Novice)
+				placedLevel = batch.AssignedSkill.ProficiencyLevel switch
+				{
+					ProficiencyLevel.Expert => ProficiencyLevel.Proficient,
+					ProficiencyLevel.Proficient => ProficiencyLevel.Intermediate,
+					ProficiencyLevel.Intermediate => ProficiencyLevel.Begineer,
+					ProficiencyLevel.Begineer => ProficiencyLevel.Novice,
+					_ => ProficiencyLevel.Novice
+				};
+				batch.AssignedSkill.ProficiencyLevel = placedLevel;
+			}
+
+			// Mark AssignedSkill as baseline assessed
+			batch.AssignedSkill.IsBaselineAssessed = true;
+			batch.AssignedSkill.BaselineAssessedAt = DateTime.UtcNow;
+			await _unitOfWork.AssignedSkills.UpdateAsync(batch.AssignedSkill);
 
 			var result = new AssessmentResult
 			{
@@ -210,7 +314,11 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				NoOfCorrectAnswers = correctAnswers,
 				NoOfWrongAnswers = totalQuestions - correctAnswers,
 				NoOfUnansweredQuestions = unansweredCount,
-				Score = score,
+				Score = compositeScore,
+				McqScore = mcqScore,
+				CodingScore = codingScore,
+				VerificationStatus = verificationStatus,
+				PlacedProficiencyLevel = placedLevel.ToString(),
 				ProficiencyLevel = batch.AssignedSkill.ProficiencyLevel,
 				DateCreated = DateTime.UtcNow,
 				DateModified = DateTime.UtcNow,
@@ -233,7 +341,7 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 			bool badgeUnlocked = false;
 			string badgeTitle = string.Empty;
 
-			if (passed)
+			if (verificationStatus == "StronglyVerified")
 			{
 				string targetBadgeLevel;
 				if (batch.AssignedSkill.ProficiencyLevel != ProficiencyLevel.Expert)
@@ -249,6 +357,7 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 					};
 
 					batch.AssignedSkill.ProficiencyLevel = newLevel;
+					result.PlacedProficiencyLevel = newLevel.ToString();
 					await _unitOfWork.AssignedSkills.UpdateAsync(batch.AssignedSkill);
 					targetBadgeLevel = newLevel.ToString();
 				}
@@ -259,7 +368,7 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 					targetBadgeLevel = "Master";
 				}
 
-				// Award Milestone Badges (Edge Case: prevent duplicate badge awards)
+				// Award Milestone Badges
 				var badgesList = await _unitOfWork.Badges.FindAsync(
 					b => b.ProficiencyLevel.Equals(targetBadgeLevel, StringComparison.OrdinalIgnoreCase)
 				);
@@ -299,7 +408,7 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			// Identify Gaps and update/resolve existing active gaps (Edge Case: resolve duplicates)
+			// Identify Gaps
 			var skillGaps = new List<SkillGap>();
 			foreach (var kvp in conceptScores)
 			{
@@ -307,7 +416,6 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				var stats = kvp.Value;
 				int conceptScore = stats.Total > 0 ? (int)((double)stats.Correct / stats.Total * 100) : 0;
 
-				// Threshold for competence is 70%
 				if (conceptScore < 70)
 				{
 					var gap = new SkillGap
@@ -329,7 +437,7 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				}
 			}
 
-			// Clean up previous active gaps for this user and skill
+			// Clean up previous active gaps
 			var existingGapsList = await _unitOfWork.SkillGaps.GetAllAsync();
 			var userGaps = existingGapsList.Where(g =>
 				g.SkillId == batch.SkillId &&
@@ -350,7 +458,7 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			// Generate Tailored Improvement Plan (passing active gaps)
+			// Generate Tailored Improvement Plan
 			var improvementPlan = await _aiService.GenerateImprovementPlanAsync(result, skillGaps);
 			improvementPlan.AssessmentResultId = result.Id;
 			await _unitOfWork.ImprovementPlans.AddAsync(improvementPlan);
@@ -362,6 +470,11 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				Id = result.Id,
 				SkillName = batch.AssignedSkill.Name,
 				Score = result.Score,
+				McqScore = mcqScore,
+				CodingScore = codingScore,
+				VerificationStatus = verificationStatus,
+				PlacedProficiencyLevel = placedLevel.ToString(),
+				VerificationMessage = verificationMessage,
 				NoOfCorrectAnswers = result.NoOfCorrectAnswers,
 				NoOfWrongAnswers = result.NoOfWrongAnswers,
 				TotalQuestions = result.TotalQuestions,
@@ -382,12 +495,12 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 		{
 			return level switch
 			{
-				ProficiencyLevel.Novice => 50,
-				ProficiencyLevel.Begineer => 60,
-				ProficiencyLevel.Intermediate => 70,
-				ProficiencyLevel.Proficient => 80,
-				ProficiencyLevel.Expert => 90,
-				_ => 70
+				ProficiencyLevel.Novice => 65,
+				ProficiencyLevel.Begineer => 65,
+				ProficiencyLevel.Intermediate => 75,
+				ProficiencyLevel.Proficient => 75,
+				ProficiencyLevel.Expert => 80,
+				_ => 75
 			};
 		}
 	}

@@ -92,7 +92,7 @@ namespace Application.Features.CareerPaths.Commands.CreateCareerPathTrackCommand
             return new BaseResponse<Guid>
             {
                 Data = track.Id,
-                Message = "CareerPath Created Successfully. ",
+                Message = "Track created successfully.",
                 Success = true
             };
         }

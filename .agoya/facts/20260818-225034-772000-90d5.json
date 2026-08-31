@@ -1,0 +1,16 @@
+{
+  "id": "20260818-225034-772000-90d5",
+  "ts": "2026-08-18T22:50:34.795Z",
+  "agent": "opencode",
+  "type": "fact",
+  "content": "Completed backend/frontend message audit (Aug 18, 2026). Backend: Fixed 8 custom exception default messages (grammar, spelling, professionalism), fixed 5 inconsistent handler success messages. Frontend: Updated 31 catch blocks from `catch {}` to `catch (err)` with `err?.response?.data?.message || err?.message || 'fallback'` pattern. Replaced 8 redundant hardcoded `toast.success()` calls with `showSuccessToast: true` flag to use backend messages. Both frontend and backend build cleanly (0 errors).",
+  "tags": [
+    "skill-matrix",
+    "backend",
+    "frontend",
+    "messages",
+    "completed"
+  ],
+  "meta": {},
+  "importance": 0.883928463796341
+}

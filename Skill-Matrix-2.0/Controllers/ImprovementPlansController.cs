@@ -24,9 +24,29 @@ namespace Skill_Matrix_2._0.Controllers
 		[HttpGet]
 		public async Task<ActionResult<BaseResponse<List<ImprovementPlanDTO>>>> GetImprovementPlans()
 		{
-			var query = new GetImprovementPlansQuery();
+			var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var userRole = User.FindFirstValue(ClaimTypes.Role);
+			Guid? userId = !string.IsNullOrEmpty(userIdString) ? Guid.Parse(userIdString) : null;
+
+			var query = new GetImprovementPlansQuery(userId, userRole);
 			var response = await _mediator.Send(query);
 			return Ok(BaseResponse<List<ImprovementPlanDTO>>.SuccessResponse(response, "Improvement plans retrieved successfully."));
+		}
+
+		[HttpGet("{id}")]
+		public async Task<ActionResult<BaseResponse<ImprovementPlanDTO>>> GetImprovementPlan(Guid id)
+		{
+			var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
+			if (string.IsNullOrEmpty(userIdString))
+			{
+				return Unauthorized();
+			}
+
+			var userId = Guid.Parse(userIdString);
+			var query = new Application.Features.ImprovementPlans.Queries.GetImprovementPlanById.GetImprovementPlanByIdQuery(id, userId, userRole);
+			var response = await _mediator.Send(query);
+			return Ok(response);
 		}
 
 

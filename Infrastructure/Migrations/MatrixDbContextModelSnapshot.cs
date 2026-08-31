@@ -220,6 +220,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid?>("AssignedSkillId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("CodingScore")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
@@ -232,6 +235,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid?>("LearnerID")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("McqScore")
+                        .HasColumnType("integer");
+
                     b.Property<int>("NoOfCorrectAnswers")
                         .HasColumnType("integer");
 
@@ -240,6 +246,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("NoOfWrongAnswers")
                         .HasColumnType("integer");
+
+                    b.Property<string>("PlacedProficiencyLevel")
+                        .HasColumnType("text");
 
                     b.Property<int>("ProficiencyLevel")
                         .HasColumnType("integer");
@@ -255,6 +264,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("TotalQuestions")
                         .HasColumnType("integer");
+
+                    b.Property<string>("VerificationStatus")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -360,12 +372,18 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime?>("BaselineAssessedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("DateAssigned")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsBaselineAssessed")
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsFullyMastered")
                         .HasColumnType("boolean");
@@ -976,6 +994,12 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("AssessmentQuestionId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ConsoleOutput")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ExecutionResultsJson")
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsCorrect")
                         .HasColumnType("boolean");

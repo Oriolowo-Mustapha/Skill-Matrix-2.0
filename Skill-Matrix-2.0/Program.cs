@@ -85,6 +85,15 @@ builder.Services.AddHttpClient<IAiService, OpenRouterAiService>(client =>
 builder.Services.AddHttpClient<IAiAnalysisService, AiAnalysisService>();
 builder.Services.AddSingleton<Application.Interfaces.Service.ICatalogJobService, Infrastructure.Implementation.Services.CatalogJobService>();
 
+// Code Execution Test Harness Builders & Factory
+builder.Services.AddScoped<Application.Interfaces.Service.ICodeHarnessBuilder, Infrastructure.Implementation.Services.CodeHarnesses.CSharpHarnessBuilder>();
+builder.Services.AddScoped<Application.Interfaces.Service.ICodeHarnessBuilder, Infrastructure.Implementation.Services.CodeHarnesses.PythonHarnessBuilder>();
+builder.Services.AddScoped<Application.Interfaces.Service.ICodeHarnessBuilder, Infrastructure.Implementation.Services.CodeHarnesses.JavaScriptHarnessBuilder>();
+builder.Services.AddScoped<Application.Interfaces.Service.ICodeHarnessBuilder, Infrastructure.Implementation.Services.CodeHarnesses.TypeScriptHarnessBuilder>();
+builder.Services.AddScoped<Application.Interfaces.Service.ICodeHarnessBuilder, Infrastructure.Implementation.Services.CodeHarnesses.JavaHarnessBuilder>();
+builder.Services.AddScoped<Application.Interfaces.Service.ICodeHarnessBuilder, Infrastructure.Implementation.Services.CodeHarnesses.CppHarnessBuilder>();
+builder.Services.AddScoped<Application.Interfaces.Service.ICodeHarnessFactory, Infrastructure.Implementation.Services.CodeHarnesses.CodeHarnessFactory>();
+
 builder.Services.AddHttpClient<ICodeExecutionService, CodeExecutionService>();
 builder.Services.AddScoped<IReminderService, ReminderService>();
 
@@ -93,9 +102,6 @@ builder.Services.AddScoped<IPhotoService, Infrastructure.ExternalServices.Cloudi
 
 builder.Services.AddMemoryCache();
 builder.Services.AddHostedService<Skill_Matrix_2_0.BackgroundServices.SkillCatalogSeedService>();
-// CareerPathSeedService is intentionally removed from startup background services; 
-// career path seeding is now event-driven via SkillsAddedNotification when new skills are added.
-// builder.Services.AddHostedService<Skill_Matrix_2_0.BackgroundServices.CareerPathSeedService>();
 
 builder.Services.AddOpenApi(options =>
 {

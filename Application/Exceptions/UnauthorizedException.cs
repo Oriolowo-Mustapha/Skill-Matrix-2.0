@@ -2,7 +2,7 @@
 {
 	public class UnauthorizedException : ApplicationException
 	{
-		public UnauthorizedException() : base("Authentication Failed")
+		public UnauthorizedException() : base("Authentication failed. Please verify your credentials and try again.")
 		{
 
 		}

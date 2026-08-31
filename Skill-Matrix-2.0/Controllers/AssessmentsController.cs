@@ -137,6 +137,20 @@ namespace Skill_Matrix_2_0.Controllers
 			return Ok(BaseResponse<AssessmentResultDTO>.SuccessResponse(response, "Assessment result retrieved successfully."));
 		}
 
+		[HttpGet("results/{id}/details")]
+		[HttpGet("history/{id}/details")]
+		public async Task<IActionResult> GetAssessmentDetail(Guid id)
+		{
+			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
+				?? throw new UnauthorizedAccessException("User ID claim not found.");
+			var userId = Guid.Parse(userIdClaim);
+			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
+
+			var query = new Application.Features.Assessments.Queries.GetAssessmentDetail.GetAssessmentDetailQuery(id, userId, userRole);
+			var response = await _mediator.Send(query);
+			return Ok(response);
+		}
+
 		[HttpGet("batches/{batchId}/state")]
 		public async Task<IActionResult> GetAttemptState(int batchId)
 		{

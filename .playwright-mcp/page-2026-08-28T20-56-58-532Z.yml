@@ -1,0 +1,140 @@
+- generic [ref=f4e219]:
+  - complementary [ref=f4e220]:
+    - generic [ref=f4e221]: SkillMatrix
+    - navigation [ref=f4e228]:
+      - button "Organization Analytics" [ref=f4e229]
+      - button "Team Directory" [ref=f4e233]
+      - button "Career Path Architect" [ref=f4e237]
+    - generic [ref=f4e241]:
+      - generic [ref=f4e242]:
+        - generic [ref=f4e243]: O
+        - generic [ref=f4e245]:
+          - generic [ref=f4e246]: Oriolowo Mustapha
+          - generic [ref=f4e247]: Manager
+      - button "Sign Out" [ref=f4e248] [cursor=pointer]
+  - generic [ref=f4e251]:
+    - banner [ref=f4e252]:
+      - generic [ref=f4e253]:
+        - heading "Dashboard" [level=1] [ref=f4e378]
+        - generic [ref=f4e255]: Friday, August 28, 2026
+      - button "Switch to light mode" [ref=f4e256] [cursor=pointer]
+    - generic [ref=f4e379]:
+      - link "Back to Team Directory" [ref=f4e382] [cursor=pointer]:
+        - /url: /dashboard/team
+      - generic [ref=f4e386]:
+        - generic [ref=f4e387]:
+          - generic [ref=f4e388]:
+            - generic [ref=f4e389]: OM
+            - generic [ref=f4e391]:
+              - heading "Oriolowo Mustapha" [level=2] [ref=f4e392]
+              - paragraph [ref=f4e393]: baseapha@gmail.com • Team Members
+              - generic [ref=f4e394]: 📅 Member since Aug 2026
+          - generic [ref=f4e396]:
+            - generic [ref=f4e397]: Total Experience
+            - generic [ref=f4e398]: ⚡ 0 XP
+        - generic [ref=f4e399]:
+          - generic [ref=f4e400]:
+            - text: Assigned Skills
+            - heading "9" [level=3] [ref=f4e401]
+          - generic [ref=f4e402]:
+            - text: Mastered Skills
+            - heading "0" [level=3] [ref=f4e403]
+          - generic [ref=f4e404]:
+            - text: In Progress
+            - heading "9" [level=3] [ref=f4e405]
+          - generic [ref=f4e406]:
+            - text: Avg. Test Score
+            - heading "26.5%" [level=3] [ref=f4e407]
+        - generic [ref=f4e408]:
+          - generic [ref=f4e409]:
+            - generic [ref=f4e410]:
+              - heading "🎯 Active Career Pathways (1)" [level=3] [ref=f4e411]
+              - generic [ref=f4e413]:
+                - generic [ref=f4e414]:
+                  - heading "Software Engineering & Application Development" [level=4] [ref=f4e415]
+                  - generic [ref=f4e416]: 0%
+                - paragraph [ref=f4e417]: Specialized engineering pathways focused on modern backend stacks, APIs, and enterprise software architecture.
+            - generic [ref=f4e420]:
+              - heading "📚 Assigned Skill Matrix (9)" [level=3] [ref=f4e421]
+              - table [ref=f4e423]:
+                - rowgroup [ref=f4e424]:
+                  - row [ref=f4e425]:
+                    - columnheader "SKILL" [ref=f4e426]
+                    - columnheader "CATEGORY" [ref=f4e427]
+                    - columnheader "PROFICIENCY" [ref=f4e428]
+                    - columnheader "STATUS" [ref=f4e429]
+                - rowgroup [ref=f4e430]:
+                  - row [ref=f4e431]:
+                    - cell "Layered Architecture" [ref=f4e432]
+                    - cell "Software Architecture" [ref=f4e433]
+                    - cell "Novice" [ref=f4e435]
+                    - cell "In Progress" [ref=f4e436]
+                  - row [ref=f4e438]:
+                    - cell "SQL Server" [ref=f4e439]
+                    - cell "Databases" [ref=f4e440]
+                    - cell "Novice" [ref=f4e442]
+                    - cell "In Progress" [ref=f4e443]
+                  - row [ref=f4e445]:
+                    - cell "ASP.NET Core" [ref=f4e446]
+                    - cell "Backend" [ref=f4e447]
+                    - cell "Novice" [ref=f4e449]
+                    - cell "In Progress" [ref=f4e450]
+                  - row [ref=f4e452]:
+                    - cell "Microservices" [ref=f4e453]
+                    - cell "Software Architecture" [ref=f4e454]
+                    - cell "Novice" [ref=f4e456]
+                    - cell "In Progress" [ref=f4e457]
+                  - row [ref=f4e459]:
+                    - cell "Domain-Driven Design" [ref=f4e460]
+                    - cell "Software Architecture" [ref=f4e461]
+                    - cell "Novice" [ref=f4e463]
+                    - cell "In Progress" [ref=f4e464]
+                  - row [ref=f4e466]:
+                    - cell "Design Patterns" [ref=f4e467]
+                    - cell "Software Architecture" [ref=f4e468]
+                    - cell "Novice" [ref=f4e470]
+                    - cell "In Progress" [ref=f4e471]
+                  - row [ref=f4e473]:
+                    - cell "C#" [ref=f4e474]
+                    - cell "Programming Languages" [ref=f4e475]
+                    - cell "Intermediate" [ref=f4e477]
+                    - cell "In Progress" [ref=f4e478]
+                  - row [ref=f4e480]:
+                    - cell "PostgreSQL" [ref=f4e481]
+                    - cell "Databases" [ref=f4e482]
+                    - cell "Novice" [ref=f4e484]
+                    - cell "In Progress" [ref=f4e485]
+                  - row [ref=f4e487]:
+                    - cell "Entity Framework" [ref=f4e488]
+                    - cell "AI Catalog Generated" [ref=f4e489]
+                    - cell "Novice" [ref=f4e491]
+                    - cell "In Progress" [ref=f4e492]
+          - generic [ref=f4e494]:
+            - generic [ref=f4e495]:
+              - heading "📝 Recent Assessment History (2)" [level=3] [ref=f4e496]
+              - generic [ref=f4e497]:
+                - generic [ref=f4e498]:
+                  - generic [ref=f4e499]:
+                    - heading "C#" [level=4] [ref=f4e500]
+                    - paragraph [ref=f4e501]: "Score: 8/15 correct • Level: Intermediate • Aug 16, 2026"
+                  - generic [ref=f4e502]: 53%
+                - generic [ref=f4e503]:
+                  - generic [ref=f4e504]:
+                    - heading "C#" [level=4] [ref=f4e505]
+                    - paragraph [ref=f4e506]: "Score: 0/15 correct • Level: Intermediate • Aug 16, 2026"
+                  - generic [ref=f4e507]: 0%
+            - generic [ref=f4e508]:
+              - heading "🚀 Growth Improvement Plans (2)" [level=3] [ref=f4e509]
+              - generic [ref=f4e510]:
+                - generic [ref=f4e511]:
+                  - generic [ref=f4e512]:
+                    - heading "• Master generics and type-safe collection handling in C# • Distinguish between value types and reference types and their memory implications • Reinforce loop constructs, conditional logic, and control flow structures • Work effectively with arrays, indexing, and iteration patterns • Master string manipulation, encoding, and common method operations • Implement recursive methods with proper base cases and stack safety • Apply hashing algorithms for data integrity and collision handling" [level=4] [ref=f4e513]
+                    - generic [ref=f4e514]: 100%
+                  - paragraph [ref=f4e515]: The assessment identified critical gaps across all seven evaluated C# subtopics, each scoring 0%, highlighting a need for foundational reinforcement. This plan provides targeted, hands-on exercises and validated resources to rebuild confidence and competence in these areas.
+                  - generic [ref=f4e516]: "Tasks Completed: 7/7"
+                - generic [ref=f4e518]:
+                  - generic [ref=f4e519]:
+                    - heading "• Reinforce core C# syntax, loops, and conditionals for solid foundational fluency • Deepen proficiency in modern C# paradigms such as LINQ, async/await, and Generics • Master memory-safe patterns, exception handling, and resource management via IDisposable and nullable types" [level=4] [ref=f4e520]
+                    - generic [ref=f4e521]: 0%
+                  - paragraph [ref=f4e522]: The user scored 0% on an Intermediate C# assessment, revealing widespread gaps in core language fundamentals and modern features. Growth should focus on reinforcing syntax, mastering LINQ and async patterns, and implementing robust memory and error-handling practices.
+                  - generic [ref=f4e523]: "Tasks Completed: 0/15"

@@ -9,6 +9,8 @@ namespace Domain.Entities
 		public ProficiencyLevel ProficiencyLevel { get; set; } = ProficiencyLevel.Novice;
 		public ProficiencyLevel TargetProficiencyLevel { get; set; } = ProficiencyLevel.Novice;
 		public bool IsFullyMastered { get; set; } = false;
+		public bool IsBaselineAssessed { get; set; } = false;
+		public DateTime? BaselineAssessedAt { get; set; }
 		public Learner? Learner { get; set; }
 		public Guid? LearnerId { get; set; }
 		public TeamMember? TeamMember { get; set; }

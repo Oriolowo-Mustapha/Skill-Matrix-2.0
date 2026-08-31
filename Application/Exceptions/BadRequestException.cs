@@ -2,7 +2,7 @@
 {
 	public class BadRequestException : ApplicationException
 	{
-		public BadRequestException() : base("The request is Invalid")
+		public BadRequestException() : base("The request is invalid. Please check your input and try again.")
 		{
 		}
 

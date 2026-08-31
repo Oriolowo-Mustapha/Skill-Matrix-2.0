@@ -1,0 +1,26 @@
+- generic [ref=f4e2]:
+  - generic [ref=f4e761]:
+    - complementary [ref=f4e762]:
+      - generic [ref=f4e763]: SkillMatrix
+      - navigation [ref=f4e770]:
+        - button "Overview" [ref=f4e771]
+        - button "My Skills" [ref=f4e775]
+        - button "Career Paths" [ref=f4e779]
+        - button "Assessment Arena & History" [ref=f4e783]
+        - button "Improvement Plans" [ref=f4e787]
+        - button "Achievements & Leaderboard" [ref=f4e791]
+      - generic [ref=f4e795]:
+        - generic [ref=f4e796]:
+          - generic [ref=f4e797]: O
+          - generic [ref=f4e799]:
+            - generic [ref=f4e800]: Oriolowo Mustapha
+            - generic [ref=f4e801]: Team_Members
+        - button "Sign Out" [ref=f4e802] [cursor=pointer]
+    - generic [ref=f4e805]:
+      - banner [ref=f4e806]:
+        - generic [ref=f4e807]:
+          - heading "Welcome back, Oriolowo" [level=1] [ref=f4e808]
+          - generic [ref=f4e809]: Friday, August 28, 2026
+        - button "Switch to light mode" [ref=f4e810] [cursor=pointer]
+      - paragraph [ref=f4e817]: Loading your dashboard...
+  - status [ref=f4e823]: Login successful.

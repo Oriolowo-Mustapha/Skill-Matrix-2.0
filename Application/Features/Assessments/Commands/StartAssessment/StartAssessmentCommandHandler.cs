@@ -93,6 +93,8 @@ namespace Application.Features.Assessments.Commands.StartAssessment
 			int effectiveTimeLimit = package.TimeLimitMinutes > 0 ? package.TimeLimitMinutes : timeLimitMinutes;
 			var expiresAt = startedAt.AddMinutes(effectiveTimeLimit);
 
+			string batchType = !assignedSkill.IsBaselineAssessed ? "Baseline" : "Progression";
+
 			var batch = new AssessmentBatch
 			{
 				SkillId = assignedSkill.Id,
@@ -102,6 +104,7 @@ namespace Application.Features.Assessments.Commands.StartAssessment
 				ExpiresAt = expiresAt,
 				TimeLimitMinutes = effectiveTimeLimit,
 				LastActiveQuestionIndex = 0,
+				BatchType = batchType,
 				Assessments = package.Questions
 			};
 

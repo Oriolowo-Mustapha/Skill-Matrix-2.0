@@ -72,7 +72,7 @@ namespace Application.Features.Gamification.Commands.EndorsePeer
 
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-			return BaseResponse<bool>.SuccessResponse(true, "Peer successfully endorsed and +10 points awarded!");
+			return BaseResponse<bool>.SuccessResponse(true, "Peer endorsed successfully. 10 bonus points have been awarded.");
 		}
 	}
 }

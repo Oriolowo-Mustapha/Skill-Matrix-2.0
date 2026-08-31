@@ -1,0 +1,16 @@
+- generic [ref=f3e5]:
+  - button "Level 11 Specialist, 12,450 XP" [ref=f3e7] [cursor=pointer]:
+    - generic [ref=f3e8]: "11"
+    - generic [ref=f3e9]:
+      - generic [ref=f3e10]: Level 11
+      - emphasis [ref=f3e11]: Specialist
+    - generic [ref=f3e12]: 12,450 XP
+    - generic "5-day streak" [ref=f3e13]: "5"
+  - button "Level 0 Newcomer, 0 XP" [ref=f3e18] [cursor=pointer]:
+    - generic [ref=f3e19]: "0"
+    - generic [ref=f3e20]:
+      - generic [ref=f3e21]: Level 0
+      - emphasis [ref=f3e22]: Newcomer
+    - generic [ref=f3e23]: 0 XP
+  - generic [ref=f3e24]: 36%
+  - generic "12-day streak" [ref=f3e35]: "12"

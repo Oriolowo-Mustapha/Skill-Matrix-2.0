@@ -2,6 +2,6 @@
 {
 	public class AssessmentAlreadyCompletedException : BadRequestException
 	{
-		private const string DefaultMessage = "This Assessment Has Already been Completed and cant be submitted again";
+		private const string DefaultMessage = "This assessment has already been completed and cannot be resubmitted.";
 	}
 }

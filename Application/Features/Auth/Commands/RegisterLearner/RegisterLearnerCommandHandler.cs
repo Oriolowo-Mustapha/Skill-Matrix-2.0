@@ -93,7 +93,7 @@ namespace Application.Features.Auth.Commands.RegisterLearner
 				""";
 			await _emailService.SendEmailAsync(learner.Email, subject, body);
 
-			return BaseResponse<string>.SuccessResponse(" ", "Registration Successful. You can now check your email to verify.");
+			return BaseResponse<string>.SuccessResponse(" ", "Registration successful. Please check your email to verify your account.");
 		}
 
 		private string HashPassword(string password)

@@ -1,0 +1,50 @@
+- generic [ref=f4e2]:
+  - generic [ref=f4e761]:
+    - complementary [ref=f4e762]:
+      - generic [ref=f4e763]: SkillMatrix
+      - navigation [ref=f4e770]:
+        - button "Overview" [ref=f4e771] [cursor=pointer]
+        - button "My Skills" [ref=f4e775] [cursor=pointer]
+        - button "Career Paths" [ref=f4e779] [cursor=pointer]
+        - button "Assessment Arena & History" [ref=f4e783] [cursor=pointer]
+        - button "Improvement Plans" [ref=f4e787] [cursor=pointer]
+        - button "Achievements & Leaderboard" [active] [ref=f4e791] [cursor=pointer]
+      - generic [ref=f4e795]:
+        - generic [ref=f4e796]:
+          - generic [ref=f4e797]: O
+          - generic [ref=f4e799]:
+            - generic [ref=f4e800]: Oriolowo Mustapha
+            - generic [ref=f4e801]: Team_Members
+        - button "Sign Out" [ref=f4e802] [cursor=pointer]
+    - generic [ref=f4e805]:
+      - banner [ref=f4e806]:
+        - generic [ref=f4e807]:
+          - heading "Achievements & Leaderboard" [level=1] [ref=f4e1516]
+          - generic [ref=f4e809]: Friday, August 28, 2026
+        - button "Switch to light mode" [ref=f4e810] [cursor=pointer]
+      - generic [ref=f4e1517]:
+        - generic [ref=f4e1518]:
+          - generic [ref=f4e1519]:
+            - heading "Achievements & Leaderboard" [level=2] [ref=f4e1520]
+            - paragraph [ref=f4e1521]: Track unlocked badges, recognize peer achievements, and view organization rankings.
+          - button "👏 Endorse a Peer" [ref=f4e1522] [cursor=pointer]
+        - generic [ref=f4e1523]:
+          - generic [ref=f4e1524]:
+            - generic [ref=f4e1525]:
+              - heading "🏆 Unlocked Badges (0)" [level=3] [ref=f4e1526]
+              - paragraph [ref=f4e1528]: No badges unlocked yet. Complete skill assessments to earn recognition.
+            - heading "Badge Catalog" [level=3] [ref=f4e1530]
+          - generic [ref=f4e1531]:
+            - heading "🌟 Organization Leaderboard" [level=3] [ref=f4e1532]
+            - table [ref=f4e1534]:
+              - rowgroup [ref=f4e1535]:
+                - row [ref=f4e1536]:
+                  - columnheader "RANK" [ref=f4e1537]
+                  - columnheader "MEMBER" [ref=f4e1538]
+                  - columnheader "POINTS / XP" [ref=f4e1539]
+              - rowgroup [ref=f4e1540]:
+                - row [ref=f4e1541]:
+                  - cell "No leaderboard entries calculated for your organization yet." [ref=f4e1542]
+  - generic:
+    - status [ref=f4e1548]: An unexpected server error occurred.
+    - status [ref=f4e1554]: An unexpected server error occurred.

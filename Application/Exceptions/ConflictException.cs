@@ -3,7 +3,7 @@
 	public class ConflictException : ApplicationException
 	{
 		public ConflictException()
-			: base("A conflict occurred with the current state of the resource.")
+			: base("This action conflicts with the current state of the resource. Please refresh and try again.")
 		{
 		}
 

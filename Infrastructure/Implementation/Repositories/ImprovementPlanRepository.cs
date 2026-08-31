@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Repository;
+using Application.Interfaces.Repository;
 using Domain.Entities;
 using Infrastructure.Context;
 using Infrastructure.Implementation.Repositories;
@@ -12,10 +12,24 @@ namespace Infrastructure.Implementation.Servicies
 		{
 		}
 
+		public override async Task<IReadOnlyList<ImprovementPlan>> GetAllAsync()
+		{
+			return await _context.ImprovementPlans
+				.Include(ip => ip.RecommendedResources)
+				.Include(ip => ip.Tasks)
+				.Include(ip => ip.AssignedSkill)
+				.Include(ip => ip.AssessmentResult)
+				.OrderByDescending(ip => ip.DateGenerated)
+				.ToListAsync();
+		}
+
 		public async Task<ImprovementPlan?> GetByAssessmentResultIdAsync(Guid assessmentResultId)
 		{
 			return await _context.ImprovementPlans
 				.Include(ip => ip.RecommendedResources)
+				.Include(ip => ip.Tasks)
+				.Include(ip => ip.AssignedSkill)
+				.Include(ip => ip.AssessmentResult)
 				.FirstOrDefaultAsync(ip => ip.AssessmentResultId == assessmentResultId);
 		}
 
@@ -23,6 +37,9 @@ namespace Infrastructure.Implementation.Servicies
 		{
 			return await _context.ImprovementPlans
 				.Include(ip => ip.RecommendedResources)
+				.Include(ip => ip.Tasks)
+				.Include(ip => ip.AssignedSkill)
+				.Include(ip => ip.AssessmentResult)
 				.FirstOrDefaultAsync(ip => ip.Id == planId);
 		}
 	}

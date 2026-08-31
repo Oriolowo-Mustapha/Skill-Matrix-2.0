@@ -16,7 +16,7 @@
 
 		}
 
-		public NotFoundException(string entityName, object key) : base($"Entity \"{entityName}\" with key \"{key}\"")
+		public NotFoundException(string entityName, object key) : base($"{entityName} with identifier \"{key}\" was not found.")
 		{
 
 		}

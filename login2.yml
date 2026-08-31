@@ -1,0 +1,83 @@
+- generic [ref=f4e2]:
+  - navigation [ref=f4e552]:
+    - generic [ref=f4e553]:
+      - generic [ref=f4e554]: SkillMatrix
+      - list [ref=f4e561]:
+        - listitem [ref=f4e562]
+        - listitem [ref=f4e564]
+      - generic [ref=f4e566]:
+        - button "Switch to light mode" [ref=f4e567] [cursor=pointer]
+        - button "Login" [ref=f4e571] [cursor=pointer]
+        - button "Get Started" [ref=f4e572] [cursor=pointer]
+  - main [ref=f4e573]:
+    - generic [ref=f4e574]:
+      - generic [ref=f4e575]:
+        - generic [ref=f4e576]: AI-Powered Learning Platform
+        - heading "Know Exactly Where You Stand" [level=1] [ref=f4e577]
+        - paragraph [ref=f4e578]: SkillMatrix uses intelligent assessments to pinpoint your technical strengths and weaknesses, then builds a personalized roadmap to get you to the next level — whether you're a solo developer or managing a team of fifty.
+        - generic [ref=f4e579]
+        - generic [ref=f4e582]
+      - generic [ref=f4e592]:
+        - generic [ref=f4e593]
+        - generic [ref=f4e598]
+    - generic [ref=f4e602]:
+      - generic [ref=f4e603]:
+        - generic [ref=f4e604]: Why SkillMatrix
+        - heading "Built for Engineers Who Take Growth Seriously" [level=2] [ref=f4e605]
+        - paragraph [ref=f4e606]: Stop guessing where your gaps are. SkillMatrix gives you data-backed insights, structured learning plans, and the tools managers need to upskill their teams.
+      - generic [ref=f4e607]:
+        - generic [ref=f4e608]
+        - generic [ref=f4e614]
+        - generic [ref=f4e621]
+        - generic [ref=f4e627]
+        - generic [ref=f4e636]
+        - generic [ref=f4e642]
+    - generic [ref=f4e648]:
+      - generic [ref=f4e649]:
+        - generic [ref=f4e650]: How It Works
+        - heading "Three Steps to Measurable Growth" [level=2] [ref=f4e651]
+        - paragraph [ref=f4e652]: Getting started takes less than two minutes. No credit card, no setup complexity — just sign up and take your first assessment.
+      - generic [ref=f4e653]:
+        - generic [ref=f4e654]
+        - generic [ref=f4e659]
+        - generic [ref=f4e664]
+    - generic [ref=f4e669]:
+      - generic [ref=f4e670]:
+        - generic [ref=f4e671]: Interactive Path Preview
+        - heading "Explore Tech Stack Focus Nodes" [level=2] [ref=f4e672]
+        - paragraph [ref=f4e673]: Select specific technology tracks below to view how competencies are grouped, evaluated, and unlocked based on assessment results.
+      - generic [ref=f4e674]:
+        - generic [ref=f4e675]
+        - generic [ref=f4e685]
+    - generic [ref=f4e712]:
+      - heading "Your Skills Deserve More Than a Self-Assessment" [level=2] [ref=f4e713]
+      - paragraph [ref=f4e714]: Join thousands of developers and engineering teams using SkillMatrix to measure, track, and accelerate technical growth with precision.
+      - generic [ref=f4e715]:
+        - button "Create Free Account" [ref=f4e716] [cursor=pointer]
+        - button "Sign In" [ref=f4e717] [cursor=pointer]
+  - contentinfo [ref=f4e718]:
+    - generic [ref=f4e719]:
+      - generic [ref=f4e720]: © 2026 SkillMatrix. All rights reserved.
+      - list [ref=f4e721]:
+        - listitem [ref=f4e722]
+        - listitem [ref=f4e724]
+  - generic [ref=f4e727]:
+    - button "×" [ref=f4e728] [cursor=pointer]
+    - generic [ref=f4e729]:
+      - button "Sign In" [ref=f4e730] [cursor=pointer]
+      - button "Sign Up" [ref=f4e731] [cursor=pointer]
+    - heading "Welcome Back" [level=3] [ref=f4e732]
+    - paragraph [ref=f4e733]: Sign in with your email or username to access your dashboard.
+    - generic [ref=f4e734]:
+      - generic [ref=f4e735]:
+        - generic [ref=f4e736]: Email or Username
+        - textbox "name@example.com or johndoe" [ref=f4e738]: apha
+      - generic [ref=f4e739]:
+        - generic [ref=f4e740]: Password
+        - generic [ref=f4e741]
+      - generic [ref=f4e747] [cursor=pointer]:
+        - checkbox "Remember me" [checked] [ref=f4e748]
+        - text: Remember me
+      - button "Sign In" [ref=f4e749] [cursor=pointer]
+    - generic [ref=f4e750]: OR
+    - button "Continue with Google" [ref=f4e754] [cursor=pointer]

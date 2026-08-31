@@ -1,0 +1,97 @@
+- generic [ref=f4e761]:
+  - complementary [ref=f4e762]:
+    - generic [ref=f4e763]: SkillMatrix
+    - navigation [ref=f4e770]:
+      - button "Overview" [ref=f4e771]
+      - button "My Skills" [ref=f4e775]
+      - button "Career Paths" [ref=f4e779]
+      - button "Assessment Arena & History" [ref=f4e783]
+      - button "Improvement Plans" [ref=f4e787]
+      - button "Achievements & Leaderboard" [ref=f4e791]
+    - generic [ref=f4e795]:
+      - generic [ref=f4e796]:
+        - generic [ref=f4e797]: O
+        - generic [ref=f4e799]:
+          - generic [ref=f4e800]: Oriolowo Mustapha
+          - generic [ref=f4e801]: Team_Members
+      - button "Sign Out" [ref=f4e802] [cursor=pointer]
+  - generic [ref=f4e805]:
+    - banner [ref=f4e806]:
+      - generic [ref=f4e807]:
+        - heading "Welcome back, Oriolowo" [level=1] [ref=f4e808]
+        - generic [ref=f4e809]: Friday, August 28, 2026
+      - button "Switch to light mode" [ref=f4e810] [cursor=pointer]
+    - generic [ref=f4e824]:
+      - generic [ref=f4e825]:
+        - generic [ref=f4e826]:
+          - heading "Elevate Your Skill Matrix 🚀" [level=2] [ref=f4e827]
+          - paragraph [ref=f4e828]: Track your skill masteries, complete target career path milestones, and earn points as you level up.
+        - generic [ref=f4e829]:
+          - button "Quick Skill Check" [ref=f4e830] [cursor=pointer]
+          - button "Explore Skills" [ref=f4e833] [cursor=pointer]
+      - generic [ref=f4e834]:
+        - generic [ref=f4e835]:
+          - generic [ref=f4e836]: "9"
+          - generic [ref=f4e837]: Assigned Skills (0 Mastered)
+        - generic [ref=f4e838]:
+          - generic [ref=f4e839]: "1"
+          - generic [ref=f4e840]: Active Career Paths
+        - generic [ref=f4e841]:
+          - generic [ref=f4e842]: "2"
+          - generic [ref=f4e843]: Active Growth Plans
+        - generic [ref=f4e844]:
+          - generic [ref=f4e845]: 900 XP
+          - generic [ref=f4e846]: 0 Badges Earned
+      - generic [ref=f4e847]:
+        - generic [ref=f4e848]:
+          - generic [ref=f4e849]:
+            - generic [ref=f4e850]:
+              - heading "Career Path Milestones" [level=3] [ref=f4e851]
+              - button "View All" [ref=f4e852]
+            - generic [ref=f4e855] [cursor=pointer]:
+              - generic [ref=f4e856]:
+                - generic [ref=f4e857]: Software Engineering & Application DevelopmentSpecialized engineering pathways focused on modern backend stacks, APIs, and enterprise software architecture.
+                - button "Continue" [ref=f4e858]
+              - generic [ref=f4e860]:
+                - text: Track Completion
+                - generic [ref=f4e861]: 0%
+          - generic [ref=f4e864]:
+            - heading "Badges & Achievements" [level=3] [ref=f4e866]
+            - generic [ref=f4e867]: Complete skill baselines to unlock your first badge!
+        - generic [ref=f4e869]:
+          - generic [ref=f4e870]:
+            - generic [ref=f4e871]:
+              - heading "Skill Proficiency Breakdown" [level=3] [ref=f4e872]
+              - button "Manage Skills" [ref=f4e873]
+            - generic [ref=f4e875]:
+              - generic [ref=f4e877]:
+                - generic [ref=f4e878]: Novice
+                - generic [ref=f4e879]: 8 Skills (89%)
+              - generic [ref=f4e884]:
+                - generic [ref=f4e885]: Intermediate
+                - generic [ref=f4e886]: 1 Skill (11%)
+          - generic [ref=f4e890]:
+            - generic [ref=f4e891]:
+              - heading "Pending Growth Tasks" [level=3] [ref=f4e892]
+              - button "View All" [ref=f4e893]
+            - generic [ref=f4e895]:
+              - generic [ref=f4e896]:
+                - generic [ref=f4e897]:
+                  - generic [ref=f4e898]: Exceptions
+                  - generic [ref=f4e899]: Target Skill Focus
+                - button "Complete" [ref=f4e900] [cursor=pointer]
+              - generic [ref=f4e901]:
+                - generic [ref=f4e902]:
+                  - generic [ref=f4e903]: Bit Manipulation
+                  - generic [ref=f4e904]: Target Skill Focus
+                - button "Complete" [ref=f4e905] [cursor=pointer]
+              - generic [ref=f4e906]:
+                - generic [ref=f4e907]:
+                  - generic [ref=f4e908]: Recursion/Iteration
+                  - generic [ref=f4e909]: Target Skill Focus
+                - button "Complete" [ref=f4e910] [cursor=pointer]
+              - generic [ref=f4e911]:
+                - generic [ref=f4e912]:
+                  - generic [ref=f4e913]: Modulo Arithmetic
+                  - generic [ref=f4e914]: Target Skill Focus
+                - button "Complete" [ref=f4e915] [cursor=pointer]
