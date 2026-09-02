@@ -60,6 +60,8 @@ __pycache__/
 # Others
 *.sqlite3
 *.log
+# Playwright MCP snapshots / logs / screenshots
+.playwright-mcp/
 # Config files
 appsettings.json
 appsettings.*.json

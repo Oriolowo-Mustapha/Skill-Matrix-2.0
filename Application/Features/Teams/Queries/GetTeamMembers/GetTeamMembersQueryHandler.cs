@@ -31,6 +31,7 @@ namespace Application.Features.Teams.Queries.GetTeamMembers
 				LastName = m.LastName,
 				Email = m.Email,
 				UserName = m.UserName,
+				Role = m.Role ?? "Learner",
 				ProfilePicUrl = m.ProfilePictureUrl,
 				OrganizationId = m.OrganizationId,
 				ManagerId = m.ManagerId,

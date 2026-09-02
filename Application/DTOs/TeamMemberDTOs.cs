@@ -18,6 +18,7 @@ namespace Application.DTOs
 		public string LastName { get; set; } = string.Empty;
 		public string Email { get; set; } = string.Empty;
 		public string UserName { get; set; } = string.Empty;
+		public string Role { get; set; } = string.Empty;
 		public string? ProfilePicUrl { get; set; }
 		public Guid OrganizationId { get; set; }
 		public Guid ManagerId { get; set; }
