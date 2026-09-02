@@ -32,15 +32,15 @@ namespace Skill_Matrix_2._0.Controllers
 		public async Task<ActionResult<BaseResponse<string>>> RegisterLearner([FromForm] RegisterLearnerRequestDTO request)
 		{
 			var command = new RegisterLearnerCommand(request);
-			var result = await _mediator.Send(command);
-			return Ok(result);
-		}
+				var result = await _mediator.Send(command);
+				return Ok(result);
+			}
 
-        [HttpPost("register-organization")]
-        [Consumes("multipart/form-data")]
-        public async Task<ActionResult<BaseResponse<string>>> RegisterOrganization([FromForm] RegisterOrganizationRequestDTO request)
-        {
-            var command = new RegisterOrganizationCommand(request);
+			[HttpPost("register-organization")]
+			[Consumes("multipart/form-data")]
+			public async Task<ActionResult<BaseResponse<string>>> RegisterOrganization([FromForm] RegisterOrganizationRequestDTO request)
+			{
+				var command = new RegisterOrganizationCommand(request);
             var result = await _mediator.Send(command);
             return Ok(result);
         }
