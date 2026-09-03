@@ -19,12 +19,14 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IAiService _aiService;
 		private readonly ICodeExecutionService _codeExecutionService;
+		private readonly IActivityLogService _activityLogService;
 
-		public SubmitAssessmentCommandHandler(IUnitOfWork unitOfWork, IAiService aiService, ICodeExecutionService codeExecutionService)
+		public SubmitAssessmentCommandHandler(IUnitOfWork unitOfWork, IAiService aiService, ICodeExecutionService codeExecutionService, IActivityLogService activityLogService)
 		{
 			_unitOfWork = unitOfWork;
 			_aiService = aiService;
 			_codeExecutionService = codeExecutionService;
+			_activityLogService = activityLogService;
 		}
 
 		public async Task<BaseResponse<AssessmentResultDTO>> Handle(SubmitAssessmentCommand request, CancellationToken cancellationToken)
@@ -465,6 +467,24 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 			
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+			// Award XP and log the activity for the learner/team member
+			int xpEarned = 50 + (int)Math.Round(compositeScore / 2.0);
+			if (levelUp) xpEarned += 25;
+			if (badgeUnlocked) xpEarned += 30;
+
+			var activityDescription = passed
+				? $"Completed {batch.AssignedSkill.Name} assessment with {compositeScore}%."
+				: $"Completed {batch.AssignedSkill.Name} assessment with {compositeScore}% and recalibrated placement.";
+
+			await _activityLogService.AwardPointsAsync(
+				request.UserId,
+				request.UserRole,
+				Domain.Enum.UserActivityType.AssessmentCompleted,
+				activityDescription,
+				xpEarned,
+				"AssessmentResult",
+				result.Id);
+
 			var responseDto = new AssessmentResultDTO
 			{
 				Id = result.Id,
@@ -485,7 +505,8 @@ namespace Application.Features.Assessments.Commands.SubmitAssessment
 				LevelUp = levelUp,
 				NewProficiencyLevel = newLevel.ToString(),
 				BadgeUnlocked = badgeUnlocked,
-				BadgeTitle = badgeTitle
+				BadgeTitle = badgeTitle,
+				XpEarned = xpEarned
 			};
 
 			return BaseResponse<AssessmentResultDTO>.SuccessResponse(responseDto, "Assessment submitted and graded successfully.");

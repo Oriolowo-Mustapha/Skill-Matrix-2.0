@@ -8,11 +8,13 @@ using Application.Features.CareerPaths.Commands.AssignCareerPathToLearnerCommand
 using Application.Features.CareerPaths.Commands.AssignCareerPathToTeamMemberCommand;
 using Application.Features.CareerPaths.Commands.UnassignCareerPathFromLearnerCommand;
 using Application.Features.CareerPaths.Commands.UnassignCareerPathFromTeamMemberCommand;
+using Application.Features.CareerPaths.Commands.GenerateAiCatalog;
 using Application.Features.CareerPaths.Queries.GetAllCareerPaths;
 using Application.Features.CareerPaths.Queries.GetCareerPathById;
 using Application.Features.CareerPaths.Queries.GetAssignedCareerPathsByLearner;
 using Application.Features.CareerPaths.Queries.GetAssignedCareerPathsByTeamMember;
 using Application.Features.CareerPaths.Queries.GetTracksByCareerPath;
+using Application.Interfaces.Repository;
 using Application.Interfaces.Service;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -30,13 +32,13 @@ namespace Skill_Matrix_2._0.Controllers
 	public class CareerPathsController : ControllerBase
 	{
 		private readonly IMediator _mediator;
-		private readonly Application.Interfaces.Repository.IUnitOfWork _unitOfWork;
+		private readonly IUnitOfWork _unitOfWork;
 		private readonly ICatalogJobService _catalogJobService;
 		private readonly IServiceScopeFactory _scopeFactory;
 
 		public CareerPathsController(
 			IMediator mediator, 
-			Application.Interfaces.Repository.IUnitOfWork unitOfWork,
+			IUnitOfWork unitOfWork,
 			ICatalogJobService catalogJobService,
 			IServiceScopeFactory scopeFactory)
 		{
@@ -64,7 +66,7 @@ namespace Skill_Matrix_2._0.Controllers
 				var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 				try
 				{
-					var result = await mediator.Send(new Application.Features.CareerPaths.Commands.GenerateAiCatalog.GenerateAiCatalogCommand());
+					var result = await mediator.Send(new GenerateAiCatalogCommand());
 					_catalogJobService.UpdateJob(job.JobId, "Completed", result.Message, result);
 				}
 				catch (Exception ex)

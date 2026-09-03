@@ -29,6 +29,10 @@ namespace Infrastructure.Implementation.Repositories
 		private IGenericRepository<PeerEndorsement>? _peerEndorsements;
 		private IGenericRepository<SkillGap>? _skillGaps;
 		private IGenericRepository<ImprovementTask>? _improvementTasks;
+		private IGenericRepository<UserActivityLog>? _userActivityLogs;
+		private IGenericRepository<UserStreak>? _userStreaks;
+		private IGenericRepository<XpAction>? _xpActions;
+		private IGenericRepository<XpLevel>? _xpLevels;
 
 		public UnitOfWork(MatrixDbContext context)
 		{
@@ -94,6 +98,18 @@ namespace Infrastructure.Implementation.Repositories
 
 		public IGenericRepository<ImprovementTask> ImprovementTasks =>
 			_improvementTasks ??= new GenericRepository<ImprovementTask>(_context);
+
+		public IGenericRepository<UserActivityLog> UserActivityLogs =>
+			_userActivityLogs ??= new GenericRepository<UserActivityLog>(_context);
+
+		public IGenericRepository<UserStreak> UserStreaks =>
+			_userStreaks ??= new GenericRepository<UserStreak>(_context);
+
+		public IGenericRepository<XpAction> XpActions =>
+			_xpActions ??= new GenericRepository<XpAction>(_context);
+
+		public IGenericRepository<XpLevel> XpLevels =>
+			_xpLevels ??= new GenericRepository<XpLevel>(_context);
 
 		public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 		{

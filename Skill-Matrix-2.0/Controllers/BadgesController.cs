@@ -6,6 +6,10 @@ using Application.Features.Badges.Commands.AssignBadgeToLearner;
 using Application.Features.Badges.Commands.AssignBadgeToTeamMember;
 using Application.Features.Badges.Commands.UnassignBadgeFromLearner;
 using Application.Features.Badges.Commands.UnassignBadgeFromTeamMember;
+using Application.Features.Badges.Queries.GetAllBadges;
+using Application.Features.Badges.Queries.GetBadgeById;
+using Application.Features.Badges.Queries.GetAssignedBadgesForLearner;
+using Application.Features.Badges.Queries.GetAssignedBadgesForTeamMember;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,28 +31,28 @@ namespace Skill_Matrix_2._0.Controllers
 		[HttpGet]
 		public async Task<ActionResult<BaseResponse<List<BadgeDTO>>>> GetAll()
 		{
-			var result = await _mediator.Send(new Application.Features.Badges.Queries.GetAllBadges.GetAllBadgesQuery());
+			var result = await _mediator.Send(new GetAllBadgesQuery());
 			return Ok(BaseResponse<List<BadgeDTO>>.SuccessResponse(result, "Badges retrieved successfully."));
 		}
 
 		[HttpGet("{id}")]
 		public async Task<ActionResult<BaseResponse<BadgeDTO>>> GetById(Guid id)
 		{
-			var result = await _mediator.Send(new Application.Features.Badges.Queries.GetBadgeById.GetBadgeByIdQuery(id));
+			var result = await _mediator.Send(new GetBadgeByIdQuery(id));
 			return Ok(BaseResponse<BadgeDTO>.SuccessResponse(result, "Badge retrieved successfully."));
 		}
 
 		[HttpGet("assigned/learner/{learnerId}")]
 		public async Task<ActionResult<BaseResponse<List<BadgeDTO>>>> GetAssignedByLearner(Guid learnerId)
 		{
-			var result = await _mediator.Send(new Application.Features.Badges.Queries.GetAssignedBadgesForLearner.GetAssignedBadgesForLearnerQuery(learnerId));
+			var result = await _mediator.Send(new GetAssignedBadgesForLearnerQuery(learnerId));
 			return Ok(BaseResponse<List<BadgeDTO>>.SuccessResponse(result, "Assigned badges retrieved successfully."));
 		}
 
 		[HttpGet("assigned/team-member/{teamMemberId}")]
 		public async Task<ActionResult<BaseResponse<List<BadgeDTO>>>> GetAssignedByTeamMember(Guid teamMemberId)
 		{
-			var result = await _mediator.Send(new Application.Features.Badges.Queries.GetAssignedBadgesForTeamMember.GetAssignedBadgesForTeamMemberQuery(teamMemberId));
+			var result = await _mediator.Send(new GetAssignedBadgesForTeamMemberQuery(teamMemberId));
 			return Ok(BaseResponse<List<BadgeDTO>>.SuccessResponse(result, "Assigned badges retrieved successfully."));
 		}
 

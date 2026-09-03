@@ -22,5 +22,6 @@ namespace Application.DTOs
 		public string NewProficiencyLevel { get; set; } = string.Empty;
 		public bool BadgeUnlocked { get; set; } = false;
 		public string BadgeTitle { get; set; } = string.Empty;
+		public int XpEarned { get; set; }
 	}
 }

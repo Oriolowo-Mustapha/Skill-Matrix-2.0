@@ -62,6 +62,10 @@ __pycache__/
 *.log
 # Playwright MCP snapshots / logs / screenshots
 .playwright-mcp/
+*.yml
+*.png
+# AI tooling metadata
+.agoya/
 # Config files
 appsettings.json
 appsettings.*.json

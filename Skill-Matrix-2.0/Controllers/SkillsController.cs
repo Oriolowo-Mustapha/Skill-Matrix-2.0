@@ -4,6 +4,7 @@ using Application.Features.Assessments.Commands.DeleteSkill;
 using Application.Features.Assessments.Commands.UpdateSkill;
 using Application.Features.Assessments.Commands.TeamManagement;
 using Application.Features.Assessments.Queries.GetSkills;
+using Application.Features.Skills.Commands.SelfAssignSkill;
 using Application.Features.Skills.Queries.GetAssignedSkills;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -73,7 +74,7 @@ namespace Skill_Matrix_2._0.Controllers
 				return Unauthorized("Invalid user token.");
 			}
 
-			var finalCommand = new Application.Features.Assessments.Commands.TeamManagement.AssignSkillCommand(managerId, request.TeamMemberId, request.SkillId);
+			var finalCommand = new AssignSkillCommand(managerId, request.TeamMemberId, request.SkillId);
 			
 			var response = await _mediator.Send(finalCommand);
 			return Ok(response);
@@ -90,7 +91,7 @@ namespace Skill_Matrix_2._0.Controllers
 				return Unauthorized("Invalid user token.");
 			}
 
-			var command = new Application.Features.Skills.Commands.SelfAssignSkill.SelfAssignSkillCommand(userId, request.SkillId);
+			var command = new SelfAssignSkillCommand(userId, request.SkillId);
 			var response = await _mediator.Send(command);
 			return Ok(response);
 		}

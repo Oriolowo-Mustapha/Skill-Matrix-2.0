@@ -6,6 +6,7 @@ using Application.Features.Auth.Commands.RegisterOrganization;
 using Application.Features.Auth.Commands.RegisterTeamMember;
 using Application.Features.Auth.Commands.ResetPassword;
 using Application.Features.Auth.Commands.VerifyEmail;
+using Application.Features.Assessments.Commands.UpdateUserProfile;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -101,7 +102,7 @@ namespace Skill_Matrix_2._0.Controllers
 				?? throw new UnauthorizedAccessException("User ID claim not found.");
 			var userId = Guid.Parse(userIdClaim);
 
-			var command = new Application.Features.Assessments.Commands.UpdateUserProfile.UpdateUserProfileCommand(userId, request);
+			var command = new UpdateUserProfileCommand(userId, request);
 			var result = await _mediator.Send(command);
 			return Ok(result);
 		}
@@ -123,8 +124,8 @@ namespace Skill_Matrix_2._0.Controllers
 				return BadRequest("External authentication failed.");
 			}
 
-			var email = authenticateResult.Principal.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.Email)?.Value;
-			var name = authenticateResult.Principal.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.Name)?.Value;
+			var email = authenticateResult.Principal.FindFirst(claim => claim.Type == ClaimTypes.Email)?.Value;
+			var name = authenticateResult.Principal.FindFirst(claim => claim.Type == ClaimTypes.Name)?.Value;
 
 			return Ok(new { Message = $"Successfully authenticated with Google. Email: {email}, Name: {name}" });
 		}

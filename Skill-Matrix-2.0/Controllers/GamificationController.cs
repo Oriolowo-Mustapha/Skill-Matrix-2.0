@@ -1,6 +1,10 @@
 using Application.DTOs;
 using Application.Features.Gamification.Commands.EndorsePeer;
+using Application.Features.Gamification.Commands.FreezeStreak;
+using Application.Features.Gamification.Commands.RepairStreak;
 using Application.Features.Gamification.Queries.GetLeaderboard;
+using Application.Features.Gamification.Queries.GetStreak;
+using Application.Features.Gamification.Queries.GetXpConfig;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +45,59 @@ namespace Skill_Matrix_2._0.Controllers
 		public async Task<ActionResult<BaseResponse<List<LeaderboardEntryDTO>>>> GetLeaderboard(Guid organizationId)
 		{
 			var query = new GetLeaderboardQuery { OrganizationId = organizationId };
+			var response = await _mediator.Send(query);
+			return Ok(response);
+		}
+
+		[HttpGet("streak")]
+		public async Task<ActionResult<BaseResponse<StreakDTO>>> GetStreak()
+		{
+			var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var userRole = User.FindFirstValue(ClaimTypes.Role);
+			if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId) || string.IsNullOrEmpty(userRole))
+			{
+				return Unauthorized("Invalid user token.");
+			}
+
+			var query = new GetStreakQuery(userId, userRole);
+			var response = await _mediator.Send(query);
+			return Ok(response);
+		}
+
+		[HttpPost("streak/freeze")]
+		public async Task<ActionResult<BaseResponse<bool>>> FreezeStreak()
+		{
+			var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var userRole = User.FindFirstValue(ClaimTypes.Role);
+			if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId) || string.IsNullOrEmpty(userRole))
+			{
+				return Unauthorized("Invalid user token.");
+			}
+
+			var command = new FreezeStreakCommand(userId, userRole);
+			var response = await _mediator.Send(command);
+			return Ok(response);
+		}
+
+		[HttpPost("streak/repair")]
+		public async Task<ActionResult<BaseResponse<RepairStreakResponseDTO>>> RepairStreak()
+		{
+			var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var userRole = User.FindFirstValue(ClaimTypes.Role);
+			if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId) || string.IsNullOrEmpty(userRole))
+			{
+				return Unauthorized("Invalid user token.");
+			}
+
+			var command = new RepairStreakCommand(userId, userRole);
+			var response = await _mediator.Send(command);
+			return Ok(response);
+		}
+
+		[HttpGet("xp-config")]
+		public async Task<ActionResult<BaseResponse<XpConfigDTO>>> GetXpConfig()
+		{
+			var query = new GetXpConfigQuery();
 			var response = await _mediator.Send(query);
 			return Ok(response);
 		}

@@ -11,12 +11,20 @@ using Hangfire.PostgreSql;
 using Infrastructure.Context;
 using Infrastructure.Implementation.Repositories;
 using Infrastructure.ExternalServices;
+using Infrastructure.ExternalServices.Cloudinary;
+using Infrastructure.Implementation.Services;
+using Infrastructure.Implementation.Services.CodeHarnesses;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
 using Application.Features.Assessments.Commands.StartAssessment;
-using Infrastructure.Implementation.Services;
+using Skill_Matrix_2_0.Filters;
+using Skill_Matrix_2_0.Middlewares;
+using Skill_Matrix_2_0.BackgroundServices;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +39,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins("http://localhost:5173", "http://localhost:5175")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials(); // Often needed with cookies/auth
@@ -40,7 +48,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers(options =>
 {
-    options.Filters.Add<Skill_Matrix_2_0.Filters.ValidationFilter>();
+    options.Filters.Add<ValidationFilter>();
 });
 
 builder.Services.AddMediatR(cfg => {
@@ -49,12 +57,12 @@ builder.Services.AddMediatR(cfg => {
 
 builder.Services.AddAuthentication(options =>
 {
-	options.DefaultAuthenticateScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
-	options.DefaultChallengeScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
+	options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+	options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddJwtBearer(options =>
 {
-    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
@@ -62,46 +70,47 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key missing")))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key missing")))
     };
 })
 .AddCookie()
 .AddGoogle(googleOptions =>
 {
-	googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-	googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+	googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"] ?? string.Empty;
+	googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ?? string.Empty;
 });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBadgeEligibilityChecker, BadgeEligibilityChecker>();
+builder.Services.AddScoped<IActivityLogService, ActivityLogService>();
 
-builder.Services.Configure<Infrastructure.ExternalServices.EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
-builder.Services.AddHttpClient<IEmailService, Infrastructure.ExternalServices.BrevoEmailService>();
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddHttpClient<IEmailService, BrevoEmailService>();
 
 builder.Services.AddHttpClient<IAiService, OpenRouterAiService>(client =>
 {
     client.Timeout = TimeSpan.FromMinutes(5);
 });
 builder.Services.AddHttpClient<IAiAnalysisService, AiAnalysisService>();
-builder.Services.AddSingleton<Application.Interfaces.Service.ICatalogJobService, Infrastructure.Implementation.Services.CatalogJobService>();
+builder.Services.AddSingleton<ICatalogJobService, CatalogJobService>();
 
 // Code Execution Test Harness Builders & Factory
-builder.Services.AddScoped<Application.Interfaces.Service.ICodeHarnessBuilder, Infrastructure.Implementation.Services.CodeHarnesses.CSharpHarnessBuilder>();
-builder.Services.AddScoped<Application.Interfaces.Service.ICodeHarnessBuilder, Infrastructure.Implementation.Services.CodeHarnesses.PythonHarnessBuilder>();
-builder.Services.AddScoped<Application.Interfaces.Service.ICodeHarnessBuilder, Infrastructure.Implementation.Services.CodeHarnesses.JavaScriptHarnessBuilder>();
-builder.Services.AddScoped<Application.Interfaces.Service.ICodeHarnessBuilder, Infrastructure.Implementation.Services.CodeHarnesses.TypeScriptHarnessBuilder>();
-builder.Services.AddScoped<Application.Interfaces.Service.ICodeHarnessBuilder, Infrastructure.Implementation.Services.CodeHarnesses.JavaHarnessBuilder>();
-builder.Services.AddScoped<Application.Interfaces.Service.ICodeHarnessBuilder, Infrastructure.Implementation.Services.CodeHarnesses.CppHarnessBuilder>();
-builder.Services.AddScoped<Application.Interfaces.Service.ICodeHarnessFactory, Infrastructure.Implementation.Services.CodeHarnesses.CodeHarnessFactory>();
+builder.Services.AddScoped<ICodeHarnessBuilder, CSharpHarnessBuilder>();
+builder.Services.AddScoped<ICodeHarnessBuilder, PythonHarnessBuilder>();
+builder.Services.AddScoped<ICodeHarnessBuilder, JavaScriptHarnessBuilder>();
+builder.Services.AddScoped<ICodeHarnessBuilder, TypeScriptHarnessBuilder>();
+builder.Services.AddScoped<ICodeHarnessBuilder, JavaHarnessBuilder>();
+builder.Services.AddScoped<ICodeHarnessBuilder, CppHarnessBuilder>();
+builder.Services.AddScoped<ICodeHarnessFactory, CodeHarnessFactory>();
 
 builder.Services.AddHttpClient<ICodeExecutionService, CodeExecutionService>();
 builder.Services.AddScoped<IReminderService, ReminderService>();
 
-builder.Services.Configure<Infrastructure.ExternalServices.Cloudinary.CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
-builder.Services.AddScoped<IPhotoService, Infrastructure.ExternalServices.Cloudinary.CloudinaryPhotoService>();
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
+builder.Services.AddScoped<IPhotoService, CloudinaryPhotoService>();
 
 builder.Services.AddMemoryCache();
-builder.Services.AddHostedService<Skill_Matrix_2_0.BackgroundServices.SkillCatalogSeedService>();
+builder.Services.AddHostedService<SkillCatalogSeedService>();
 
 builder.Services.AddOpenApi(options =>
 {
@@ -153,7 +162,7 @@ if (app.Environment.IsDevelopment())
 	app.MapScalarApiReference();
 }
 
-app.UseMiddleware<Skill_Matrix_2_0.Middlewares.ExceptionMiddleware>();
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
@@ -164,7 +173,7 @@ app.UseAuthorization();
 
 app.UseHangfireDashboard("/jobs", new DashboardOptions
 {
-	Authorization = new[] { new Skill_Matrix_2_0.Filters.HangfireDashboardAuthorizationFilter() }
+	Authorization = new[] { new HangfireDashboardAuthorizationFilter() }
 });
 
 RecurringJob.AddOrUpdate<IReminderService>(

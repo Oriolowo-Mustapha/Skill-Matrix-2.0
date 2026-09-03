@@ -1,6 +1,7 @@
 using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
+using Application.Interfaces.Service;
 using Domain.Enum;
 using MediatR;
 using System;
@@ -13,10 +14,12 @@ namespace Application.Features.ImprovementPlans.Commands.CompleteImprovementTask
 	public class CompleteImprovementTaskCommandHandler : IRequestHandler<CompleteImprovementTaskCommand, BaseResponse<string>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IActivityLogService _activityLogService;
 
-		public CompleteImprovementTaskCommandHandler(IUnitOfWork unitOfWork)
+		public CompleteImprovementTaskCommandHandler(IUnitOfWork unitOfWork, IActivityLogService activityLogService)
 		{
 			_unitOfWork = unitOfWork;
+			_activityLogService = activityLogService;
 		}
 
 		public async Task<BaseResponse<string>> Handle(CompleteImprovementTaskCommand request, CancellationToken cancellationToken)
@@ -53,6 +56,16 @@ namespace Application.Features.ImprovementPlans.Commands.CompleteImprovementTask
 
 			await _unitOfWork.ImprovementTasks.UpdateAsync(task);
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+			await _activityLogService.AwardPointsAsync(
+				request.UserId,
+				request.UserRole,
+				Domain.Enum.UserActivityType.ImprovementTaskCompleted,
+				$"Completed improvement task '{task.Concept}'.",
+				20,
+				"ImprovementTask",
+				task.Id,
+				cancellationToken);
 
 			return BaseResponse<string>.SuccessResponse(" ", "Task marked as completed successfully.");
 		}

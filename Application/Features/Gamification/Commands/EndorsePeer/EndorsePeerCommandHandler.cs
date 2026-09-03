@@ -1,7 +1,9 @@
 using Application.DTOs;
 using Application.Exceptions;
 using Application.Interfaces.Repository;
+using Application.Interfaces.Service;
 using Domain.Entities;
+using Domain.Enum;
 using MediatR;
 
 namespace Application.Features.Gamification.Commands.EndorsePeer
@@ -9,10 +11,12 @@ namespace Application.Features.Gamification.Commands.EndorsePeer
 	public class EndorsePeerCommandHandler : IRequestHandler<EndorsePeerCommand, BaseResponse<bool>>
 	{
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IActivityLogService _activityLogService;
 
-		public EndorsePeerCommandHandler(IUnitOfWork unitOfWork)
+		public EndorsePeerCommandHandler(IUnitOfWork unitOfWork, IActivityLogService activityLogService)
 		{
 			_unitOfWork = unitOfWork;
+			_activityLogService = activityLogService;
 		}
 
 		public async Task<BaseResponse<bool>> Handle(EndorsePeerCommand request, CancellationToken cancellationToken)
@@ -51,10 +55,12 @@ namespace Application.Features.Gamification.Commands.EndorsePeer
 
 			// Add bonus points to the endorsee
 			var endorseeLearner = await _unitOfWork.Learners.GetByIdAsync(request.EndorseeId);
+			string endorseeRole;
 			if (endorseeLearner != null)
 			{
 				endorseeLearner.TotalPoints += 10;
 				await _unitOfWork.Learners.UpdateAsync(endorseeLearner);
+				endorseeRole = Roles.Learner.ToString();
 			}
 			else
 			{
@@ -63,6 +69,7 @@ namespace Application.Features.Gamification.Commands.EndorsePeer
 				{
 					endorseeTeamMember.TotalPoints += 10;
 					await _unitOfWork.TeamMembers.UpdateAsync(endorseeTeamMember);
+					endorseeRole = Roles.Team_Members.ToString();
 				}
 				else
 				{
@@ -71,6 +78,12 @@ namespace Application.Features.Gamification.Commands.EndorsePeer
 			}
 
 			await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+			await _activityLogService.LogAsync(
+				request.EndorseeId,
+				endorseeRole,
+				UserActivityType.PeerEndorsed,
+				$"You were endorsed for the skill '{skill.Name}' by a peer. +10 points.");
 
 			return BaseResponse<bool>.SuccessResponse(true, "Peer endorsed successfully. 10 bonus points have been awarded.");
 		}

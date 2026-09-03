@@ -1,7 +1,9 @@
 using Application.DTOs;
 
 using Application.Features.Assessments.Queries.GetImprovementPlans;
+using Application.Features.ImprovementPlans.Commands.CompleteImprovementTask;
 using Application.Features.ImprovementPlans.Commands.GenerateAiImprovementPlan;
+using Application.Features.ImprovementPlans.Queries.GetImprovementPlanById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -44,7 +46,7 @@ namespace Skill_Matrix_2._0.Controllers
 			}
 
 			var userId = Guid.Parse(userIdString);
-			var query = new Application.Features.ImprovementPlans.Queries.GetImprovementPlanById.GetImprovementPlanByIdQuery(id, userId, userRole);
+			var query = new GetImprovementPlanByIdQuery(id, userId, userRole);
 			var response = await _mediator.Send(query);
 			return Ok(response);
 		}
@@ -70,7 +72,7 @@ namespace Skill_Matrix_2._0.Controllers
 			}
 
 			var userId = Guid.Parse(userIdString);
-			var command = new Application.Features.ImprovementPlans.Commands.CompleteImprovementTask.CompleteImprovementTaskCommand(taskId, userId, userRole);
+			var command = new CompleteImprovementTaskCommand(taskId, userId, userRole);
 			var result = await _mediator.Send(command);
 			return Ok(result);
 		}

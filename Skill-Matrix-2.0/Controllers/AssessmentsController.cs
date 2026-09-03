@@ -1,8 +1,17 @@
 using Application.DTOs;
+using Application.DTOs.Assessments;
+using Application.Features.Assessments.Commands.GenerateStarterPlan;
+using Application.Features.Assessments.Commands.SaveQuestionResponse;
 using Application.Features.Assessments.Commands.StartAssessment;
+using Application.Features.Assessments.Commands.StartImprovementCheck;
 using Application.Features.Assessments.Commands.StartTrackBaseline;
 using Application.Features.Assessments.Commands.SubmitAssessment;
+using Application.Features.Assessments.Commands.SubmitImprovementCheck;
+using Application.Features.Assessments.Queries.GetAssessmentAttemptState;
+using Application.Features.Assessments.Queries.GetAssessmentDetail;
+using Application.Features.Assessments.Queries.GetAssessmentHistory;
 using Application.Features.Assessments.Queries.GetAssessmentResult;
+using Application.Interfaces.Service;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +25,9 @@ namespace Skill_Matrix_2_0.Controllers
 	public class AssessmentsController : ControllerBase
 	{
 		private readonly IMediator _mediator;
-		private readonly Application.Interfaces.Service.ICodeExecutionService _codeExecutionService;
+		private readonly ICodeExecutionService _codeExecutionService;
 
-		public AssessmentsController(IMediator mediator, Application.Interfaces.Service.ICodeExecutionService codeExecutionService)
+		public AssessmentsController(IMediator mediator, ICodeExecutionService codeExecutionService)
 		{
 			_mediator = mediator;
 			_codeExecutionService = codeExecutionService;
@@ -47,7 +56,7 @@ namespace Skill_Matrix_2_0.Controllers
 			var userId = Guid.Parse(userIdClaim);
 			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
 
-			var command = new Application.Features.Assessments.Commands.GenerateStarterPlan.GenerateStarterPlanCommand(dto, userId, userRole);
+			var command = new GenerateStarterPlanCommand(dto, userId, userRole);
 			var response = await _mediator.Send(command);
 			return Ok(response);
 		}
@@ -93,7 +102,7 @@ namespace Skill_Matrix_2_0.Controllers
 			var userId = Guid.Parse(userIdClaim);
 			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
 
-			var command = new Application.Features.Assessments.Commands.StartImprovementCheck.StartImprovementCheckCommand(skillId, concept, userId, userRole);
+			var command = new StartImprovementCheckCommand(skillId, concept, userId, userRole);
 			var response = await _mediator.Send(command);
 			return Ok(response);
 		}
@@ -107,7 +116,7 @@ namespace Skill_Matrix_2_0.Controllers
 			var userId = Guid.Parse(userIdClaim);
 			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
 
-			var command = new Application.Features.Assessments.Commands.SubmitImprovementCheck.SubmitImprovementCheckCommand(submitDto, userId, userRole);
+			var command = new SubmitImprovementCheckCommand(submitDto, userId, userRole);
 			var response = await _mediator.Send(command);
 			return Ok(response);
 		}
@@ -120,7 +129,7 @@ namespace Skill_Matrix_2_0.Controllers
 			var userId = Guid.Parse(userIdClaim);
 			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
 
-			var query = new Application.Features.Assessments.Queries.GetAssessmentHistory.GetAssessmentHistoryQuery(userId, userRole);
+			var query = new GetAssessmentHistoryQuery(userId, userRole);
 			var response = await _mediator.Send(query);
 			return Ok(response);
 		}
@@ -146,7 +155,7 @@ namespace Skill_Matrix_2_0.Controllers
 			var userId = Guid.Parse(userIdClaim);
 			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
 
-			var query = new Application.Features.Assessments.Queries.GetAssessmentDetail.GetAssessmentDetailQuery(id, userId, userRole);
+			var query = new GetAssessmentDetailQuery(id, userId, userRole);
 			var response = await _mediator.Send(query);
 			return Ok(response);
 		}
@@ -159,31 +168,31 @@ namespace Skill_Matrix_2_0.Controllers
 			var userId = Guid.Parse(userIdClaim);
 			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
 
-			var query = new Application.Features.Assessments.Queries.GetAssessmentAttemptState.GetAssessmentAttemptStateQuery(batchId, userId, userRole);
+			var query = new GetAssessmentAttemptStateQuery(batchId, userId, userRole);
 			var response = await _mediator.Send(query);
 			return Ok(response);
 		}
 
 		[HttpPut("batches/{batchId}/responses/{questionId}")]
 		[Consumes("application/json")]
-		public async Task<IActionResult> SaveQuestionResponse(int batchId, int questionId, [FromBody] Application.DTOs.SaveQuestionResponseDTO dto)
+		public async Task<IActionResult> SaveQuestionResponse(int batchId, int questionId, [FromBody] SaveQuestionResponseDTO dto)
 		{
 			var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier)
 				?? throw new UnauthorizedAccessException("User ID claim not found.");
 			var userId = Guid.Parse(userIdClaim);
 			var userRole = User.FindFirstValue(ClaimTypes.Role) ?? string.Empty;
 
-			var command = new Application.Features.Assessments.Commands.SaveQuestionResponse.SaveQuestionResponseCommand(batchId, questionId, dto, userId, userRole);
+			var command = new SaveQuestionResponseCommand(batchId, questionId, dto, userId, userRole);
 			var response = await _mediator.Send(command);
 			return Ok(response);
 		}
 
 		[HttpPost("run-code")]
 		[Consumes("application/json")]
-		public async Task<ActionResult<BaseResponse<Application.DTOs.Assessments.CodeExecutionResponseDTO>>> RunCode([FromBody] Application.DTOs.Assessments.CodeExecutionRequestDTO request)
+		public async Task<ActionResult<BaseResponse<CodeExecutionResponseDTO>>> RunCode([FromBody] CodeExecutionRequestDTO request)
 		{
 			var response = await _codeExecutionService.ExecuteCodeAsync(request);
-			return Ok(BaseResponse<Application.DTOs.Assessments.CodeExecutionResponseDTO>.SuccessResponse(response, "Code executed successfully."));
+			return Ok(BaseResponse<CodeExecutionResponseDTO>.SuccessResponse(response, "Code executed successfully."));
 		}
 	}
 }

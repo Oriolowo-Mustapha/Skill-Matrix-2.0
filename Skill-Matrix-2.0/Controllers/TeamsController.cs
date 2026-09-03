@@ -1,5 +1,9 @@
 using Application.DTOs;
 using Application.Features.Auth.Commands.RegisterTeamMember;
+using Application.Features.Teams.Queries.GetTeamMembers;
+using Application.Features.Teams.Queries.GetTeamMemberOverview;
+using Application.Interfaces.Repository;
+using Domain.Enum;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +17,9 @@ namespace Skill_Matrix_2._0.Controllers
 	public class TeamsController : ControllerBase
 	{
 		private readonly IMediator _mediator;
-		private readonly Application.Interfaces.Repository.IUnitOfWork _unitOfWork;
+		private readonly IUnitOfWork _unitOfWork;
 
-		public TeamsController(IMediator mediator, Application.Interfaces.Repository.IUnitOfWork unitOfWork)
+		public TeamsController(IMediator mediator, IUnitOfWork unitOfWork)
 		{
 			_mediator = mediator;
 			_unitOfWork = unitOfWork;
@@ -45,7 +49,7 @@ namespace Skill_Matrix_2._0.Controllers
 				return Unauthorized("Invalid user token.");
 			}
 
-			var query = new Application.Features.Teams.Queries.GetTeamMembers.GetTeamMembersQuery(managerId);
+			var query = new GetTeamMembersQuery(managerId);
 			var response = await _mediator.Send(query);
 			return Ok(BaseResponse<List<TeamMemberDTO>>.SuccessResponse(response, "Team members retrieved successfully."));
 		}
@@ -85,7 +89,7 @@ namespace Skill_Matrix_2._0.Controllers
 					Name = ts.Name,
 					Category = ts.Category,
 					ProficiencyLevel = ts.ProficiencyLevel.ToString(),
-					IsFullyMastered = ts.ProficiencyLevel == Domain.Enum.ProficiencyLevel.Expert,
+					IsFullyMastered = ts.ProficiencyLevel == ProficiencyLevel.Expert,
 					DateAssigned = ts.DateAssigned
 				}).ToList() ?? new List<SkillDTO>(),
 				AssignedPaths = member.CareerPaths?.Select(cp => new CareerPathDTO
@@ -93,7 +97,7 @@ namespace Skill_Matrix_2._0.Controllers
 					Id = cp.CareerPathId,
 					Title = cp.Title,
 					Description = cp.Description,
-					IconURL = cp.ImageUrl,
+					IconURL = cp.ImageUrl ?? string.Empty,
 					DateAdded = cp.DateAssigned
 				}).ToList() ?? new List<CareerPathDTO>()
 			};
@@ -110,7 +114,7 @@ namespace Skill_Matrix_2._0.Controllers
 				return Unauthorized("Invalid user token.");
 			}
 
-			var query = new Application.Features.Teams.Queries.GetTeamMemberOverview.GetTeamMemberOverviewQuery(managerId, id);
+			var query = new GetTeamMemberOverviewQuery(managerId, id);
 			var response = await _mediator.Send(query);
 
 			if (!response.Success)

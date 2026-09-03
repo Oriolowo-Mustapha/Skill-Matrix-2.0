@@ -18,11 +18,13 @@ namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly ICodeExecutionService _codeExecutionService;
+		private readonly IActivityLogService _activityLogService;
 
-		public SubmitImprovementCheckCommandHandler(IUnitOfWork unitOfWork, ICodeExecutionService codeExecutionService)
+		public SubmitImprovementCheckCommandHandler(IUnitOfWork unitOfWork, ICodeExecutionService codeExecutionService, IActivityLogService activityLogService)
 		{
 			_unitOfWork = unitOfWork;
 			_codeExecutionService = codeExecutionService;
+			_activityLogService = activityLogService;
 		}
 
 		public async Task<BaseResponse<AssessmentResultDTO>> Handle(SubmitImprovementCheckCommand request, CancellationToken cancellationToken)
@@ -220,6 +222,21 @@ namespace Application.Features.Assessments.Commands.SubmitImprovementCheck
 				}
 				await _unitOfWork.SaveChangesAsync(cancellationToken);
 			}
+
+			// Award XP and log the activity for the improvement check attempt
+			int xpEarned = passed ? 40 : 0;
+			var improvementDescription = passed
+				? $"Mastered the concept '{batch.ConceptFocus}' via improvement check on {batch.AssignedSkill.Name}."
+				: $"Retook the '{batch.ConceptFocus}' improvement check on {batch.AssignedSkill.Name}.";
+
+			await _activityLogService.AwardPointsAsync(
+				request.UserId,
+				request.UserRole,
+				Domain.Enum.UserActivityType.ImprovementTaskCompleted,
+				improvementDescription,
+				xpEarned,
+				"AssessmentResult",
+				result.Id);
 
 			var responseDto = new AssessmentResultDTO
 			{

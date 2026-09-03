@@ -29,6 +29,10 @@ namespace Infrastructure.Context
 		public DbSet<SkillGap> SkillGaps { get; set; }
 		public DbSet<ImprovementTask> ImprovementTasks { get; set; }
 		public DbSet<CareerPathTrack> CareerPathTracks { get; set; }
+		public DbSet<UserActivityLog> UserActivityLogs { get; set; }
+		public DbSet<UserStreak> UserStreaks { get; set; }
+		public DbSet<XpAction> XpActions { get; set; }
+		public DbSet<XpLevel> XpLevels { get; set; }
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -42,6 +46,21 @@ namespace Infrastructure.Context
 
 			modelBuilder.Entity<PeerEndorsement>()
 				.HasIndex(p => new { p.EndorserId, p.EndorseeId, p.SkillId })
+				.IsUnique();
+
+			modelBuilder.Entity<UserActivityLog>()
+				.HasIndex(u => new { u.UserId, u.CreatedAt });
+
+			modelBuilder.Entity<UserStreak>()
+				.HasIndex(s => new { s.UserId, s.UserRole })
+				.IsUnique();
+
+			modelBuilder.Entity<XpAction>()
+				.HasIndex(a => a.ActionType)
+				.IsUnique();
+
+			modelBuilder.Entity<XpLevel>()
+				.HasIndex(l => l.Level)
 				.IsUnique();
 
 			modelBuilder.Entity<CareerPath>()
@@ -261,6 +280,37 @@ namespace Infrastructure.Context
 						PasswordResetTokenExpiry = default
 					}
 				);
+
+			// XP Action seed data
+			var seedDate = new DateTime(2024, 01, 01, 0, 0, 0, DateTimeKind.Utc);
+			modelBuilder.Entity<XpAction>().HasData(
+				new XpAction { Id = new Guid("a1000000-0000-0000-0000-000000000001"), ActionType = "AssessmentCompleted", BaseXp = 50, Description = "Complete an assessment", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpAction { Id = new Guid("a1000000-0000-0000-0000-000000000002"), ActionType = "ImprovementTaskCompleted", BaseXp = 20, Description = "Complete an improvement task", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpAction { Id = new Guid("a1000000-0000-0000-0000-000000000003"), ActionType = "PeerEndorsed", BaseXp = 10, Description = "Receive a peer endorsement", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpAction { Id = new Guid("a1000000-0000-0000-0000-000000000004"), ActionType = "SkillMastered", BaseXp = 100, Description = "Master a skill (reach Expert level)", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpAction { Id = new Guid("a1000000-0000-0000-0000-000000000005"), ActionType = "BadgeUnlocked", BaseXp = 30, Description = "Unlock a badge", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpAction { Id = new Guid("a1000000-0000-0000-0000-000000000006"), ActionType = "CareerPathCompleted", BaseXp = 200, Description = "Complete a career path", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpAction { Id = new Guid("a1000000-0000-0000-0000-000000000007"), ActionType = "BaselineCompleted", BaseXp = 25, Description = "Complete a baseline assessment", CreatedAt = seedDate, UpdatedAt = seedDate }
+			);
+
+			// XP Level seed data (15 levels, quadratic curve matching frontend)
+			modelBuilder.Entity<XpLevel>().HasData(
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000001"), Level = 1, MinXp = 0, Title = "Rookie", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000002"), Level = 2, MinXp = 100, Title = "Rookie", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000003"), Level = 3, MinXp = 400, Title = "Apprentice", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000004"), Level = 4, MinXp = 900, Title = "Apprentice", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000005"), Level = 5, MinXp = 1600, Title = "Journeyperson", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000006"), Level = 6, MinXp = 2500, Title = "Journeyperson", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000007"), Level = 7, MinXp = 3600, Title = "Section Chief", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000008"), Level = 8, MinXp = 4900, Title = "Section Chief", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000009"), Level = 9, MinXp = 6400, Title = "Specialist", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000010"), Level = 10, MinXp = 8100, Title = "Specialist", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000011"), Level = 11, MinXp = 10000, Title = "Specialist", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000012"), Level = 12, MinXp = 12100, Title = "Master", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000013"), Level = 13, MinXp = 14400, Title = "Master", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000014"), Level = 14, MinXp = 16900, Title = "Master", CreatedAt = seedDate, UpdatedAt = seedDate },
+				new XpLevel { Id = new Guid("b1000000-0000-0000-0000-000000000015"), Level = 15, MinXp = 19600, Title = "Grandmaster", CreatedAt = seedDate, UpdatedAt = seedDate }
+			);
 		}
 	}
 }

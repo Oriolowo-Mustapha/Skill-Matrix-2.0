@@ -26,6 +26,10 @@ namespace Application.Interfaces.Repository
 		IGenericRepository<PeerEndorsement> PeerEndorsements { get; }
 		IGenericRepository<SkillGap> SkillGaps { get; }
 		IGenericRepository<ImprovementTask> ImprovementTasks { get; }
+		IGenericRepository<UserActivityLog> UserActivityLogs { get; }
+		IGenericRepository<UserStreak> UserStreaks { get; }
+		IGenericRepository<XpAction> XpActions { get; }
+		IGenericRepository<XpLevel> XpLevels { get; }
 
 		Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 	}
