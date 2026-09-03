@@ -1,4 +1,5 @@
 using Application.Features.CareerPaths.Commands.GenerateAiCatalog;
+using Application.Features.Skills.Commands;
 using Application.Interfaces.Repository;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,7 +43,7 @@ namespace Skill_Matrix_2_0.BackgroundServices
 				if (!skills.Any())
 				{
 					_logger.LogInformation("CareerPathSeedService: No skills found in database. Triggering skill catalog generation first...");
-					var skillResult = await mediator.Send(new Application.Features.Skills.Commands.GenerateAiSkillCatalogCommand(), stoppingToken);
+					var skillResult = await mediator.Send(new GenerateAiSkillCatalogCommand(), stoppingToken);
 					_logger.LogInformation("CareerPathSeedService: Skill catalog generation completed: {Message}", skillResult?.Message);
 
 					skills = (await unitOfWork.Skills.GetAllAsync()).ToList();
